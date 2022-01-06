@@ -1,0 +1,33 @@
+.purchaseContainer {
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5.4rem;
+  margin-left: 1.3rem;
+}
+
+.nameP{
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4375rem;
+  color: #222222;
+  font-family: 'Poppins';
+}
+
+.priceP {
+  font-family: 'Poppins';
+  font-weight: 400;
+  font-size: 1.375rem;
+  line-height: 1.375rem;
+  color: #696969;
+}
+
+.descriptionP {
+  margin-top: 1rem;
+  font-family: 'Poppins';
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5625rem;
+  color:#878787;
+  margin-bottom: 3rem;
+}

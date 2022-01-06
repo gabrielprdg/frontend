@@ -1,0 +1,51 @@
+.containerProduct {
+  width: 220px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 2.4rem;
+}
+
+.containerProduct:nth-child(4n) {
+  margin-right: none;
+}
+
+.name {
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+  color: #4f4f4f;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.description {
+
+  color: #4f4f4f;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.productImg {
+  cursor: pointer;
+  width: 220px;
+  height: 290px;
+}
+
+.price {
+  color: #696969;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 33px;
+}
+
+.desc {
+  cursor: pointer;
+}
+
+.desc p:hover {
+  color: #0a0303;
+}
+
+

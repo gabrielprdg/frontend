@@ -1,0 +1,36 @@
+.buttonContainer {
+  width: 17.2rem;
+  height: 2.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: var(--pink);
+  color: var(--white);
+  font-family: 'Poppins';
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 48px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.lightButton {
+  width: 17.2rem;
+  height: 2.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-family: 'Poppins';
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 48px;
+
+  background-color: var(--white);
+  color: var(--pink);
+  border: 2px solid var(--pink);
+
+  margin-bottom: 3rem;
+  cursor: pointer;
+}
