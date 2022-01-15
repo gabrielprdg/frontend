@@ -42,7 +42,7 @@ export default function Slider() {
       <div className='swiper'>
       <div className="swiper-wrapper">
         <div className="swiper-slide">
-          <img src="./s1.jpg" alt="s1" />
+          <img src="./s1.jpg" alt="s1"/>
         </div>
         <div className="swiper-slide">
           <img src="./s2.jpg" alt="s2" />

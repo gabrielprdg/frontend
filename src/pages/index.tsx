@@ -1,16 +1,14 @@
-import { Product, ProductProps, ProductType } from '../components/Product'
-import styles from './home.module.scss'
-import { Header } from "../components/Header"
-import Link from 'next/link'
-import Slider from '../components/Slider'
 import { GetServerSideProps } from 'next'
+import { Header } from "../components/Header"
+import { Product } from '../components/Product'
+import Slider from '../components/Slider'
+import { useCart } from '../contexts/ShoppingCartContext'
 import { products } from '../mock/products'
-import {} from '../components/Product'
-import { DropDown } from '../components/DropDown'
+import styles from './home.module.scss'
 
 type Product = {
   id: string
-  image: string,
+  images: Array<string>,
   name: string,
   description: string
   price: number
@@ -21,19 +19,16 @@ type HomeProps = {
 }
 
 export default function Home({ p }: HomeProps) {
+
   return(
     <div>
-      <Header/>
+      <Header isLoginPage={false}/>
       <Slider/>
       <div className={styles.container}>
       <div className={styles.topic}> 
         <span className={styles.dash}></span>
           <p className={styles.titleProd}>CONHEÇA UM POUCO DA NOSSA LOJA </p>
         <span className={styles.dash}></span>
-      </div>
-    
-      <div className={styles.dropDownContainer}>
-        <DropDown/>
       </div>
 
       <div className={styles.contentHome}>
@@ -46,7 +41,6 @@ export default function Home({ p }: HomeProps) {
           
         </div>
       </div>
-
       
     </div>
     </div>

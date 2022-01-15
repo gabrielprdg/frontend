@@ -7,8 +7,8 @@ type ButtonProps = {
 
 export default function Button({title, islightButton}: ButtonProps) {
   return (
-    <div className={islightButton ? styles.buttonContainer : styles.lightButton}>
+    <button className={islightButton ? styles.buttonContainer : styles.lightButton}>
       {title}
-    </div>
+    </button>
   )
 }

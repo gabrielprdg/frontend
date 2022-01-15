@@ -18,7 +18,7 @@
 
   --green: #25b359;
   --green-500: #04D361;
-  
+  --black: #3d393d;
   --purple-300: #9F75FF;
   --purple-400: #9164FA; 
   --purple-500: #8257E5;
@@ -41,6 +41,7 @@
 
 body {
 	background: var(--gray-50);
+	padding-top: 5.5rem;
 }
 
 body, input, textarea, button {

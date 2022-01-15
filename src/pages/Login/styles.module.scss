@@ -1,0 +1,72 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  width: 450px;
+  height: 300px;
+  background-color: #3d393d;
+  box-shadow: 0 1px rgba(0,0,0,0.6);
+  font-family: 'Poppins';
+  border-radius: 4px;
+  color: white;
+}
+
+.form .title {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.form label {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 60px;
+}
+
+.form button {
+  margin-left: 190px;
+  margin-top: 30px;
+  padding: 9px;
+  border-radius: 9px;
+  font-family: 'Poppins';
+  border: none;
+  color: white;
+  background-image: linear-gradient(to right, #d63bf5, #a708c7);
+}
+
+.form input {
+  width: 18.125rem;
+  height: 2.125rem;
+  border: none;
+  border-radius: 28px;
+  font-family: 'Poppins';
+  padding: 13px;
+  outline: none;
+  color: #3d393d;
+  margin-left: 56px;
+}
+
+.signUp {
+  font-family: 'Poppins';
+}
+
+.signUp span {
+  color: #d63bf5;
+  cursor: pointer;
+}
+
+.inputEmail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inputPass {
+  display: block;
+}

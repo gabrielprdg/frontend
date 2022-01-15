@@ -1,77 +1,63 @@
+import React, { useState } from "react"
+import styles from './styles.module.scss'
+import Link from 'next/link'
+import Close from '../../../public/x.svg'
+import Menu from '../../../public/menu.svg'
 import Image from 'next/image'
-import Link from "next/link"
-import React, { Fragment } from "react"
-import userImg from '../../../public/user.svg'
-import bagImg from '../../../public/shopping-bag.svg'
+import { useCart } from "../../contexts/ShoppingCartContext"
 
-export function Header(){
+type HeaderProps = {
+  isLoginPage: boolean
+}
+
+export function Header({isLoginPage}: HeaderProps){
+
+  const {cart} = useCart()
+  const [openMenu,setOpenMenu] = useState(false)
+
+  console.log(cart)
+  function menuToggle() {
+    setOpenMenu(!openMenu)
+  }
 
   return (
-  <>
-      <nav className='flex items-center flex-wrap bg-gray-50 p-3 '>
-        <Link href='/'>
-          <a className='inline-flex items-center p-2 mr-4 '>
-            <svg
-              viewBox='0 0 24 24'
-              xmlns='http://www.w3.org/2000/svg'
-              className='fill-current text-white h-8 w-8 mr-2'
-            >
-              <path d='M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z' />
-            </svg>
-            <span className='flex font-poppins text-xl font-bold tracking-wide'>
-              <div className='text-pink-400'>
-                Use
-              </div>
-              <div className='text-gray-800'>
-                FashionStoreLook
-              </div>
-            </span>
-          </a>
-        </Link>
-        <button className=' inline-flex p-3 hover:bg-green-600 rounded lg:hidden text-white ml-auto hover:text-white outline-none'>
-          <svg
-            className='w-6 h-6'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M4 6h16M4 12h16M4 18h16'
-            />
-          </svg>
-        </button>
-
-        <div className='font-poppins text-gray-800 hidden w-full lg:inline-flex lg:flex-grow lg:w-auto'>
-          <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
-            <Link href='/'>
-              <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center '>
-                Home
-              </a>
-            </Link>
-            <Link href='/'>
-              <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center'>
-                Contato
-              </a>
-            </Link>
-
-            <div className="pl-10">
-              <Link href='/'>
-                <Image src={userImg}/>
-              </Link>
-            </div>
-            
-            <div className="pl-4 pr-4">
-              <Link href='/'>
-                <Image src={bagImg}/>
-              </Link>
+    <div className={styles.headerContainer}>
+      <div className={styles.menuhamb} onClick={() => {menuToggle()}}>
+        <Image src={Menu} alt="menu" />
+      </div>
+      <div className={styles.headTitle}>
+        <Link href="/">
+          <div className={styles.title}>
+            <h2 className={styles.use}>
+              Use
+            </h2>
+            <div className={styles.fsl}>
+              FashionStoreLook
             </div>
           </div>
-        </div>
-      </nav>
-    </>
+        </Link>
+      </div>
+
+      {!isLoginPage ? 
+        <nav className={styles.menu}>
+          <ul className={openMenu ? styles.toggle :""}>
+            <li><Link href="/Login">Login / Register</Link></li>
+            <li><Link href="/contact"> Contact </Link></li>
+            <li><Link href="/about"> About </Link></li>
+            <li><Link href="/requests"> Meus pedidos </Link></li>
+            <li className={styles.close} onClick={menuToggle} >
+              <Image src={Close} alt="" width={25} height={35}/>
+            </li>
+          </ul>
+          <div className={styles.navCart}>
+            <span>{cart.length}</span>
+            <Link href='/Cart'>
+              <img src="/shopping-bag.svg" alt="shoppingbag" width={20} height={20}/>
+            </Link>
+          </div>
+        </nav>
+      : ''}
+      
+    </div>
   )
 }

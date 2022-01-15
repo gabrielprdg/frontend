@@ -4,7 +4,7 @@ import { products } from '../../mock/products'
 
 export type ProductType = {
   id: string
-  image: string,
+  images: Array<string>,
   name: string,
   description: string
   price: number
@@ -15,14 +15,16 @@ export type ProductProps = {
 }
 
 export function Product ({ product }: ProductProps){
+  console.log(product.images[0])
   return(
     <div className={styles.containerProduct}>
-      <Link href={`/ProductDetails/${product.id}`}>
-        <img src={product.image} alt="dress"  className={styles.productImg}/>
-      </Link>
+      <div className={styles.productImg}>
+        <Link href={`/ProductDetails/${product.id}`}>
+          <img src={product.images[0]} alt="dress" />
+        </Link>
+      </div>
       <div className={styles.desc}> 
         <p className={styles.name}>{ product.name }</p>
-        <p className={styles.description}>{product.description}</p>
       </div>
       <div className={styles.price}>R${product.price}</div>
     </div>
