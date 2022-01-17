@@ -10,7 +10,7 @@ import { useCart } from "../../contexts/ShoppingCartContext";
 
 export default function ProductDetails({product}: ProductProps) {
 
-  const {addOnCart, cart} = useCart()
+  const {addOnCart, handleSwapImages, index} = useCart()
 
   return(
     <div>
@@ -18,7 +18,7 @@ export default function ProductDetails({product}: ProductProps) {
     <div className={styles.containerDetails}>
       <div className={styles.details}>
         <div className={styles.mainImg}>
-          <img src={product.images[0]} alt="imagemain" />
+          <img src={product.images[index]} alt="imagemain" />
         </div>
         <div className={styles.content}>
           <div className={styles.row}>
@@ -28,8 +28,8 @@ export default function ProductDetails({product}: ProductProps) {
           </div>
           <div className={styles.images}>
             {
-              product.images.map(img => (
-                <img src={img} alt="d" />
+              product.images.map((img, index) => (
+                <img src={img} alt="d" onClick={() => handleSwapImages(index)}/>
               ))
             }
           </div>

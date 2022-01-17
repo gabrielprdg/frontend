@@ -19,7 +19,7 @@ export const products = [
     images: [
       '/dress.jpg',
       '/dress.jpg',
-      '/dress.jpg'
+      '/moda.jpg'
     ],
     price: 43.99,
     count: 1

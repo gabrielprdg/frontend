@@ -88,12 +88,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-		padding: 2rem 1rem;
+		padding: 1rem 1rem;
 	}
 
 	.menuhamb,
   .menu .close {
-		display: block;
+		display: flex;
+    align-items: center;
 	}
 
   .close {
@@ -107,9 +108,7 @@
     width: 30px;
   }
 
-  .headTitle {
-    font-size: 20px;
-  }
+ 
 
   .menu ul {
     position: fixed;
@@ -126,6 +125,16 @@
     opacity: 0.96;
     transition: 0.5s linear;
   }
+
+  
+.menu ul li a {
+  text-decoration: none;
+  color: #3d393d;
+  padding: 0 15px;
+  font-family: 'Poppins';
+  font-size: 19px;
+  font-weight: 500;
+}
 
   .menu ul.toggle {
     top: 0;

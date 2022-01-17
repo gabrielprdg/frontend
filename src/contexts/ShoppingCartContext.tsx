@@ -15,11 +15,13 @@ type ProductData = {
 type ShoppingCartContextData = {
   productList: Array<ProductData>
   cart: Array<ProductData>
+  index: number
   addOnCart: (id: string) => void
   reduction: (id: string) => void
   promotion: (id: string) => void
   getTotal: () => void
   removeProduct: (id: string) => void
+  handleSwapImages: (index: number) => void
   total: number
 
 }
@@ -34,12 +36,27 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   const [productList, setProductList] = useState<ProductData[]>([])
   const [cart, setCart] = useState<ProductData[]>([])
   const [total, setTotal] = useState(0)
+  const [index, setIndex] = useState(0)
   
   useEffect(() => {
-    
+    const cartData = localStorage.getItem('dataCart')
+    const totalData = localStorage.getItem('totalCart')
+
+    if(cartData){
+      setCart(JSON.parse(cartData));
+    }
+
+    if(totalData) {
+      setTotal(JSON.parse(totalData))
+    }
+
     setProductList(products)
   },[])
   
+  useEffect(() => {
+    localStorage.setItem('dataCart', JSON.stringify(cart))
+    localStorage.setItem('dataTotal', JSON.stringify(total))
+  },[cart,total])
 
   function addOnCart (id: string) {
     const check = cart.every(item => {
@@ -102,8 +119,12 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     getTotal()
   }
 
+  function handleSwapImages(index: number) {
+    setIndex(index)
+  }
+
   return (
-    <ShoppingCartContext.Provider value={{productList,total, removeProduct, addOnCart, getTotal, reduction, promotion, cart}}>
+    <ShoppingCartContext.Provider value={{productList,total, index, handleSwapImages,removeProduct, addOnCart, getTotal, reduction, promotion, cart}}>
       {children}
     </ShoppingCartContext.Provider>
   )

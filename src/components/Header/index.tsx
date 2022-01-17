@@ -56,7 +56,19 @@ export function Header({isLoginPage}: HeaderProps){
             </Link>
           </div>
         </nav>
-      : ''}
+      : 
+        <nav className={styles.menu}>
+          <ul className={openMenu ? styles.toggle :""}>
+            <li><Link href="/Login">Login / Register</Link></li>
+            <li><Link href="/contact"> Contact </Link></li>
+            <li><Link href="/about"> About </Link></li>
+            <li><Link href="/requests"> Meus pedidos </Link></li>
+            <li className={styles.close} onClick={menuToggle} >
+              <Image src={Close} alt="" width={25} height={35}/>
+            </li>
+          </ul>
+        </nav>
+      }
       
     </div>
   )

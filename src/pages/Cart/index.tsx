@@ -1,10 +1,8 @@
+import Link from 'next/link';
 import { useEffect } from "react";
 import { Header } from "../../components/Header";
 import { useCart } from "../../contexts/ShoppingCartContext";
 import styles from "./styles.module.scss";
-import Link from 'next/link'
-import Image from "next/image";
-import Close from '../../../public/x.svg'
 
 export default function Cart () {
   
@@ -12,13 +10,17 @@ export default function Cart () {
 
   useEffect(() => {
     getTotal()
-  },[])
+  },)
+
+  useEffect(() => {
+
+  })
 
   if(cart.length == 0){
     return (
       <div className={styles.noProducts}>
         <Header isLoginPage/>
-        Nenhum produto adicionado no carrinho
+        <span>Nenhum produto adicionado no carrinho</span>
       </div>
     )
   }else {
@@ -29,7 +31,8 @@ export default function Cart () {
           <div className={styles.title}>
             Carrinho
           </div>
-  
+          
+          <div className={styles.tab}>
           <table className={styles.cartTable} cellSpacing={0}>
             <thead>
               <tr>
@@ -42,7 +45,7 @@ export default function Cart () {
               </tr>
             </thead>
             
-            <tbody>
+            <tbody className={styles.tbody}>
   
             {cart.map((product, index) => {
               return (
@@ -52,17 +55,18 @@ export default function Cart () {
                       <img src={product.images[0]} alt="imageproductcart" />
                     </div>
                   </td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>
-                    <div className={styles.amount}>
-                      <button className={styles.count} onClick={() => reduction(product.id)}> - </button>
-                      <span>{product.count}</span>
-                      <button className={styles.count} onClick={() => promotion(product.id)}> + </button>
-                    </div>
+                  <td className={styles.name}><span>Nome  </span>{product.name}</td>
+                  <td className={styles.price}><span>Preço  </span>R${product.price}</td>
+                  <td className={styles.amount}>
+                      <div className={styles.qtd}><span>Quantidade</span></div>
+                      <div className={styles.qtdButtons}>
+                        <button className={styles.count} onClick={() => reduction(product.id)}> - </button>
+                        <span>{product.count}</span>
+                        <button className={styles.count} onClick={() => promotion(product.id)}> + </button>
+                      </div>
                   </td>
-                  <td>R${product.price * product.count}</td>
-                  <td>
+                  <td className={styles.totalPerProd}><span>Total</span>R${product.price * product.count}</td>
+                  <td className={styles.d}>
                     <div className={styles.removeItem} onClick={() => removeProduct(product.id)}>
                       <img src="/x.svg" alt="closeimge" />
                     </div>
@@ -73,31 +77,37 @@ export default function Cart () {
             </tbody>           
           </table>
   
+          </div>
+          
           <div className={styles.titleTotal}>Total no carrinho</div>
-       
-          <table className={styles.total} cellSpacing={0}>
-            <tbody>
-              <tr>
-                <th>
-                  <td>Subtotal <span>{total}</span></td>
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <td>Entrega<span>SEDEX - Frete grátis</span></td>
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <td>Total<span>{total}</span></td>
-                </th>
-              </tr>
-            </tbody>
-          </table>
+          
+          <div className={styles.tabTotal}>
+            <table className={styles.total} cellSpacing={0}>
+              <tbody>
+                <tr>
+                  <th>
+                    <td>Subtotal <span>R${total}</span></td>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    <td>Entrega<span>SEDEX - Frete grátis</span></td>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    <td>Total<span>R${total}</span></td>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
   
-          <Link href="/Checkout">
-            <button className={styles.finalizePurchase}>Finalizar compra</button>
-          </Link>
+          <div className={styles.finalizePurchaseContainer}>
+            <Link href="/Checkout">
+              <button className={styles.finalizePurchase}>Finalizar compra</button>
+            </Link>
+          </div>
         </div>
       </div>
     )

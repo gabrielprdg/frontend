@@ -118,7 +118,7 @@
   }
 
   .mainImg {
-    margin: 0;
+    margin: 0 38px;
   }
 
   .content {
@@ -134,5 +134,15 @@
 
   .images img {
     width: 50px;
+  }
+
+  .isColorfulButton {
+    width: 21.2rem;
+    height: 3.1rem;
+  }
+
+  .isLightButton {
+    width: 21.2rem;
+    height: 3.1rem;
   }
 }

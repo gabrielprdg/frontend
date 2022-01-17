@@ -1,8 +1,7 @@
 .content {
-  width: 100vw;
-  height: 100vh;
-  padding-top: 73px;
-  padding-left: 70px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 30px auto;
 }
 
 .title {
@@ -17,7 +16,6 @@
   font-family: 'Poppins';
   width: 100%;
   max-width: 800px;
-
 }
 
 
@@ -64,7 +62,9 @@
   color: var(--black);
 }
 
-
+.name span {
+  display: none;
+}
 
 .total tbody {
   display: table-row-group;
@@ -132,7 +132,143 @@
   justify-content: center;
 }
 
+.cartTable tbody tr td span {
+  display: none;
+}
+
+.price span{
+  display: none;
+}
+
+.qtd{
+  display: none;
+}
+
 
 @media (max-width: 500px) {
+  .cartTable th, .cartTable td {
+    border: none;
+  }
+
+  .title {
+    font-size: 2.9rem;
+    margin: 0 45px;
+  }
+
+  .cartTable {
+    border-spacing: 0 40px;
+  }
+
+  .cartTable tbody td{
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .cartTable thead th {
+    display: none;
+  }
+
+  .tab {
+    margin: 0 30px;
+  }
+
+  .tbody tr td{
+    text-align:end;
+  }
+
+  .tbody tr {
+    border: 2px solid var(--black);
+
+  }
+
+  .cartTable tbody tr td:nth-child(1){
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .cartTable .imageProd {
+    width: 10.5rem;
+    height: 15.5rem;
+  }
+
+  .cartTable tbody tr td span {
+    display: flex;
+    font-weight: 600;
+  }
+
+  .amount {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .qtd {
+    display: flex;
+  }
+
+  .amount {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
   
+  .qtdButtons {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .qtdButtons span {
+    align-items: center;
+  }
+
+  .totalPerProd {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .d {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .titleTotal {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .total tbody {
+    font-size: 17px;
+  }
+
+  .tabTotal {
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .finalizePurchaseContainer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .finalizePurchase {
+    padding: 16px 20px;
+    font-size: 17px;
+  }
+
+  .noProducts span{
+    margin: 0 13px;
+  }
 }

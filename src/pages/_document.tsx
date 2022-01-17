@@ -8,6 +8,7 @@ export default class MyDocument extends Document {
         return (
             <Html>
                 <Head>
+                  <link rel="shortcut icon" href="usefashion.ico" type="image/x-icon" />
                   <link rel="preconnect" href="https://fonts.googleapis.com"/>
                   <link rel="preconnect" href="https://fonts.gstatic.com"/>
                   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Lexend&display=swap" rel="stylesheet"/>
@@ -32,6 +33,7 @@ export default class MyDocument extends Document {
                   />
 
                   <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+                  <title>UseFashion</title>
                 </Head>
                 <body>
                     <Main/>
