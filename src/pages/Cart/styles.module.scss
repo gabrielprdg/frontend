@@ -15,7 +15,7 @@
 .cartTable {
   font-family: 'Poppins';
   width: 100%;
-  max-width: 800px;
+  max-width: 850px;
 }
 
 
@@ -132,7 +132,7 @@
   justify-content: center;
 }
 
-.cartTable tbody tr td span {
+.totalPerProd span {
   display: none;
 }
 
@@ -143,6 +143,12 @@
 .qtd{
   display: none;
 }
+
+.qtdButtons {
+  width: 140px;
+}
+
+
 
 
 @media (max-width: 500px) {
@@ -162,24 +168,32 @@
   .cartTable tbody td{
     display: flex;
     flex-direction: row;
+  }
 
+  .cartTable tbody{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab {
+    margin-right: 20px;
+    margin-left: 20px;
   }
 
   .cartTable thead th {
     display: none;
   }
 
-  .tab {
-    margin: 0 30px;
-  }
 
   .tbody tr td{
     text-align:end;
   }
 
   .tbody tr {
-    border: 2px solid var(--black);
-
+  
+    border-radius: 4px;
+    margin-bottom: 23px;
   }
 
   .cartTable tbody tr td:nth-child(1){
@@ -189,8 +203,15 @@
   }
 
   .cartTable .imageProd {
-    width: 10.5rem;
-    height: 15.5rem;
+    width: 20.5rem;
+    height: 20.5rem;
+    overflow: hidden;
+  }
+
+  .cartTable .imageProd img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .cartTable tbody tr td span {
@@ -201,6 +222,8 @@
   .amount {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    
   }
 
   .price {
@@ -220,8 +243,10 @@
   }
   
   .qtdButtons {
+    width: 80px;
     display: flex;
     flex-direction: row;
+    
   }
   
   .qtdButtons span {
@@ -270,5 +295,12 @@
 
   .noProducts span{
     margin: 0 13px;
+  }
+
+  .name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
   }
 }

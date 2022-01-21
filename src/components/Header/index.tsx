@@ -5,12 +5,14 @@ import Close from '../../../public/x.svg'
 import Menu from '../../../public/menu.svg'
 import Image from 'next/image'
 import { useCart } from "../../contexts/ShoppingCartContext"
+import { Fragment } from 'react'
 
 type HeaderProps = {
-  isLoginPage: boolean
+  isLoginPage?: boolean
+  isAdminPage?: boolean
 }
 
-export function Header({isLoginPage}: HeaderProps){
+export function Header({isLoginPage, isAdminPage}: HeaderProps){
 
   const {cart} = useCart()
   const [openMenu,setOpenMenu] = useState(false)
@@ -20,31 +22,62 @@ export function Header({isLoginPage}: HeaderProps){
     setOpenMenu(!openMenu)
   }
 
-  return (
-    <div className={styles.headerContainer}>
-      <div className={styles.menuhamb} onClick={() => {menuToggle()}}>
-        <Image src={Menu} alt="menu" />
-      </div>
-      <div className={styles.headTitle}>
-        <Link href="/">
-          <div className={styles.title}>
-            <h2 className={styles.use}>
-              Use
-            </h2>
-            <div className={styles.fsl}>
-              FashionStoreLook
+  if(isAdminPage){
+    return (
+      <div className={styles.headerContainer}>
+        <div className={styles.menuhamb} onClick={() => {menuToggle()}}>
+          <Image src={Menu} alt="menu" />
+        </div>
+        <div className={styles.headTitle}>
+          <Link href="/">
+            <div className={styles.title}>
+              <h2 className={styles.use}>
+                Use
+              </h2>
+              <div className={styles.fsl}>
+                FashionStoreLook
+              </div>
             </div>
-          </div>
-        </Link>
-      </div>
+          </Link>
+        </div>
 
-      {!isLoginPage ? 
+        <nav className={styles.menu}>
+            <ul className={openMenu ? styles.toggle :""}>
+              <li><Link href="/Login">Adicionar Produto</Link></li>
+              <li><Link href="/contact"> Excluir algum produto</Link></li>
+              <li><Link href="/about"> Adicionar Categoria </Link></li>
+              <li><Link href="/requests"> Excluir Categoria </Link></li>
+              <li><Link href="/requests"> Orders </Link></li>
+              <li><Link href="/requests"> Logout </Link></li>
+              <li className={styles.close} onClick={menuToggle} >
+                <Image src={Close} alt="" width={25} height={35}/>
+              </li>
+            </ul>
+        </nav>
+      </div>
+    )
+  }else if(!isLoginPage){
+    return (
+      <div className={styles.headerContainer}>
+        <div className={styles.menuhamb} onClick={() => {menuToggle()}}>
+          <Image src={Menu} alt="menu" />
+        </div>
+        <div className={styles.headTitle}>
+          <Link href="/">
+            <div className={styles.title}>
+              <h2 className={styles.use}>
+                Use
+              </h2>
+              <div className={styles.fsl}>
+                FashionStoreLook
+              </div>
+            </div>
+          </Link>
+        </div>
+        
         <nav className={styles.menu}>
           <ul className={openMenu ? styles.toggle :""}>
-            <li><Link href="/Login">Login / Register</Link></li>
-            <li><Link href="/contact"> Contact </Link></li>
-            <li><Link href="/about"> About </Link></li>
-            <li><Link href="/requests"> Meus pedidos </Link></li>
+            <li><Link href="/SignIn">Sign In</Link></li>
             <li className={styles.close} onClick={menuToggle} >
               <Image src={Close} alt="" width={25} height={35}/>
             </li>
@@ -56,20 +89,24 @@ export function Header({isLoginPage}: HeaderProps){
             </Link>
           </div>
         </nav>
-      : 
-        <nav className={styles.menu}>
-          <ul className={openMenu ? styles.toggle :""}>
-            <li><Link href="/Login">Login / Register</Link></li>
-            <li><Link href="/contact"> Contact </Link></li>
-            <li><Link href="/about"> About </Link></li>
-            <li><Link href="/requests"> Meus pedidos </Link></li>
-            <li className={styles.close} onClick={menuToggle} >
-              <Image src={Close} alt="" width={25} height={35}/>
-            </li>
-          </ul>
-        </nav>
-      }
-      
-    </div>
-  )
+      </div>
+    )
+  } else {
+    return (
+      <div className={styles.headerContainer}>
+        <div className={styles.headTitle}>
+          <Link href="/">
+            <div className={styles.title}>
+              <h2 className={styles.use}>
+                Use
+              </h2>
+              <div className={styles.fsl}>
+                FashionStoreLook
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+    )
+  }
 }

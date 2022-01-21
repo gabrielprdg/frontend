@@ -1,10 +1,10 @@
-import styles from './styles.module.scss'
 import Link from 'next/link'
-import { products } from '../../mock/products'
+import { Images } from '../../pages'
+import styles from './styles.module.scss'
 
 export type ProductType = {
   id: string
-  images: Array<string>,
+  images: Array<Images>,
   name: string,
   description: string
   price: number
@@ -20,11 +20,13 @@ export function Product ({ product }: ProductProps){
     <div className={styles.containerProduct}>
       <div className={styles.productImg}>
         <Link href={`/ProductDetails/${product.id}`}>
-          <img src={product.images[0]} alt="dress" />
+          <img src={product.images[0].url} alt="dress" />
         </Link>
       </div>
       <div className={styles.desc}> 
-        <p className={styles.name}>{ product.name }</p>
+        <Link href={`/ProductDetails/${product.id}`}>
+          <p className={styles.name}>{ product.name }</p>
+        </Link>
       </div>
       <div className={styles.price}>R${product.price}</div>
     </div>

@@ -12,9 +12,6 @@ export default function Cart () {
     getTotal()
   },)
 
-  useEffect(() => {
-
-  })
 
   if(cart.length == 0){
     return (
@@ -48,11 +45,12 @@ export default function Cart () {
             <tbody className={styles.tbody}>
   
             {cart.map((product, index) => {
+              console.log(product)
               return (
                 <tr key={product.id}>
                   <td>
                     <div className={styles.imageProd}>
-                      <img src={product.images[0]} alt="imageproductcart" />
+                      <img src={product.images[0].url} alt="imageproductcart" />
                     </div>
                   </td>
                   <td className={styles.name}><span>Nome  </span>{product.name}</td>

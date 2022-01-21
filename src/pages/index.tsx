@@ -1,29 +1,35 @@
 import { GetServerSideProps } from 'next'
+import { api } from '../../services/api'
 import { Header } from "../components/Header"
 import { Product } from '../components/Product'
 import Slider from '../components/Slider'
-import { useCart } from '../contexts/ShoppingCartContext'
-import { products } from '../mock/products'
 import styles from './home.module.scss'
+
+export type Images = {
+  name: string
+  size: number
+  key: string
+  url: string
+}
 
 type Product = {
   id: string
-  images: Array<string>,
+  images: Array<Images>,
   name: string,
   description: string
   price: number
 }
 
 type HomeProps = {
-  p: Array<Product>
+  prod: Array<Product>
 }
 
-export default function Home({ p }: HomeProps) {
+export default function Home({ prod }: HomeProps) {
 
   return(
     <div>
       <Header isLoginPage={false}/>
-      <Slider/>
+    
       <div className={styles.container}>
       <div className={styles.topic}> 
         <span className={styles.dash}></span>
@@ -33,7 +39,7 @@ export default function Home({ p }: HomeProps) {
 
       <div className={styles.contentHome}>
         <div className={styles.products}>
-          {p.map((value,index) => {
+          {prod.map((value,index) => {
             return(
               <Product key={value.id} product={value}/>
             )
@@ -48,11 +54,12 @@ export default function Home({ p }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const p = products
+  const products = await api.get('products')
+  const prod = products.data
 
   return {
     props: {
-      p
+      prod
     }
   }
 }

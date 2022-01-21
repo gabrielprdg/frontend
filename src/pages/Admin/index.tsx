@@ -4,7 +4,8 @@ import styles from './styles.module.scss'
 export default function AdmPanel(){
   return (
     <div className={styles.panelContainer}>
-      <Header isLoginPage={false}/>
+      <Header isAdminPage/>
+      <div className={styles.admContainer}></div>
     </div>
   )
 }

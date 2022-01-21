@@ -1,11 +1,11 @@
-import { useContext, createContext, useState, useEffect } from "react"
-import { ReactNode } from "react"
-import { NavItem } from "react-bootstrap"
-import {products} from '../mock/products'
+import { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react"
+import { api } from "../../services/api"
+import { Images } from "../pages"
+import styles from '../pages/ProductDetails/styles.module.scss'
 
 type ProductData = {
   id: string
-  images: Array<string>,
+  images: Array<Images>,
   name: string,
   description: string
   price: number
@@ -23,7 +23,7 @@ type ShoppingCartContextData = {
   removeProduct: (id: string) => void
   handleSwapImages: (index: number) => void
   total: number
-
+  myRef: any
 }
 
 type ShoppingCartContextProviderProps = {
@@ -37,8 +37,17 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   const [cart, setCart] = useState<ProductData[]>([])
   const [total, setTotal] = useState(0)
   const [index, setIndex] = useState(0)
+  const myRef = useRef<HTMLDivElement>(null)
   
-  useEffect(() => {
+  async function productData() {
+    const products = await api.get('products')
+    const prod = products.data
+    
+    setProductList(prod)
+  };
+
+  useEffect (() => {
+    
     const cartData = localStorage.getItem('dataCart')
     const totalData = localStorage.getItem('totalCart')
 
@@ -50,7 +59,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       setTotal(JSON.parse(totalData))
     }
 
-    setProductList(products)
+    productData()
   },[])
   
   useEffect(() => {
@@ -59,6 +68,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   },[cart,total])
 
   function addOnCart (id: string) {
+    console.log(productList)
     const check = cart.every(item => {
       return item.id !== id
     })
@@ -121,10 +131,17 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
 
   function handleSwapImages(index: number) {
     setIndex(index)
+    const node = myRef.current as any 
+    const images = node.children
+    for (let i = 0; i< images.length; i ++) {
+      images[i].className = images[i].className.replace("active", "")
+    }
+    console.log(images)
+    images[index].className = styles.active
   }
 
   return (
-    <ShoppingCartContext.Provider value={{productList,total, index, handleSwapImages,removeProduct, addOnCart, getTotal, reduction, promotion, cart}}>
+    <ShoppingCartContext.Provider value={{productList,total, index, myRef, handleSwapImages,removeProduct, addOnCart, getTotal, reduction, promotion, cart}}>
       {children}
     </ShoppingCartContext.Provider>
   )
