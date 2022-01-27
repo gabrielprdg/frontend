@@ -3,6 +3,7 @@ import { api } from '../../services/api'
 import { Header } from "../components/Header"
 import { Product } from '../components/Product'
 import Slider from '../components/Slider'
+import { useAuth } from '../contexts/AuthContext'
 import styles from './home.module.scss'
 
 export type Images = {
@@ -25,11 +26,13 @@ type HomeProps = {
 }
 
 export default function Home({ prod }: HomeProps) {
+  const { user } = useAuth()
 
+  console.log('oi',user?.name)
   return(
     <div>
       <Header isLoginPage={false}/>
-    
+      <div> Ola {user?.name}</div>
       <div className={styles.container}>
       <div className={styles.topic}> 
         <span className={styles.dash}></span>

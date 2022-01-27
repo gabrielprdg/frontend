@@ -1,0 +1,183 @@
+.checkoutContainer {
+  width: 1200px;
+  height: 100vh;
+  display: flex;
+  flex-direction:row;
+  font-family: 'Poppins';
+}
+
+.formCheckout {
+  display: flex;
+  flex-direction:column;
+  color: var(--black);
+}
+
+.formCheckout label{
+  font-size: 0.9rem;
+}
+
+
+
+.emailField:focus {
+  outline: none !important;
+  border-color: var(--pink);
+  box-shadow: 0 0 10px  var(--pink);
+}
+
+.contentForm{
+  padding-left: 7rem;
+  padding-top: 3rem;
+}
+
+.publicPlace {
+  display: flex;
+}
+
+.location {
+  display: flex;
+}
+
+.labelData {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+.labelContact {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.labelAdress{
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.labelCharge {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.toBeContinued {
+  margin: 15px 0;
+  margin-bottom: 5rem;
+  width: 37rem;
+  height: 2.7rem;
+  outline: none;
+  border: none;
+  background-image: linear-gradient(to right, var(--pink), #b86384);
+  color: white;
+  font-family: 'Poppins';
+  padding: 5px 9px;
+  border-radius: 5px;
+}
+
+.cartContent {
+  margin: 6rem 8rem;
+  width: 15rem;
+  height: 15rem;
+  font-size: 0.8rem;
+}
+
+.cartDetails {
+  display: flex;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+.name {
+  margin-left: 2rem;
+}
+
+.imageProd {
+  width: 4.5rem;
+  height: 4.5rem;
+
+}
+
+.imageProd img {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.subTot {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  display: flex;
+  justify-content:space-between;
+  border-top: 1px solid var(--pink);
+}
+
+.shipping {
+  display: flex;
+  justify-content:space-between;
+  padding-bottom: 1rem;
+}
+
+.countP {
+  margin-right: 26px;
+}
+
+.cartTotal {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--pink);
+}
+
+.cartTotal span {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--pink);
+}
+
+.tot {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.select {
+  width: 14.2rem !important;
+}
+
+@media (max-width:768px) {
+  .checkoutContainer {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+  }
+
+  .contentForm{
+    padding-left: 0;
+    width: 22rem;
+  }
+
+  .formCheckout {
+    width: 22rem;
+  }
+
+  .toBeContinued {
+    width: 22rem;
+    height: 4rem;
+    background-color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+
+  .emailField {
+    color: var(--pink);
+  }
+
+  .cep {
+    width: 13rem !important;
+  }
+
+  .select {
+    width: 8rem !important;
+    height: 3.82rem !important;
+  }
+
+}

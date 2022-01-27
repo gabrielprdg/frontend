@@ -102,7 +102,7 @@ export default function Cart () {
           </div>
   
           <div className={styles.finalizePurchaseContainer}>
-            <Link href="/Checkout">
+            <Link href="/Checkout/Delivery">
               <button className={styles.finalizePurchase}>Finalizar compra</button>
             </Link>
           </div>

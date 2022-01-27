@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { api } from '../../services/api'
 import { setCookie, parseCookies } from 'nookies'
 import Router from 'next/router'
+import jwt from 'jsonwebtoken'
 
 type SignInData = {
   email: string
@@ -9,8 +10,10 @@ type SignInData = {
 }
 
 type User = {
+  id: string
   name: string
   email: string
+  role?: string
 }
 
 type AuthContextTypes = {
@@ -31,8 +34,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   useEffect(() => {
     const { 'usestore-token' : token } = parseCookies()
+    const { 'usestore-userdata' : user } = parseCookies()
     if(token) {
-      
+      setUser(JSON.parse(user))
     }
   },[])
 
@@ -41,10 +45,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       email, 
       password
     })
-    const token = res.data.accessToken
-    console.log('oi', token)
+
+    console.log(res.data)
+    const { accessToken :token, user } = res.data
 
     setCookie(undefined, 'usestore-token', token, {
+      maxAge: 60 * 60 * 1 // 1 hour 
+    })
+
+    setCookie(undefined, 'usestore-userdata', user, {
       maxAge: 60 * 60 * 1 // 1 hour 
     })
 

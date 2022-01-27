@@ -4,12 +4,13 @@ import { api } from "../../../services/api";
 import { Header } from "../../components/Header";
 import { ProductProps } from '../../components/Product';
 import { useCart } from "../../contexts/ShoppingCartContext";
-import { products } from "../../mock/products";
 import styles from "./styles.module.scss";
 
 export default function ProductDetails({product}: ProductProps) {
 
   const {addOnCart, handleSwapImages, index, myRef} = useCart()
+
+  console.log(`s`,product.id)
 
   return(
     <div>
@@ -49,6 +50,7 @@ export default function ProductDetails({product}: ProductProps) {
 
 export const getServerSideProps: GetServerSideProps = async ({params}: Params) => {
   const { slug } = params
+  console.log(slug)
 
   const productData = await api.get(`product/${slug}`)
   const product = productData.data

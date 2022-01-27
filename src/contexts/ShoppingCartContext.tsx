@@ -49,7 +49,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   useEffect (() => {
     
     const cartData = localStorage.getItem('dataCart')
-    const totalData = localStorage.getItem('totalCart')
+    const totalData = localStorage.getItem('dataTotal')
 
     if(cartData){
       setCart(JSON.parse(cartData));
@@ -59,7 +59,6 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       setTotal(JSON.parse(totalData))
     }
 
-    productData()
   },[])
   
   useEffect(() => {
@@ -115,7 +114,8 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       return prev + (item.price * item.count)
     },0)
     
-    setTotal(tot)
+    const price = tot.toFixed(2)
+    setTotal(parseFloat(tot.toFixed(2)))
   }
 
   function removeProduct(id: string) {

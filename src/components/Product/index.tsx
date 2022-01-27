@@ -15,7 +15,7 @@ export type ProductProps = {
 }
 
 export function Product ({ product }: ProductProps){
-  console.log(product.images[0])
+
   return(
     <div className={styles.containerProduct}>
       <div className={styles.productImg}>

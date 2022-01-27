@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Head>
           <main>
             <Component {...pageProps} />
+           
           </main>
         </div>
       </ShoppingCartContextProvider>

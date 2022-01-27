@@ -1,0 +1,455 @@
+.paymentContainer {
+  width: 1200px;
+  height: 800px;
+  font-family: 'Poppins';
+}
+
+.paymentMethods {
+  display: flex;
+  font-family: 'Poppins';
+  padding-left: 7rem;
+}
+
+.paymentTitle {
+  font-size: 1.9rem;
+  font-weight: 600;
+  font-family: 'Poppins';
+  color: var(--black);
+  margin: 3rem 7rem;
+}
+
+.cardAndText {
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+}
+
+.imageCard {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.bankSlip {
+  width: 40rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2rem;
+  border: 1px solid #808080;
+  border-radius: 2px;
+  background-color:white;
+  margin-bottom: 1.5rem;
+}
+
+.noBankSlip {
+  display:none;
+}
+
+.bankSlipAndText {
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+}
+
+
+
+
+.mercadoPagoFirstImages {
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+}
+
+.confirmPayment {
+  background-image: linear-gradient(to right, var(--pink), #b86384);
+  font-family: 'Poppins';
+  border-radius: 3px;
+  color: white;
+  width: 40rem;
+  height: 3rem;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:1.2rem;
+  font-weight: 600;
+  margin-top: 4rem;
+  margin-bottom: 12rem;
+}
+
+/* cartContent*/
+
+.cartContent {
+  margin-left: 6rem;
+  width: 15rem;
+  height: 15rem;
+  font-size: 0.8rem;
+}
+
+.cartDetails {
+  display: flex;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+.name {
+  margin-left: 2rem;
+}
+
+.imageProd {
+  width: 4.5rem;
+  height: 4.5rem;
+
+}
+
+.imageProd img {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.subTot {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  display: flex;
+  justify-content:space-between;
+  border-top: 1px solid var(--pink);
+}
+
+.shipping {
+  display: flex;
+  justify-content:space-between;
+  padding-bottom: 1rem;
+}
+
+.countP {
+  margin-right: 26px;
+}
+
+.cartTotal {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--pink);
+}
+
+.cartTotal span {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--pink);
+}
+
+.tot {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.cardData {
+  width: 40rem;
+  margin-bottom: 30px;
+  display: none;
+}
+
+.noCardData {
+  margin-bottom: 30rem;
+}
+
+.formCard {
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 1.5rem 2rem;
+  border-right: 1px solid #808080;
+  border-left: 1px solid #808080;
+}
+
+.nameNasCv {
+  display: flex;
+}
+
+.cardName {
+  margin-right: 15px;
+}
+
+.cardName input{
+  width: 18.3rem;
+  height: 2.4rem;
+}
+
+.cardExpiration {
+  margin-right: 15px;
+}
+
+.cardExpiration input{
+  width: 10.5rem;
+  height: 2.4rem;
+}
+
+.cardCvv input{
+  width: 5.1rem;
+  height: 2.4rem;
+}
+
+.nameNasCv div {
+  display: flex;
+  flex-direction:column;
+}
+
+.formCard label{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.formCard input {
+  font-family: 'Poppins';
+  height: 2.4rem;
+  padding: 4px 12px;
+  color:var(--black);
+}
+
+.formCard select {
+  height: 2.4rem;
+}
+
+.formCard input:focus {
+  outline: none !important;
+
+}
+
+.formCard select:focus {
+  outline: none !important;
+}
+
+.cards {
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0rem 2rem 1.5rem 2rem;
+  border-right: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+}
+
+.cards .title{
+  margin-top: 0.7rem;
+  font-family: 'PT Serif', serif;
+  font-size: 0.87rem;
+}
+
+.cards span {
+  font-weight: bold;
+  color: var(--black);
+}
+
+.cards div {
+  margin-bottom: 0.3rem;
+  margin-right: 3px;
+}
+.imageCards {
+  display: flex;
+}
+
+
+.slipContent {
+  width: 40rem;
+  background-color: white;
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #808080;
+  border-radius: 2px;
+  color: var(--black);
+
+}
+
+.noSlipContent {
+  width: 40rem;
+  height: 20rem;
+  display: none;
+}
+
+.mercadoPagoDetails {
+  width: 40rem;
+  height: 20rem;
+  display: none;
+}
+
+.noMercadoPagoDetails {
+  width: 40rem;
+  background-color: white;
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #808080;
+  border-radius: 2px;
+  color: var(--black);
+}
+
+
+
+.mercadoPagoContent {
+  display: none;
+}
+
+.slipContent {
+  display: none;
+}
+
+.modalCard {
+  width: 40rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2rem;
+  border: 1px solid #808080;
+  border-radius: 2px;
+  background-color:white;
+}
+
+.slip {
+  width: 40rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2rem;
+  border: 1px solid #808080;
+  border-radius: 2px;
+  background-color:white;
+  margin-bottom: 1.5rem;
+}
+
+.noSlip {
+  display:none;
+}
+
+.noCreditCard {
+  display: none;
+}
+
+.noMercadoPago {
+  display:none;
+}
+
+.mercadoPagoContent {
+  width: 40rem;
+  height: 20rem;
+  display: none;
+}
+
+.cc {
+  margin-bottom:1.8rem; 
+}
+
+.bs {
+  margin-bottom:1.8rem; 
+}
+
+.mp {
+  margin-bottom:1.8rem; 
+}
+
+.slipC {
+  width: 40rem;
+  background-color: white;
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #808080;
+  border-radius: 2px;
+  color: var(--black);
+}
+
+.slipC .titleSlip{
+  font-size: 0.87rem;
+  margin-bottom: 19px;
+}
+
+.slipC .nameSlip{
+  font-size: 0.87rem;
+  margin-bottom: 19px;
+}
+
+.slipC .dataSlip{
+  font-weight: 600;
+  color: var(--black);
+}
+
+.slipC .cpfSlip{
+  font-size: 0.84rem;
+}
+
+.mercP {
+  width: 40rem;
+  background-color: white;
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #808080;
+  border-radius: 2px;
+  color: var(--black);
+  font-size: 0.84rem;
+}
+
+.mercP span {
+  font-weight: 600;
+}
+
+.mercadoPagoCreditCard {
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 13px;
+  font-size: 0.79rem;
+}
+
+
+.mercadoPagoCreditCard div{
+  margin-right: 8px;
+  font-weight: 600;
+}
+
+.cardImages {
+  display: flex;
+}
+
+.cardImages div {
+  margin-right: 3px;
+}
+
+.lineSeparate {
+  border-bottom: 1px solid #dedede;
+  margin: 0.5rem 0.2rem;
+}
+
+.mercadoPagoBankSlip {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 13px;
+  font-size: 0.79rem;
+}
+
+.mercadoPagoBankSlip div{
+  margin-right: 8px;
+  font-weight: 600;
+}
+
+.buttonPayment {
+  margin: 15px 0;
+  margin-left: 7rem;
+  width: 40rem;
+  height: 3rem;
+  outline: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  background-image: linear-gradient(to right, var(--pink), #b86384);
+  color: white;
+  font-family: 'Poppins';
+  padding: 5px 9px;
+  border-radius: 5px;
+}
