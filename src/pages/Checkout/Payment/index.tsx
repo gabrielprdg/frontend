@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import Image from 'next/image'
 import CreditCartIcon from '../../../../public/credit-card.png'
 import  BankSlip from '../../../../public/codigo-de-barras.svg'
-import  MercadoPago from '../../../../public/mercadopago.svg'
+import  MercadoP from '../../../../public/mercadopago.svg'
 import Next from '../../../../public/next.svg'
 import ArrowD from '../../../../public/diagonal-arrows.svg'
 import { useCart } from '../../../contexts/ShoppingCartContext'
@@ -16,6 +16,7 @@ import Hipercard from '../../../../public/hipercard.svg'
 import Elo from '../../../../public/elo.svg'
 import CreditCardSmall from '../../../../public/credit_card.svg'
 import Offline from '../../../../public/offline.svg'
+import MercadoPago from 'mercadopago'
 
 
 export default function Payment (){
@@ -38,6 +39,7 @@ export default function Payment (){
     setOpenMercadoPagoOption(!openMercadoPagoOption)
     console.log(openMercadoPagoOption)
   }
+  
 
   return (
     <div className={styles.paymentContainer}>
@@ -65,28 +67,60 @@ export default function Payment (){
 
             <div className={!openCardOption ? styles.cardData : ''}>
               <form action="" className={styles.formCard}>
-                <label htmlFor="">Numero do cartão</label>
-                <input type="text" required/>
+                <label htmlFor="form-checkout__cardNumber">Numero do cartão</label>
+
+                <input 
+                  type="text"
+                  required
+                  name="cardNumber"
+                  id="form-checkout__cardNumber"
+                />
+
                 <div className={styles.nameNasCv}>
                   <div className={styles.cardName}>
-                    <label htmlFor="">Nome impresso no cartão</label>
-                    <input type="text" required/>
+                    <label htmlFor="form-checkout__cardholderName" >Nome impresso no cartão</label>
+
+                    <input 
+                      type="text"
+                      required
+                      name="cardholderName" 
+                      id="form-checkout__cardholderName"
+                    />
+
                   </div>
                   <div className={styles.cardExpiration}>
-                    <label htmlFor="">Vencimento(MM/AA)</label>
-                    <input type="text" required/>
+                    <label htmlFor="form-checkout__cardExpirationDate">Vencimento(MM/AA)</label>
+
+                    <input 
+                      type="text" 
+                      required
+                      name="cardExpirationDate"
+                      id="form-checkout__cardExpirationDate"
+                    />
                   </div>
                   <div className={styles.cardCvv}>
-                    <label htmlFor="">CVV</label>
-                    <input type="text" required/>
+                    <label htmlFor="form-checkout__securityCode">CVV</label>
+              
+                    <input 
+                      type="text"
+                      required
+                      name="securityCode"
+                      id="form-checkout__securityCode"
+                    />
                   </div>
                 </div>
-                <label htmlFor="">Parcelas</label>
-                <select name="" id="">
+
+                <label htmlFor="form-checkout__installments">Parcelas</label>
+                <select name="installments" id="form-checkout__installments">
                   <option value="">1x de 344,44</option>
                 </select>
-                <label htmlFor="">CPF ou CNPJ do portador do cartão</label>
-                <input type="text" />
+                <label htmlFor="form-checkout__identificationNumber">CPF ou CNPJ do portador do cartão</label>
+                <input 
+                  type="text"
+                  required
+                  name="identificationNumber" 
+                  id="form-checkout__identificationNumber"
+                />
               </form>
  
               <div className={styles.cards}>
@@ -160,7 +194,7 @@ export default function Payment (){
                   <Image src={ArrowD}/>
                 </div>
                 <div>
-                  <Image src={MercadoPago}/>
+                  <Image src={MercadoP}/>
                 </div>
               </div>
 
@@ -223,7 +257,7 @@ export default function Payment (){
                 <div className={styles.imageProd}>
                   <img src={product.images[0].url} alt="imageproductcart" />
                 </div>
-                <div className={styles.name}>{product.name} x <span className={styles.countP}>{product.count}</span><span>R${product.price * product.count}</span></div>
+                <div className={styles.name}>{product.name} x <span className={styles.countP}>{product.count}</span><span>R${(product.price * product.count).toFixed(2)}</span></div>
               </div>
             )
           })}
@@ -231,26 +265,31 @@ export default function Payment (){
           <div className={styles.cartPrice}>
             <div className={styles.subTot}>
               <div>Subtotal</div>
-              <span>R${total}</span>
+              <span>R${total.toFixed(2)}</span>
             </div>
 
             <div className={styles.shipping}>
               <div>Custo de Frete</div>
-              <span>R${total}</span>
+              <span>R${total.toFixed(2)}</span>
             </div>
           </div>
 
           <div className={styles.cartTotal}>
             <span>Total</span>
             <div className={styles.tot}>
-              R$ {total}
+              R$ {total.toFixed(2)}
             </div>
           </div>
         </div>
-
       </div>
-
-      <button className={styles.buttonPayment}>Finalizar pedido</button>
+      <button 
+        type="submit"
+        id="form-checkout__submit"
+        className={styles.buttonPayment}
+      >
+        Finalizar Pedido
+      </button>
+      <progress value="0" className="progress-bar">Carregando...</progress>
     </div>
   )
 }

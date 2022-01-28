@@ -59,6 +59,8 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       setTotal(JSON.parse(totalData))
     }
 
+    productData()
+
   },[])
   
   useEffect(() => {
@@ -114,7 +116,6 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       return prev + (item.price * item.count)
     },0)
     
-    const price = tot.toFixed(2)
     setTotal(parseFloat(tot.toFixed(2)))
   }
 

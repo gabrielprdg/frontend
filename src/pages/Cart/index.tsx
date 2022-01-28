@@ -63,7 +63,7 @@ export default function Cart () {
                         <button className={styles.count} onClick={() => promotion(product.id)}> + </button>
                       </div>
                   </td>
-                  <td className={styles.totalPerProd}><span>Total</span>R${product.price * product.count}</td>
+                  <td className={styles.totalPerProd}><span>Total</span>R${(product.price * product.count).toFixed(2)}</td>
                   <td className={styles.d}>
                     <div className={styles.removeItem} onClick={() => removeProduct(product.id)}>
                       <img src="/x.svg" alt="closeimge" />
@@ -84,7 +84,7 @@ export default function Cart () {
               <tbody>
                 <tr>
                   <th>
-                    <td>Subtotal <span>R${total}</span></td>
+                    <td>Subtotal <span>R${total.toFixed(2)}</span></td>
                   </th>
                 </tr>
                 <tr>
@@ -94,7 +94,7 @@ export default function Cart () {
                 </tr>
                 <tr>
                   <th>
-                    <td>Total<span>R${total}</span></td>
+                    <td>Total<span>R${total.toFixed(2)}</span></td>
                   </th>
                 </tr>
               </tbody>
