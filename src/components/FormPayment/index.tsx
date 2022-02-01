@@ -13,7 +13,7 @@ type PaymentData = {
   securityCode: string
 }
 
-const mp = new MercadoPago(process.env.PUBLIC_KEY_MERCADO_PAGO)
+const mp = MercadoPago
 
 export default function FormPayment() {
   
@@ -32,7 +32,7 @@ export default function FormPayment() {
     identificationNumber,
     securityCode
   }: PaymentData) {
-    const cardForm = mp.cardForm({
+    const cardForm = mp.card({
       amount: total,
       autoMount: true,
       form: {
