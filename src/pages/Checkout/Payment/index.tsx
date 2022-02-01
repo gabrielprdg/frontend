@@ -1,22 +1,21 @@
-import { Header } from '../../../components/Header'
-import styles from './styles.module.scss'
+
 import Image from 'next/image'
-import CreditCartIcon from '../../../../public/credit-card.png'
-import  BankSlip from '../../../../public/codigo-de-barras.svg'
-import  MercadoP from '../../../../public/mercadopago.svg'
-import Next from '../../../../public/next.svg'
-import ArrowD from '../../../../public/diagonal-arrows.svg'
-import { useCart } from '../../../contexts/ShoppingCartContext'
 import { useState } from 'react'
-import Visa from '../../../../public/visa.svg'
-import MasterCard from '../../../../public/mastercard.svg'
-import Amex from '../../../../public/amex.svg'
-import Diners from '../../../../public/diners.svg'
-import Hipercard from '../../../../public/hipercard.svg'
-import Elo from '../../../../public/elo.svg'
+import { useForm } from 'react-hook-form'
+import Cards from '../../../components/Cards'
+import FormPayment from '../../../components/FormPayment'
+import { Header } from '../../../components/Header'
+import PaymentCards from '../../../components/PaymentCards'
+import { usePayment } from '../../../contexts/PaymentContext'
+import { useCart } from '../../../contexts/ShoppingCartContext'
+import styles from './styles.module.scss'
+import Next from '../../../../public/next.svg'
+import CreditCardIcon from '../../../../public/credit-card.png'
+import BankSlip from '../../../../public/codigo-de-barras.svg'
+import ArrowD from '../../../../public/diagonal-arrows.svg'
 import CreditCardSmall from '../../../../public/credit_card.svg'
+import MercadoP from '../../../../public/mercadopago.svg'
 import Offline from '../../../../public/offline.svg'
-import MercadoPago from 'mercadopago'
 
 
 export default function Payment (){
@@ -24,10 +23,13 @@ export default function Payment (){
   const [openBankSlipOption, setOpenBankSlipOption] = useState(false)
   const [openMercadoPagoOption, setOpenMercadoPagoOption] = useState(false)
   const {cart, total} = useCart()
+  const { userData } = usePayment()
+  const { register, handleSubmit } = useForm()
+
 
   function handleOpenCardOption() {
     setOpenCardOption(!openCardOption)
-    console.log(openCardOption)
+    console.log(userData)
   }
 
   function handleOpenBankSlipOption() {
@@ -40,6 +42,45 @@ export default function Payment (){
     console.log(openMercadoPagoOption)
   }
   
+  /*
+  const inputFn: InputProps = (data, val) =>
+    setProfile((prevState) =>
+      Object({
+        ...prevState,
+        [data]: val
+      })
+    )
+
+  const isValidInput = (id: string, val: string, size: number) =>
+  !isNaN(Number(val)) && val.replace(/\D/g, '') !== id && val.length <= size
+
+  const inputValidFn = (id: string, val: string) => {
+    switch (id) {
+      case 'card_number':
+        if (isValidInput(id, val, 16)) {
+          inputFn(id, val)
+        }
+        break
+      case 'card_month':
+        if (isValidInput(id, val, 2)) {
+          inputFn(id, val)
+        }
+        break
+      case 'card_year':
+        if (isValidInput(id, val, 2)) {
+          inputFn(id, val)
+        }
+        break
+    case 'code':
+      if (isValidInput(id, val, 4)) {
+        inputFn(id, val)
+      }
+      break
+    default:
+      inputFn(id, val)
+    }
+  }*/
+
 
   return (
     <div className={styles.paymentContainer}>
@@ -54,7 +95,7 @@ export default function Payment (){
 
               <div className={styles.cardAndText}>
                 <div className={styles.imageCard}>
-                  <Image src={CreditCartIcon} width={40} height={40}/>
+                  <Image src={CreditCardIcon} width={40} height={40}/>
                 </div>
                 <div>Cartão de crédito</div>
               </div>
@@ -66,86 +107,8 @@ export default function Payment (){
             </div>
 
             <div className={!openCardOption ? styles.cardData : ''}>
-              <form action="" className={styles.formCard}>
-                <label htmlFor="form-checkout__cardNumber">Numero do cartão</label>
-
-                <input 
-                  type="text"
-                  required
-                  name="cardNumber"
-                  id="form-checkout__cardNumber"
-                />
-
-                <div className={styles.nameNasCv}>
-                  <div className={styles.cardName}>
-                    <label htmlFor="form-checkout__cardholderName" >Nome impresso no cartão</label>
-
-                    <input 
-                      type="text"
-                      required
-                      name="cardholderName" 
-                      id="form-checkout__cardholderName"
-                    />
-
-                  </div>
-                  <div className={styles.cardExpiration}>
-                    <label htmlFor="form-checkout__cardExpirationDate">Vencimento(MM/AA)</label>
-
-                    <input 
-                      type="text" 
-                      required
-                      name="cardExpirationDate"
-                      id="form-checkout__cardExpirationDate"
-                    />
-                  </div>
-                  <div className={styles.cardCvv}>
-                    <label htmlFor="form-checkout__securityCode">CVV</label>
-              
-                    <input 
-                      type="text"
-                      required
-                      name="securityCode"
-                      id="form-checkout__securityCode"
-                    />
-                  </div>
-                </div>
-
-                <label htmlFor="form-checkout__installments">Parcelas</label>
-                <select name="installments" id="form-checkout__installments">
-                  <option value="">1x de 344,44</option>
-                </select>
-                <label htmlFor="form-checkout__identificationNumber">CPF ou CNPJ do portador do cartão</label>
-                <input 
-                  type="text"
-                  required
-                  name="identificationNumber" 
-                  id="form-checkout__identificationNumber"
-                />
-              </form>
- 
-              <div className={styles.cards}>
-                <div className={styles.title}>Cartões aceitos por <span>Mercado Pago</span></div>
-                <div className={styles.imageCards}>
-                  <div>
-                    <Image src={Visa}/>
-                  </div>
-                  <div>
-                    <Image src={MasterCard}/>
-                  </div>
-                  <div>
-                    <Image src={Amex}/>
-                  </div>
-                  <div>
-                    <Image src={Diners}/>
-                  </div>
-                  <div>
-                    <Image src={Hipercard}/>
-                  </div>
-                  <div>
-                    <Image src={Elo}/>
-                  </div>
-                </div>
-              </div>
+              <FormPayment/>
+              <PaymentCards/>
             </div>
           </div>
 
@@ -172,7 +135,7 @@ export default function Payment (){
                   Nome
                 </div>
                 <div className={styles.dataSlip}>
-                  Gabriel
+                  {userData.name} {userData.surname}
                 </div>
               </div>
 
@@ -181,7 +144,7 @@ export default function Payment (){
                   CPF/CNPJ
                 </div>
                 <div className={styles.dataSlip}>
-                  143.592.976-45
+                  {userData.cpf}
                 </div>
               </div>
             </div>
@@ -213,27 +176,7 @@ export default function Payment (){
                   Cartão de Crédito
                 </div>
               </div>
-
-              <div className={styles.cardImages}>
-                <div>
-                  <Image src={Visa}/>
-                </div>
-                <div>
-                  <Image src={MasterCard}/>
-                </div>
-                <div>
-                  <Image src={Amex}/>
-                </div>
-                <div>
-                  <Image src={Diners}/>
-                </div>
-                <div>
-                  <Image src={Hipercard}/>
-                </div>
-                <div>
-                  <Image src={Elo}/>
-                </div>
-              </div>
+              <Cards/>
 
               <div className={styles.lineSeparate}></div>
 

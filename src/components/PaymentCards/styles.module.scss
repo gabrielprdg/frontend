@@ -1,0 +1,28 @@
+.cards {
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0rem 2rem 1.5rem 2rem;
+  border-right: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+}
+
+.cards .title{
+  margin-top: 0.7rem;
+  font-family: 'PT Serif', serif;
+  font-size: 0.87rem;
+}
+
+.cards span {
+  font-weight: bold;
+  color: var(--black);
+}
+
+.cards div {
+  margin-bottom: 0.3rem;
+  margin-right: 3px;
+}
+
+

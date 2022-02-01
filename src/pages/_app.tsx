@@ -5,21 +5,24 @@ import { ShoppingCartContextProvider } from '../contexts/ShoppingCartContext';
 import styles from '../styles/app.module.scss';
 import '../styles/global.scss';
 import Script from 'next/script'
+import { PaymentContextProvider } from '../contexts/PaymentContext';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
   return(
     <AuthContextProvider>
-       <ShoppingCartContextProvider>
-        <div className={styles.wrapper}>
-          <Head>
-            <title>Use Fashion</title>
-          </Head>
-          <main>
-            <Script src="https://sdk.mercadopago.com/js/v2"/>
-            <Component {...pageProps} />
-          </main>
-        </div>
+      <ShoppingCartContextProvider>
+        <PaymentContextProvider>
+          <div className={styles.wrapper}>
+              <Head>
+                <title>Use Fashion</title>
+              </Head>
+              <main>
+                <script src="https://sdk.mercadopago.com/js/v2"></script>
+                <Component {...pageProps} />
+              </main>
+          </div>
+        </PaymentContextProvider>
       </ShoppingCartContextProvider>
     </AuthContextProvider>
   )

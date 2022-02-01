@@ -40,7 +40,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   },[])
 
-  async function signIn({email, password}: SignInData){
+  async function signIn({ email, password }: SignInData){
     const res = await api.post('login', {
       email, 
       password

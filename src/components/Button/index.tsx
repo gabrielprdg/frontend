@@ -12,3 +12,6 @@ export default function Button({title, islightButton}: ButtonProps) {
     </button>
   )
 }
+
+
+
