@@ -1,14 +1,20 @@
 import Router from "next/router"
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react"
 import { api } from '../../services/api'
+import { ProfileProps } from "../components/FormPayment"
 
-type PaymentData = any
+export interface InstallmentsItemProps {
+  installments: number
+  recommended_message: string
+}
 
-type PaymentContextTypes = {
-
-  paymentResp: any
+export interface CheckoutProps {
+  useProfile: ProfileProps
+  setProfile: Dispatch<SetStateAction<ProfileProps>>
   userData: UserDataType
-  userRegistration: (data: any) => void
+  userRegistration:(data:any) => void
+  useInstallments: InstallmentsItemProps[]
+  setInstallments: Dispatch<SetStateAction<InstallmentsItemProps[]>>
 }
 
 type AdressType = {
@@ -32,11 +38,18 @@ export type PaymentContextProviderProps = {
   children: ReactNode
 }
 
-const PaymentContext = createContext({} as PaymentContextTypes)
+const PaymentContext = createContext<CheckoutProps>(null!)
 
-export function PaymentContextProvider({ children }: PaymentContextProviderProps) {
+export function PaymentContextProvider({children}: PaymentContextProviderProps) {
   const [paymentResp, setPaymentResp] = useState<any>()
-  const [userData, setUserData] = useState<UserDataType>({} as UserDataType)
+  const [ userData, setUserData ] = useState<UserDataType>({} as UserDataType)
+  const [ useProfile, setProfile  ] = useState<ProfileProps>({})
+  const [ useInstallments, setInstallments ] = useState([
+    {
+      installments: 1,
+      recommended_message: 'Parcelas'
+    }
+  ])
   
 
   function userRegistration(data:any) {
@@ -46,7 +59,14 @@ export function PaymentContextProvider({ children }: PaymentContextProviderProps
   }
 
   return (
-    <PaymentContext.Provider value={{ paymentResp, userData, userRegistration }}>
+    <PaymentContext.Provider value={{ 
+      userData, 
+      userRegistration, 
+      useProfile, 
+      setProfile ,
+      useInstallments,
+      setInstallments
+    }}>
       {children}
     </PaymentContext.Provider>
   )

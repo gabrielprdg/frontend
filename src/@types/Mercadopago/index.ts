@@ -3,7 +3,7 @@ import { GetCreateToken } from './createToken'
 import { GetInstallments } from './getInstallments'
 import { GetPaymentMethod } from './getPaymentMethod'
 
-export default interface Mercadopago {
+export default interface MercadoPago {
   AJAX: (t: any) => void
   clearSession: () => void
   createDeviceProvider: (n: any) => void
@@ -21,6 +21,7 @@ export default interface Mercadopago {
   key: string
   referer: string
   sessionId: any
+  setPaymentMethod: (t: any, a: any) => void
   setPaymentMethods: (e: any) => void
   setPublishableKey: (key: string) => void
   tokenId: string

@@ -934,11 +934,6 @@
   resolved "https://registry.npmjs.org/@types/long/-/long-4.0.1.tgz"
   integrity sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
 
-"@types/mercadopago@^1.5.6":
-  version "1.5.6"
-  resolved "https://registry.yarnpkg.com/@types/mercadopago/-/mercadopago-1.5.6.tgz#c0fdedf96226390ae4ed3de60679898e65abad12"
-  integrity sha512-nD7OE6r+xPMY7iB6hmrX1xJJdyPzy6lJg6gzpWwhx949t/tC/eFCXMM/ddIpEPG5oirzH5UPdrcRgpwZtWk+UQ==
-
 "@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
   version "16.10.2"
   resolved "https://registry.npmjs.org/@types/node/-/node-16.10.2.tgz"
@@ -1916,6 +1911,11 @@ domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.npmjs.org/domain-browser/-/domain-browser-1.2.0.tgz"
   integrity sha512-jnjyiM6eRyZl2H+W8Q/zLMA481hzi0eszAaBUzIVnmYVDBbnLxVNnfu1HgEBvCbL+71FrxMl3E6lpKH7Ge3OXA==
+
+dotenv@^16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
+  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
 
 ecdsa-sig-formatter@1.0.11:
   version "1.0.11"
@@ -4080,10 +4080,12 @@ react-router@6.2.1:
   dependencies:
     history "^5.2.0"
 
-react-sdk-mercadopago@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-sdk-mercadopago/-/react-sdk-mercadopago-1.1.1.tgz#9a0dff45e1ad17228d405029dabf76a02d839e41"
-  integrity sha512-HG3WwC1YztevWe5MrcaY1/MzjTtohihstBMI5QXFWB6zQDxcL4PZT39q6SYQ2ZvNZMYCXxSFcGf6FheELthIXQ==
+react-toastify@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-8.1.1.tgz#79fada2487bcd2ca9b5910015f8d6f78cc65c984"
+  integrity sha512-KQa+j+JHjy69xpPYheaWUq3SjVw1sV2D7/QsXW6Tpo2x9HhUCvASezAMYDmLhfAYoSnaXUVnTNFAgZQA75SExQ==
+  dependencies:
+    clsx "^1.1.1"
 
 react-transition-group@^4.4.1, react-transition-group@^4.4.2:
   version "4.4.2"

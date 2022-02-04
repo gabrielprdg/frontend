@@ -69,7 +69,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   },[cart,total])
 
   function addOnCart (id: string) {
-    console.log(productList)
+    console.log(productList,process.env.PUBLIC_KEY_MERCADO_PAGO)
     const check = cart.every(item => {
       return item.id !== id
     })

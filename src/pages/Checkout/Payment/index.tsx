@@ -41,46 +41,6 @@ export default function Payment (){
     setOpenMercadoPagoOption(!openMercadoPagoOption)
     console.log(openMercadoPagoOption)
   }
-  
-  /*
-  const inputFn: InputProps = (data, val) =>
-    setProfile((prevState) =>
-      Object({
-        ...prevState,
-        [data]: val
-      })
-    )
-
-  const isValidInput = (id: string, val: string, size: number) =>
-  !isNaN(Number(val)) && val.replace(/\D/g, '') !== id && val.length <= size
-
-  const inputValidFn = (id: string, val: string) => {
-    switch (id) {
-      case 'card_number':
-        if (isValidInput(id, val, 16)) {
-          inputFn(id, val)
-        }
-        break
-      case 'card_month':
-        if (isValidInput(id, val, 2)) {
-          inputFn(id, val)
-        }
-        break
-      case 'card_year':
-        if (isValidInput(id, val, 2)) {
-          inputFn(id, val)
-        }
-        break
-    case 'code':
-      if (isValidInput(id, val, 4)) {
-        inputFn(id, val)
-      }
-      break
-    default:
-      inputFn(id, val)
-    }
-  }*/
-
 
   return (
     <div className={styles.paymentContainer}>
@@ -196,9 +156,9 @@ export default function Payment (){
         <div className={styles.cartContent}>
           {cart.map((product,index) => {
             return (
-              <div className={styles.cartDetails}>
+              <div className={styles.cartDetails} key={index}>
                 <div className={styles.imageProd}>
-                  <img src={product.images[0].url} alt="imageproductcart" />
+                  <img src={product.images[0].url} alt="imageproductcart"/>
                 </div>
                 <div className={styles.name}>{product.name} x <span className={styles.countP}>{product.count}</span><span>R${(product.price * product.count).toFixed(2)}</span></div>
               </div>
@@ -225,14 +185,16 @@ export default function Payment (){
           </div>
         </div>
       </div>
+    
+      {!openCardOption ?  
       <button 
         type="submit"
         id="form-checkout__submit"
         className={styles.buttonPayment}
       >
         Finalizar Pedido
-      </button>
-      <progress value="0" className="progress-bar">Carregando...</progress>
+      </button> : ''}
+
     </div>
   )
 }

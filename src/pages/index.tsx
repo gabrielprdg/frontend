@@ -32,7 +32,6 @@ export default function Home({ prod }: HomeProps) {
   return(
     <div>
       <Header isLoginPage={false}/>
-      <div> Ola {user?.name}</div>
       <div className={styles.container}>
       <div className={styles.topic}> 
         <span className={styles.dash}></span>

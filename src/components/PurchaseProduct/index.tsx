@@ -11,7 +11,7 @@ export default function PurchaseProduct() {
           return ( 
             <div className={styles.cartDetails}>
               <div className={styles.imageProd}>
-                <img src={product.images[0].url} alt="imageproductcart" />
+                <img src={product.images[0].url} alt="imageproductcart" key={product.id}/>
               </div>
               <div className={styles.name}>{product.name} x <span className={styles.countP}>{product.count}</span><span>R${(product.price * product.count).toFixed(2)}</span></div>
             </div>

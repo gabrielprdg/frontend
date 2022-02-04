@@ -2,6 +2,7 @@
 import React from 'react'
 
 import Document, {Html, Head, Main, NextScript} from 'next/document'
+import Script from 'next/script'
 
 export default class MyDocument extends Document {
     render () {
@@ -18,7 +19,6 @@ export default class MyDocument extends Document {
                   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
         
                   <script src="https://unpkg.com/react/umd/react.production.min.js" data-crossorigin></script>
-                  <script src="sliderProductDetails.js"></script>
                   <script
                     src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"
                     data-crossorigin>

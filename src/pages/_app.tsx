@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <title>Use Fashion</title>
               </Head>
               <main>
-                <script src="https://sdk.mercadopago.com/js/v2"></script>
+                <Script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></Script>
                 <Component {...pageProps} />
               </main>
           </div>
