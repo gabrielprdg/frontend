@@ -1,0 +1,65 @@
+.footerContainer {
+  height: 16rem;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+}
+
+.footerInfo{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.paymentMethod h2 {
+  margin-bottom: 2.1rem;
+  color:#b563cf;
+}
+
+.contact h2 {
+  margin-bottom: 0.5rem;
+  color:#b563cf;
+}
+
+.emailContact {
+  display: flex;
+}
+
+.icon {
+  margin-top: 2px;
+  margin-right: 3px;
+}
+
+.location {
+  display: flex;
+}
+
+.socialMedia {
+  cursor: pointer;
+}
+
+.socialMedia div{
+  margin-right: 6px;
+}
+
+.medias {
+  display: flex;
+}
+
+.socialMedia h2{
+  margin-bottom: 2rem;
+  color:#b563cf;
+}
+
+.rights {
+  font-size: 13px;
+  margin-top: 2rem;
+  margin-left: 8.8rem;
+}
+
+.rights span {
+  color:#b563cf;
+  cursor: pointer;
+}

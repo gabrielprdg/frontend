@@ -1,9 +1,10 @@
 import { GetServerSideProps } from 'next'
 import { api } from '../../services/api'
+import { Footer } from '../components/Footer'
 import { Header } from "../components/Header"
 import { Product } from '../components/Product'
-import Slider from '../components/Slider'
 import { useAuth } from '../contexts/AuthContext'
+import  Slider  from '../components/Slider'
 import styles from './home.module.scss'
 
 export type Images = {
@@ -15,7 +16,7 @@ export type Images = {
 
 type Product = {
   id: string
-  images: Array<Images>,
+  images: Array<Images>
   name: string,
   description: string
   price: number
@@ -32,6 +33,7 @@ export default function Home({ prod }: HomeProps) {
   return(
     <div>
       <Header isLoginPage={false}/>
+      <Slider/>
       <div className={styles.container}>
       <div className={styles.topic}> 
         <span className={styles.dash}></span>
@@ -49,7 +51,7 @@ export default function Home({ prod }: HomeProps) {
           
         </div>
       </div>
-      
+      <Footer/>
     </div>
     </div>
   )

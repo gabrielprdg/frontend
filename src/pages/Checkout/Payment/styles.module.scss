@@ -357,3 +357,39 @@
   padding: 5px 9px;
   border-radius: 5px;
 }
+
+.formCard {
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+
+  border-right: 1px solid #808080;
+  border-left: 1px solid #808080;
+}
+
+.formCard label{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.formCard input {
+  font-family: 'Poppins';
+  height: 2.4rem;
+  padding: 4px 12px;
+  color:var(--black);
+}
+
+.formCard select {
+  height: 2.4rem;
+}
+
+.formCard input:focus {
+  outline: none !important;
+
+}
+
+.formCard select:focus {
+  outline: none !important;
+}
+

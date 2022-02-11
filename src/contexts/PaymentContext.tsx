@@ -1,77 +1,109 @@
-import Router from "next/router"
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react"
-import { api } from '../../services/api'
-import { ProfileProps } from "../components/FormPayment"
+import { createContext, useContext, Dispatch, SetStateAction, MutableRefObject } from 'react'
+
+export type Address = {
+  streetName: string
+  streetNumber: string
+  complement: string
+  district: string
+  cep: string
+  state: string
+}
+
+export type ProfileShipping = {
+  email: string
+  firstName: string
+  surname: string
+  telephone: string
+  address: Address
+  doc: string
+} 
+
+export interface ProfileProps {
+  display_name?: string
+  e_mail?: string
+  e_mail_valid?: string
+  card_number?: string
+  card_month?: string
+  card_year?: string
+  code?: string
+  doc?: string
+  issuer?: string
+  slt_installment?: number
+}
+
+
+export interface SectionProps {
+  screen: number
+  id?: number
+}
 
 export interface InstallmentsItemProps {
   installments: number
   recommended_message: string
 }
 
+type WithChildren = { children?: React.ReactNode }
+type ProviderProps = WithChildren & CheckoutProps
 export interface CheckoutProps {
   useProfile: ProfileProps
   setProfile: Dispatch<SetStateAction<ProfileProps>>
-  userData: UserDataType
-  userRegistration:(data:any) => void
   useInstallments: InstallmentsItemProps[]
   setInstallments: Dispatch<SetStateAction<InstallmentsItemProps[]>>
+  useProfileShipping: ProfileShipping
+  setProfileShipping:Dispatch<SetStateAction<ProfileShipping>>
+  formRef: MutableRefObject<HTMLFormElement>
 }
 
-type AdressType = {
-  addressName: string
-  number: string
-  complement: string
-  district: string
-  cep: string
-}
+const ElementContext = createContext<CheckoutProps>(null!)
 
-type UserDataType = {
-  email: string
-  name: string
-  surname: string
-  telephone: string
-  address: AdressType
-  cpf: string
-}
-
-export type PaymentContextProviderProps = {
-  children: ReactNode
-}
-
-const PaymentContext = createContext<CheckoutProps>(null!)
-
-export function PaymentContextProvider({children}: PaymentContextProviderProps) {
-  const [paymentResp, setPaymentResp] = useState<any>()
-  const [ userData, setUserData ] = useState<UserDataType>({} as UserDataType)
-  const [ useProfile, setProfile  ] = useState<ProfileProps>({})
-  const [ useInstallments, setInstallments ] = useState([
-    {
-      installments: 1,
-      recommended_message: 'Parcelas'
-    }
-  ])
-  
-
-  function userRegistration(data:any) {
-    setUserData(data)
-    console.log('user', userData)
-    Router.push('/Checkout/Payment')
-  }
-
+export default function ElementProvider({
+  children,
+  useProfile,
+  setProfile,
+  useInstallments,
+  setInstallments,
+  formRef,
+  useProfileShipping,
+  setProfileShipping
+}: ProviderProps) {
   return (
-    <PaymentContext.Provider value={{ 
-      userData, 
-      userRegistration, 
-      useProfile, 
-      setProfile ,
-      useInstallments,
-      setInstallments
-    }}>
+    <ElementContext.Provider
+      value={{
+        useProfile,
+        setProfile,
+        useInstallments,
+        setInstallments,
+        formRef,
+        useProfileShipping,
+        setProfileShipping
+      }}
+    >
       {children}
-    </PaymentContext.Provider>
+    </ElementContext.Provider>
   )
 }
 
-export const usePayment = () => {
-  return useContext(PaymentContext)
+export function SnapshotProfile() {
+  const context = useContext(ElementContext)
+  const { useProfile, setProfile } = context
+  return { useProfile, setProfile }
+}
+
+export function SnapshotInstallments() {
+  const context = useContext(ElementContext)
+  const { useInstallments, setInstallments } = context
+  return { useInstallments, setInstallments }
+}
+
+export function SnapshotRef() {
+  const context = useContext(ElementContext)
+  const { formRef } = context
+  return { formRef }
+}
+
+
+export function SnapshotProfileShipping() {
+  const context = useContext(ElementContext)
+  const { useProfileShipping, setProfileShipping } = context
+  return { useProfileShipping, setProfileShipping }
 }

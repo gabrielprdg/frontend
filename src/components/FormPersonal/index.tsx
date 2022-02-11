@@ -6,19 +6,46 @@ import {
   MenuItem
 } from '@mui/material'
 
+import Router from 'next/router'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { usePayment } from '../../contexts/PaymentContext'
+import { SnapshotProfile, SnapshotProfileShipping } from '../../contexts/PaymentContext'
 import styles from './styles.module.scss'
 
+type InputProps = (data: string, val: string) => void
+
 export default function FormPersonal() {
-  
   const {register, handleSubmit} = useForm()
 
-  const { userRegistration } = usePayment()
+  const { useProfile, setProfile } = SnapshotProfile()
+  const { useProfileShipping, setProfileShipping } = SnapshotProfileShipping() 
+  const {  e_mail = '', doc = ''} = useProfile
+
+  useEffect(() => {
+   
+    const useProfileShippingData = localStorage.getItem('dataProfileShipping')
+
+    if(useProfileShippingData){
+      setProfileShipping(JSON.parse(useProfileShippingData));
+    }
+  },[])
+
+  useEffect(() => {
+    localStorage.setItem('dataProfileShipping', JSON.stringify(useProfileShipping))
+  },[useProfileShipping])
 
   function handleShippingData(data:any) {
-    userRegistration(data)
+    setProfileShipping(data)
+    Router.push('/Checkout/Payment')
   }
+
+  const inputFn: InputProps = (data, val) =>
+  setProfile((prevState) =>
+    Object({
+      ...prevState,
+      [data]: val
+    })
+  )
 
   return (
     <div className={styles.contentForm}>
@@ -33,6 +60,10 @@ export default function FormPersonal() {
           id="outlined-basic"
           label="Email"
           variant="outlined"
+          onInput={(e) =>
+            inputFn('e_mail', (e.target as HTMLInputElement).value)
+          }
+          value={e_mail}
           color="secondary"
           className={styles.emailField}
           style={{ marginBottom: '13px', backgroundColor: 'white'}} 
@@ -180,7 +211,13 @@ export default function FormPersonal() {
           label="CPF" 
           variant="outlined" 
           color="secondary"
+          type="text"
+          data-checkout="docNumber"
+          onInput={(e) =>
+            inputFn('doc', (e.target as HTMLInputElement).value)
+          }
           style={{ marginBottom: '13px', backgroundColor: 'white'}} 
+          value={doc}
         />
         <button id='user-data' type="submit" className={styles.toBeContinued}>Continuar</button>
       </form>

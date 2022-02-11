@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { toast } from 'react-toastify'
 import { api } from '../../../services/api'
-import { usePayment } from '../../contexts/PaymentContext'
+import { SnapshotInstallments, SnapshotProfile, SnapshotRef } from '../../contexts/PaymentContext'
 import { useCart } from '../../contexts/ShoppingCartContext'
 import MercadopagoErrorStatus from '../../utils/modules/MercadopagoErrorStatus'
 import styles from './styles.module.scss'
@@ -52,22 +52,27 @@ type FormSubmitProps = (data: {
 }) => Promise<FormSubmitThenProps>
  
 export default function FormPayment() {
-  const formRef = useRef<HTMLFormElement>(null!)
   const clickRef = useRef(true)
-  const cardNumberRef = useRef(false)
-  const [cardNumber, setCardNumber] = useState('')
-  const { useProfile, setProfile, userData, useInstallments, setInstallments} = usePayment()
   const { total } = useCart()
+  const { useInstallments } = SnapshotInstallments()
+  const { formRef } = SnapshotRef()
+  const { useProfile, setProfile } = SnapshotProfile()
+
 
   const {
-    card_number = cardNumber,
+    card_number = '',
     card_month = '',
     card_year = '',
     code = '',
-    e_mail = '',
+    doc = '',
+    display_name = '',
+    e_mail,
     issuer,
     slt_installment = 1
   } = useProfile
+
+
+  
 
   const inputFn: InputProps = (data, val) =>
   setProfile((prevState) =>
@@ -86,18 +91,19 @@ export default function FormPayment() {
   )
 
   const formSubmit: FormSubmitProps = async (data) => {
+    console.log(data)
     const res = await api.post('/process_payment', data)
     console.log('DATA',res.data)
     return res.data
   }
 
   const confirmFn = () => {
-    toast.success(`4`)
+
     if (clickRef.current) {
       clickRef.current = false
       window.Mercadopago.createToken(formRef.current, (status, response) => {
         if (status === 200 || status === 201) {
-
+          console.log(response, issuer)
           formSubmit({
             token: response.id,
             payment_method_id: issuer,
@@ -142,84 +148,6 @@ export default function FormPayment() {
     }
   }
 
- 
-  useEffect(() => {
-    console.log('oie',process.env.PUBLIC_KEY_MERCADO_PAGO)
-    window.onload = () => {
-      function checkFn() {
-        window.Mercadopago.setPublishableKey('TEST-57ab01b0-15a9-42a8-8da8-72194265fd45')
-        window.Mercadopago.getIdentificationTypes()
-      }
-      checkFn()
-
-      setTimeout(() => {
-        if (!window.Mercadopago.initialized) {
-          checkFn()
-          console.log('Reconectando...')
-        }
-      }, 1000)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (cardNumberRef.current) {
-      if (card_number || (!card_number && issuer)) {
-        // recebe o nome do cartão antecipado
-        if (card_number.length > 5 && !issuer) {
-          const bin = card_number.substring(0, 6)
-          window.Mercadopago.getPaymentMethod({ bin }, (status, response) => {
-            if (status === 200) {
-              setProfile((prevState) => {
-                const assoc = { ...prevState }
-                assoc.issuer = response[0].id
-                return assoc
-              })
-            } else {
-              console.log('error:', response)
-            }
-          })
-
-          window.Mercadopago.getInstallments(
-            { bin, amount: total },
-            function (status, response) {
-              if (status === 200) {
-                setInstallments(
-                  response[0].payer_costs.map(
-                    ({ recommended_message, installments }) => {
-                      return {
-                        recommended_message,
-                        installments
-                      }
-                    }
-                  )
-                )
-              } else {
-                console.log('error:', response)
-              }
-            }
-          )
-        } else {
-          if (card_number.length < 6 && issuer) {
-            setInstallments([
-              {
-                installments: 1,
-                recommended_message: 'Parcelas'
-              }
-            ])
-            setProfile((prevState) => {
-              const assoc = { ...prevState }
-              delete assoc.issuer
-              return assoc
-            })
-          }
-        }
-      }
-    } else {
-      cardNumberRef.current = true
-    }
-  }, [card_number])
-
-
   const isValidInput = (id: string, val: string, size: number) =>
     !isNaN(Number(val)) && val.replace(/\D/g, '') !== id && val.length <= size
 
@@ -253,19 +181,17 @@ export default function FormPayment() {
 
   return (
     <div>
-      <form action="" id="paymentForm" className={styles.formCard} ref={formRef} >
-
         <div className={styles.cardInputs}>
           <div className={styles.fields}>
             <label htmlFor="cardNumber">Número do cartão</label>
             <input 
-              type="text" 
-              id="cardNumber" 
-              data-checkout="cardNumber" 
+              type="text"
+              data-checkout="cardNumber"
               onInput={(e) =>
                 inputValidFn('card_number', (e.target as HTMLInputElement).value)
               }
               value={card_number}
+          
             />
           </div>
 
@@ -273,10 +199,17 @@ export default function FormPayment() {
             <div className={styles.fields}>
               <label htmlFor="cardholderName">Nome impresso no cartão</label>
               <input 
-                id="cardholderName" 
-                data-checkout="cardholderName" 
-                type="text" 
+                type="text"
+                data-checkout="cardholderName"
                 className={styles.nameCard}
+                onInput={(e) =>
+                  inputFn(
+                    'display_name',
+                    (e.target as HTMLInputElement).value.toUpperCase()
+                  )
+                }
+
+                value={display_name}
               />
             </div>
 
@@ -286,7 +219,6 @@ export default function FormPayment() {
                 <input 
                   className={styles.expM} 
                   type="text" placeholder="MM" 
-                  id="cardExpirationMonth" 
                   data-checkout="cardExpirationMonth"
                   onInput={(e) =>
                     inputValidFn('card_month', (e.target as HTMLInputElement).value)
@@ -297,7 +229,6 @@ export default function FormPayment() {
                 <input 
                   className={styles.expY} 
                   type="text" placeholder="YY" 
-                  id="cardExpirationYear" 
                   data-checkout="cardExpirationYear"
                   onInput={(e) =>
                     inputValidFn('card_year', (e.target as HTMLInputElement).value)
@@ -310,7 +241,6 @@ export default function FormPayment() {
             <div className={styles.cvvCard}>
               <label htmlFor="securityCode">CVV</label>
               <input 
-                id="securityCode" 
                 data-checkout="securityCode" 
                 type="text" 
                 className={styles.cvv}
@@ -322,9 +252,10 @@ export default function FormPayment() {
             </div>
           </div>
          
+
           <div className={styles.fields}>
             <label htmlFor="installments">Parcelas</label>
-             <select id="installments" onChange={(e) => selectFn(e.target)}>
+             <select id="installments" className={styles.installments} onChange={(e) => selectFn(e.target)}>
               {useInstallments.map(({ recommended_message, installments }, i) => (
                 <option key={i} value={installments}>
                   {recommended_message}
@@ -332,16 +263,20 @@ export default function FormPayment() {
               ))}
             </select>
           </div>
-          <div className={styles.hidden}>
-            <input type="hidden" name="transactionAmount" id="transactionAmount" value={total}/>
-           
-            <input type="hidden" name="description" id="description" value="Compra de vestuário"/>
-            <input type="hidden" id="email" name="email" value={userData.email}/>
 
-            <button type="submit" className={styles.buttonPayment} onClick={() => confirmFn()}>Pagar</button>
+      
+
+          <div className={styles.hidden}>
+            <button 
+              type="submit" 
+              className={styles.buttonPayment} 
+              onClick={() => confirmFn()}
+            >
+                Pagar
+            </button>
           </div>
        </div>
-      </form>
     </div>
   )
 }
+

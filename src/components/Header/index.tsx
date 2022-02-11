@@ -5,7 +5,7 @@ import Close from '../../../public/x.svg'
 import Menu from '../../../public/menu.svg'
 import Image from 'next/image'
 import { useCart } from "../../contexts/ShoppingCartContext"
-import { Fragment } from 'react'
+import Logo from '../../../public/logo.jpg'
 
 type HeaderProps = {
   isLoginPage?: boolean
