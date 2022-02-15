@@ -1,7 +1,6 @@
 
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import BankSlip from '../../../../public/codigo-de-barras.svg'
 import CreditCardIcon from '../../../../public/credit-card.png'
 import CreditCardSmall from '../../../../public/credit_card.svg'
@@ -13,8 +12,7 @@ import Cards from '../../../components/Cards'
 import FormPayment from '../../../components/FormPayment'
 import { Header } from '../../../components/Header'
 import PaymentCards from '../../../components/PaymentCards'
-import ElementProvider, { ProfileProps } from '../../../contexts/PaymentContext'
-import { SnapshotProfileShipping } from '../../../contexts/PaymentContext'
+import { SnapshotInstallments, SnapshotProfile, SnapshotProfileShipping, SnapshotRef } from '../../../contexts/PaymentContext'
 import { useCart } from '../../../contexts/ShoppingCartContext'
 import styles from './styles.module.scss'
 
@@ -24,27 +22,23 @@ export default function Payment (){
   const [openBankSlipOption, setOpenBankSlipOption] = useState(false)
   const [openMercadoPagoOption, setOpenMercadoPagoOption] = useState(false)
 
-
-  const { total, cart } = useCart()
-  const [useProfile, setProfile] = useState<ProfileProps>({})
   const cardNumberRef = useRef(false)
+  const { total, cart } = useCart()
+  const { useProfile, setProfile } = SnapshotProfile()
+
  
-  const formRef = useRef<HTMLFormElement>(null!)
+  const { formRef } = SnapshotRef()
   const { card_number = '', issuer } = useProfile
-  const [useInstallments, setInstallments] = useState([
-    {
-      installments: 1,
-      recommended_message: 'Parcelas'
-    }
-  ])
+  const { setInstallments } = SnapshotInstallments()
 
   const { useProfileShipping } = SnapshotProfileShipping()
 
   useEffect(() => {
-    console.log('oie',process.env.PUBLIC_KEY_MERCADO_PAGO)
     window.onload = () => {
       function checkFn() {
-        window.Mercadopago.setPublishableKey('TEST-57ab01b0-15a9-42a8-8da8-72194265fd45')
+        window.Mercadopago.setPublishableKey(
+          'TEST-57ab01b0-15a9-42a8-8da8-72194265fd45'
+        )
         window.Mercadopago.getIdentificationTypes()
       }
       checkFn()
@@ -60,13 +54,13 @@ export default function Payment (){
 
   useEffect(() => {
     if (cardNumberRef.current) {
-      console.log(cardNumberRef.current)
+      console.log('ecd',cardNumberRef.current)
       if (card_number || (!card_number && issuer)) {
+        console.log('iss', issuer)
         // recebe o nome do cartão antecipado
         if (card_number.length > 5 && !issuer) {
           const bin = card_number.substring(0, 6)
-          console.log('bin',bin) 
-            window.Mercadopago.getPaymentMethod({ bin }, (status, response) => {
+          window.Mercadopago.getPaymentMethod({ bin }, (status, response) => {
             console.log('status', status)
             console.log('response', response)
             if (status === 200) {
@@ -81,13 +75,9 @@ export default function Payment (){
             }
           })
 
-
           window.Mercadopago.getInstallments(
             { bin, amount: total },
             function (status, response) {
-              console.log('statusinstal', status)
-              console.log('responseinstal',response)
-            
               if (status === 200) {
                 setInstallments(
                   response[0].payer_costs.map(
@@ -109,11 +99,12 @@ export default function Payment (){
             setInstallments([
               {
                 installments: 1,
-                recommended_message: 'Parcelas'
+                recommended_message: 'Padrcelas'
               }
             ])
             setProfile((prevState) => {
               const assoc = { ...prevState }
+              console.log('r', assoc.issuer)
               delete assoc.issuer
               return assoc
             })
@@ -124,7 +115,6 @@ export default function Payment (){
       cardNumberRef.current = true
     }
   }, [card_number])
-
 
 
 

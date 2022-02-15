@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { api } from '../../../services/api'
 import { SnapshotInstallments, SnapshotProfile, SnapshotRef } from '../../contexts/PaymentContext'
@@ -91,10 +91,14 @@ export default function FormPayment() {
   )
 
   const formSubmit: FormSubmitProps = async (data) => {
-    console.log(data)
-    const res = await api.post('/process_payment', data)
-    console.log('DATA',res.data)
-    return res.data
+    try {
+      console.log(data)
+      const res = await api.post('/process_payment', data)
+      console.log('DATA',res.data)
+      return res.data
+    }catch(err:any) {
+      console.log(err)
+    }
   }
 
   const confirmFn = () => {
@@ -177,8 +181,7 @@ export default function FormPayment() {
         inputFn(id, val)
     }
   }
-    
-
+  
   return (
     <div>
         <div className={styles.cardInputs}>
@@ -193,6 +196,9 @@ export default function FormPayment() {
               value={card_number}
           
             />
+            <div className={styles.imageCard}>
+              oi {issuer}
+            </div>
           </div>
 
           <div className={styles.nameNasCv}>

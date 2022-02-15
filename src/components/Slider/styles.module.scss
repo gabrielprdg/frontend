@@ -1,0 +1,17 @@
+.config {
+  height: 380px;
+  overflow: hidden;
+  width: 1297px;
+}
+
+@media (max-width: 650px) {
+  .config {
+    height: 250px;
+  }
+
+  .bann img{
+    max-height: 400px !important;
+    height: 100%  !important;
+    object-fit: cover;
+  }
+}

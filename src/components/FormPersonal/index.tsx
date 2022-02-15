@@ -24,7 +24,7 @@ export default function FormPersonal() {
   useEffect(() => {
    
     const useProfileShippingData = localStorage.getItem('dataProfileShipping')
-
+    console.log(useProfileShippingData)
     if(useProfileShippingData){
       setProfileShipping(JSON.parse(useProfileShippingData));
     }

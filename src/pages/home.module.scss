@@ -33,6 +33,7 @@
 }
 
 .contentHome {
+  
   display: flex;
   justify-content: center;
   margin-left: 50px;
@@ -45,10 +46,12 @@
 @media (max-width: 500px) {
   .contentHome {
     margin-left: 0;
+    width: 100vw;
   }
 
   .products {
-    justify-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr,1fr));
   }
 
   .dropDownContainer {

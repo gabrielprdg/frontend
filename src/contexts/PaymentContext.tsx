@@ -64,7 +64,7 @@ export default function ElementProvider({
   setInstallments,
   formRef,
   useProfileShipping,
-  setProfileShipping
+  setProfileShipping,
 }: ProviderProps) {
   return (
     <ElementContext.Provider
@@ -75,7 +75,7 @@ export default function ElementProvider({
         setInstallments,
         formRef,
         useProfileShipping,
-        setProfileShipping
+        setProfileShipping,
       }}
     >
       {children}
@@ -100,7 +100,6 @@ export function SnapshotRef() {
   const { formRef } = context
   return { formRef }
 }
-
 
 export function SnapshotProfileShipping() {
   const context = useContext(ElementContext)
