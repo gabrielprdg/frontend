@@ -33,6 +33,8 @@ export default function Payment (){
 
   const { useProfileShipping } = SnapshotProfileShipping()
 
+
+  
   useEffect(() => {
     window.onload = () => {
       function checkFn() {
@@ -60,6 +62,8 @@ export default function Payment (){
         // recebe o nome do cartão antecipado
         if (card_number.length > 5 && !issuer) {
           const bin = card_number.substring(0, 6)
+          console.log(bin)
+          
           window.Mercadopago.getPaymentMethod({ bin }, (status, response) => {
             console.log('status', status)
             console.log('response', response)
