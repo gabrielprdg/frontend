@@ -14,10 +14,11 @@ import '../styles/global.scss';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const cardNumberRef = useRef(false)
+
   const formRef = useRef<HTMLFormElement>(null!)
   const [ useProfile, setProfile ] = useState<ProfileProps>({})
   const [ useProfileShipping, setProfileShipping ] = useState({} as ProfileShipping)
+  const cardNumberRef = useRef(false)
   const [useInstallments, setInstallments] = useState([
     {
       installments: 1,
@@ -38,7 +39,6 @@ function MyApp({ Component, pageProps }: AppProps) {
               useProfileShipping,
               setProfileShipping,
               cardNumberRef
-
             }}
           >
             <div className={styles.wrapper}>

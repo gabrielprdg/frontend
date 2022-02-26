@@ -1,0 +1,24 @@
+.categoriesContainer{
+  width: 100%;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.category {
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  margin-right: 1rem;
+  width: 5rem;
+  font-family: 'Poppins';
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px;
+  border: 3px solid var(--pink);
+  border-radius: 2px;
+  background-color: var(--gray-50);
+  color:  var(--black);
+  cursor: pointer;
+}

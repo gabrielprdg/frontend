@@ -12,9 +12,24 @@
   padding: 1.5rem 2rem;
 }
 
+.fieldsForm {
+  display: flex;
+  flex-direction: column;
+  margin: 0rem 1rem;
+}
+
+.expAndCvv {
+  display: flex;
+}
+
 .fields{
   display: flex;
   flex-direction: column;
+}
+
+.fieldsForm {
+  display: flex;
+
 }
 
 .cardName {
@@ -42,8 +57,7 @@
 
 .nameNasCv {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  align-items: space-between;
 }
 
 .formCard label{
@@ -92,7 +106,7 @@
 }
 
 .cvvCard input{
-  width: 5.1rem;
+  width: 6.14rem;
   height: 2.4rem;
 }
 
@@ -166,3 +180,74 @@
     }
 }
 
+.imageCard {
+  display: block;
+  position: relative;
+  margin-left: 33rem;
+  top: -2rem;
+}
+
+.docNumber {
+  display: flex;
+}
+.docType {
+  width: 8rem;
+  height: 2.96rem !important;
+  margin-right: 20px;
+  color: #777;
+  font-weight: 600;
+  background-color: #ececec;
+  padding-left: 24px;
+  padding-right: 42px;
+  border-radius: 3px;
+  transition: all 375ms ease-in-out;
+  font-family: var(--font-open);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align-last: center;
+  direction: ltr;
+  background-image: url('https://lh6.googleusercontent.com/proxy/LnbzEmBi9EQVYlCQcxOShrhtbeICdW0N7dlFEn4VAFKB6auDhYegFVQg665RROyDao0FKOBxjTmjMYH0GAVwvPkItxRnUjznsRyzl8y4ZogsqPW9usbsjzAlADHQIUkpw1m8=s0-d');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 18px);
+}
+
+.docn {
+  width: 27rem;
+}
+
+.docGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+
+@media (max-width:650px) {
+  .formCard{
+    width: 24rem;
+  }
+
+
+.fieldsForm {
+  display: flex;
+}
+
+  .nameNasCv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .docn {
+    width: 12rem;
+  }
+
+  .buttonPayment {
+    width: 24rem;
+  }
+
+  .nameCard {
+    width: 19.9rem;
+    height: 2.4rem;
+  }
+}

@@ -22,6 +22,7 @@ export type CallbackGetInstallments = (
       installment_amount: number
       installment_rate: number
       installment_rate_collector: string[]
+      total_amount: number
       installments: number
       labels: [] // NOTE: o valor para labels é desconhecido
       max_allowed_amount: number

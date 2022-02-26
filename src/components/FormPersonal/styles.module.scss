@@ -73,15 +73,46 @@
   width: 14.2rem !important;
 }
 
-@media (max-width:768px) {
+.docNumber {
+  display: flex;
+}
+.docType {
+  width: 8rem;
+  height: 3.4rem;
+  margin-right: 20px;
+  color: #777;
+  font-weight: 600;
+  background-color: #ececec;
+  padding-left: 24px;
+  padding-right: 42px;
+  border-radius: 3px;
+  transition: all 375ms ease-in-out;
+  font-family: var(--font-open);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align-last: center;
+  direction: ltr;
+  background-image: url('https://lh6.googleusercontent.com/proxy/LnbzEmBi9EQVYlCQcxOShrhtbeICdW0N7dlFEn4VAFKB6auDhYegFVQg665RROyDao0FKOBxjTmjMYH0GAVwvPkItxRnUjznsRyzl8y4ZogsqPW9usbsjzAlADHQIUkpw1m8=s0-d');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 18px);
+}
+
+.docn {
+  width: 28rem;
+}
+@media (max-width:650px) {
   .checkoutContainer {
     display: flex;
     flex-direction:column;
     align-items: center;
+    
   }
 
   .contentForm{
-    padding-left: 0;
+    position: absolute;
+
+    padding-left: 2.5rem;
     width: 22rem;
   }
 
@@ -111,4 +142,3 @@
   }
 
 }
-

@@ -50,7 +50,7 @@ export default function Cart () {
                 <tr key={product.id}>
                   <td>
                     <div className={styles.imageProd}>
-                      <img src={product.images[0].url} alt="imageproductcart" />
+                      <img src={product?.images[0].url} alt="imageproductcart" />
                     </div>
                   </td>
                   <td className={styles.name}><span>Nome  </span>{product.name}</td>

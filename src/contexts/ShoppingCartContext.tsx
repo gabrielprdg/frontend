@@ -9,6 +9,8 @@ type ProductData = {
   name: string,
   description: string
   price: number
+  colors?: string[]
+  productSize: string[]
   count: number
 }
 
@@ -16,7 +18,10 @@ type ShoppingCartContextData = {
   productList: Array<ProductData>
   cart: Array<ProductData>
   index: number
+  cartBuyNow: ProductData 
   addOnCart: (id: string) => void
+  buyNow: (id: string) => void
+  getTotalBuyNow: () => void
   reduction: (id: string) => void
   promotion: (id: string) => void
   getTotal: () => void
@@ -34,6 +39,7 @@ export const ShoppingCartContext = createContext({} as ShoppingCartContextData)
 
 export function ShoppingCartContextProvider({children}: ShoppingCartContextProviderProps) {
   const [productList, setProductList] = useState<ProductData[]>([])
+  const [ cartBuyNow, setCartBuyNow ] = useState({} as ProductData)
   const [cart, setCart] = useState<ProductData[]>([])
   const [total, setTotal] = useState(0)
   const [index, setIndex] = useState(0)
@@ -50,6 +56,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     
     const cartData = localStorage.getItem('dataCart')
     const totalData = localStorage.getItem('dataTotal')
+    const cartBuyNowData = localStorage.getItem('dataCartBuyNow')
 
     if(cartData){
       setCart(JSON.parse(cartData));
@@ -59,6 +66,10 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       setTotal(JSON.parse(totalData))
     }
 
+    if(cartBuyNowData) {
+      setCartBuyNow(JSON.parse(cartBuyNowData))
+    }
+
     productData()
 
   },[])
@@ -66,7 +77,8 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   useEffect(() => {
     localStorage.setItem('dataCart', JSON.stringify(cart))
     localStorage.setItem('dataTotal', JSON.stringify(total))
-  },[cart,total])
+    localStorage.setItem('dataCartBuyNow', JSON.stringify(cartBuyNow))
+  },[cart,total,cartBuyNow])
 
   function addOnCart (id: string) {
     console.log(productList,process.env.PUBLIC_KEY_MERCADO_PAGO)
@@ -84,6 +96,18 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     }else {
       alert('Produto ja adicionado no carrinho')
     }
+  }
+
+  function buyNow(id: string){
+
+    const productInBuyNow = productList.filter(element => {
+      return element.id === id
+    })
+
+    console.log('ddd', productInBuyNow[0])
+
+    setCartBuyNow(productInBuyNow[0])
+    getTotalBuyNow()
   }
 
   function reduction (id:string) {
@@ -108,6 +132,10 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
 
     setCart([...cart])
     getTotal()
+  }
+
+  function getTotalBuyNow() {
+    setTotal(cartBuyNow.price)
   }
 
   function getTotal() {
@@ -142,7 +170,21 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   }
 
   return (
-    <ShoppingCartContext.Provider value={{productList,total, index, myRef, handleSwapImages,removeProduct, addOnCart, getTotal, reduction, promotion, cart}}>
+    <ShoppingCartContext.Provider value={{
+      productList,total,
+      index, 
+      myRef,
+      cartBuyNow,
+      getTotalBuyNow,
+      handleSwapImages,
+      removeProduct, 
+      addOnCart, 
+      buyNow,
+      getTotal,
+      reduction, 
+      promotion, 
+      cart}}
+    >
       {children}
     </ShoppingCartContext.Provider>
   )

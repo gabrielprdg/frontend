@@ -1,6 +1,9 @@
 import { GetServerSideProps } from "next";
 import { Params } from "next/dist/server/router";
+import Link from "next/link";
+import Router from "next/router";
 import { api } from "../../../services/api";
+import { ColorOptions } from "../../components/ColorOptions";
 import { Header } from "../../components/Header";
 import { ProductProps } from '../../components/Product';
 import { useCart } from "../../contexts/ShoppingCartContext";
@@ -8,9 +11,14 @@ import styles from "./styles.module.scss";
 
 export default function ProductDetails({product}: ProductProps) {
 
-  const {addOnCart, handleSwapImages, index, myRef} = useCart()
+  const {addOnCart, buyNow, handleSwapImages, index, myRef} = useCart()
 
   console.log(`s`,product.id)
+
+  function setBuyNow (id: string) {
+    buyNow(id)
+    Router.push('/Checkout/Delivery')
+  }
 
   return(
     <div>
@@ -25,6 +33,20 @@ export default function ProductDetails({product}: ProductProps) {
             <h2>{product.name}</h2>
             <span>R${product.price}</span>
             <p>{product.description}</p>
+
+            <span className={styles.colorTitle}>Cores disponíveis :</span>
+            <div className={styles.colors}>
+              {product.colors ? product.colors.map(color => (
+                <ColorOptions color={color}/>
+              )): ''}
+            </div>
+
+            <span className={styles.sizeTitle}>Tamanho :</span>
+            <div className={styles.psize}>
+              {Array.isArray(product.productSize) ? product.productSize.map(size => (
+                <div className={styles.size}>{size}</div>
+              )): <div className={styles.size}>{product.productSize}</div>}
+            </div>
           </div>
           <div className={styles.images} ref={myRef}>
             {
@@ -35,8 +57,11 @@ export default function ProductDetails({product}: ProductProps) {
           </div>
           <div className={styles.buttons}>
             
-            <div className={styles.isColorfulButton}>Comprar agora</div>
-      
+        
+            <div className={styles.isColorfulButton} onClick={() => {setBuyNow(product.id)}}>
+              Comprar agora
+            </div>
+       
             
             <button className={styles.isLightButton} onClick={() => addOnCart(product.id)}>Adicionar ao carrinho</button>
      

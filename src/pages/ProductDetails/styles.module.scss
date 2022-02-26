@@ -12,11 +12,10 @@
 }
 
 .mainImg {
-  max-width: 500px;
-  min-width: 300px;
+  max-width: 400px;
+  min-width: 200px;
   overflow: hidden;
   margin: 25px;
-  border-radius: 16px;
 }
 
 .mainImg img {
@@ -56,6 +55,7 @@
   display: flex;
   cursor: pointer;
   margin: 10px 0;
+  margin-bottom: 20px;
 }
 
 .images img {
@@ -111,6 +111,36 @@
   margin-bottom: 1.5rem;
   cursor: pointer;
   outline: none;
+}
+
+.colors {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.colorTitle {
+  font-weight: 0.9rem;
+  margin: 10px 0 10px 0;
+  color: var(--black)
+}
+
+.sizeTitle {
+  font-weight: 0.9rem;
+  margin: 10px 0 10px 0;
+  color: var(--black)
+}
+
+.psize {
+  display: flex;
+}
+
+.size {
+  display: flex;
+  justify-content: center;
+  padding: 2px 22px;
+  border: 1px solid var(--black);
+  color: var(--black);
+  margin-bottom: 30px;
 }
 
 @media (max-width: 500px) {

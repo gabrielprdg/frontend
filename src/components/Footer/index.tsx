@@ -57,8 +57,7 @@ export function Footer() {
       </div>
 
       <div className={styles.rights}>
-        Use Fashin Store 2022 © Todos os Direitos Reservados. Desenvolvido por 
-        <Link href='https://www.instagram.com/gabrielpr7/'><span> Gabriel</span></Link>
+        Use Fashin Store 2022 © Todos os Direitos Reservados. Desenvolvido por Gabriel
       </div>
     </div>
   )

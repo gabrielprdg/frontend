@@ -25,4 +25,8 @@
   margin-right: 3px;
 }
 
-
+@media (max-width: 650px) {
+  .cards {
+    width: 24rem;
+  }
+}

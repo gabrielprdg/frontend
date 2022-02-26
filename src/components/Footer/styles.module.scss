@@ -55,11 +55,52 @@
 
 .rights {
   font-size: 13px;
-  margin-top: 2rem;
+  margin-top: 4rem;
   margin-left: 8.8rem;
 }
 
 .rights span {
   color:#b563cf;
   cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .footerContainer {
+    height: 29rem;
+  }
+  
+  .paymentMethod h2{
+    margin-right: 2.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .footerInfo{
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .contact h2 {
+    margin: 0.9rem 0rem;
+    color:#b563cf;
+  }
+
+  .socialMedia h2{
+    margin: 2rem 8.6rem 1rem 0rem;
+    color:#b563cf;
+  }
+
+  .rights {
+    margin: 1rem 4rem;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 412px) {
+  .rights {
+    margin: 1rem 5.4rem;
+    display: flex;
+    justify-content: center;
+  }
 }

@@ -6,3 +6,52 @@
   font-family: 'Poppins';
 }
 
+.checkoutPersonal {
+  display: flex;
+}
+
+.productToggle {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .checkoutPersonal {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .formPersonal {
+    opacity: 0.2;
+  }
+
+  .productToggle {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.3rem 1rem 1.7rem;
+    background-color: #b326ff;
+    color: white;
+    font-size: 1rem;
+  }
+
+  .totToggle {
+    font-size: 1.2rem;
+  }
+
+  .purchaseToggle {
+    display: block;
+    position: relative;
+    
+    top: 0px;
+    left: -69px;
+    background-color: white;
+    transition: 0.5s linear;
+
+  }
+
+  .noPurchaseToggle { 
+    display: none;
+  }
+}

@@ -14,7 +14,7 @@
 
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, minmax(320px, 1fr));
 }
 
 .titleProd {
@@ -36,22 +36,50 @@
   
   display: flex;
   justify-content: center;
-  margin-left: 50px;
+}
+
+.showTheRest {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+
+.showTheRest button {
+  outline: none;
+  cursor: pointer;
+  border: 3px solid var(--pink);
+  font-family: 'Poppins';
+  font-weight: 500;
+  color: var(--black);
+  padding: 6px;
+  margin-bottom: 4rem;
 }
 
 .dropDownContainer {
   margin-left: 135px;
 }
 
+.removeButton {
+  display: none;
+}
+.createB {
+  display: flex;
+}
+
 @media (max-width: 500px) {
   .contentHome {
     margin-left: 0;
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr,1fr));
+    grid-template-columns: repeat(2, minmax(167.5px, 1fr));
+    gap: 15px;
+    padding: 0 auto;
   }
 
   .dropDownContainer {

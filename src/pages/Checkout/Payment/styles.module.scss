@@ -1,7 +1,27 @@
 .paymentContainer {
   width: 1200px;
-  height: 800px;
+  height: 900px;
   font-family: 'Poppins';
+}
+
+.checkoutPayment {
+  display: flex;
+  flex-direction: column;
+}
+
+.f { 
+  display: flex;
+  flex-direction: row;
+}
+
+.formCard {
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+
+  border-right: 1px solid #808080;
+  border-left: 1px solid #808080;
 }
 
 .paymentMethods {
@@ -343,7 +363,7 @@
 }
 
 .buttonPayment {
-  margin: 15px 0;
+  margin: 15px;
   margin-left: 7rem;
   width: 40rem;
   height: 3rem;
@@ -391,5 +411,98 @@
 
 .formCard select:focus {
   outline: none !important;
+}
+
+.productToggle {
+  display: none;
+}
+
+.noPurchaseToggle {
+  margin-top: 2.5rem;
+
+}
+
+@media (max-width: 650px) {
+  .paymentContainer {
+    height: 600px;
+    font-family: 'Poppins';
+  }
+
+  .mercP {
+    width: 24rem;
+  }
+
+  .formCard {
+    width: 24rem;
+  }
+
+  .cardCont {
+    width:22rem;
+  }
+
+  .checkoutPayment {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .formPersonal {
+    opacity: 0.2;
+  }
+
+  .productToggle {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.3rem 1rem 1.7rem;
+    background-color: #b326ff;
+    color: white;
+    font-size: 1rem;
+  }
+
+  .totToggle {
+    font-size: 1.2rem;
+  }
+
+  .purchaseToggle {
+    display: block;
+    position: relative;
+
+    top: -448px;
+    left: -70px;
+    background-color: white;
+    transition: 0.5s linear;
+
+  }
+
+  .noPurchaseToggle { 
+    display: none;
+  }
+
+  .paymentMethods {
+    width: 100vw;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .paymentTitle {
+    margin-left: 1.5rem;
+  }
+
+
+  .modalCard {
+    width: 24rem;
+  }
+
+  .menuPaymentOptionOpacity {
+    opacity: 0.3;
+  }
+
+  .slipC {
+    width: 24rem;
+  }
 }
 

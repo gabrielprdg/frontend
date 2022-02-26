@@ -7,6 +7,8 @@ export type ProductType = {
   images: Array<Images>,
   name: string,
   description: string
+  colors?: string[]
+  productSize: string[]
   price: number
 }
 

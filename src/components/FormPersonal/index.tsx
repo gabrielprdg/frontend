@@ -19,7 +19,7 @@ export default function FormPersonal() {
 
   const { useProfile, setProfile } = SnapshotProfile()
   const { useProfileShipping, setProfileShipping } = SnapshotProfileShipping() 
-  const {  e_mail = '', doc = ''} = useProfile
+  const {  e_mail = ''} = useProfile
 
   useEffect(() => {
    
@@ -29,6 +29,8 @@ export default function FormPersonal() {
       setProfileShipping(JSON.parse(useProfileShippingData));
     }
   },[])
+
+
 
   useEffect(() => {
     localStorage.setItem('dataProfileShipping', JSON.stringify(useProfileShipping))
@@ -50,6 +52,8 @@ export default function FormPersonal() {
   return (
     <div className={styles.contentForm}>
       <form id='user-data' className={styles.formCheckout} onSubmit={handleSubmit(handleShippingData)}>
+       
+        
         <div
           className={styles.labelContact}
         >
@@ -73,9 +77,10 @@ export default function FormPersonal() {
         >
           Dados do destinatário
         </div>
-
+      
+        
         <TextField
-          {...register('name')}
+          {...register('firstName')}
           id="outlined-basic"
           label="Nome"
           variant="outlined"
@@ -100,7 +105,6 @@ export default function FormPersonal() {
           color="secondary"
           style={{ marginBottom: '13px',backgroundColor: 'white' }} 
         />
-
         <div
           className={styles.labelAdress}
         >
@@ -155,70 +159,69 @@ export default function FormPersonal() {
             color="secondary"
             style={{ marginBottom: '13px' ,backgroundColor: 'white', width: '22rem', marginRight:'1rem'}} 
           />
+
           <FormControl>
-            <InputLabel id="demo-simple-select-label" color='secondary'>Estado</InputLabel>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Estado"
-                {...register('state')}
-                defaultValue="Estado"
-                color="secondary"
-                className={styles.select}
-                style={{ height: '3.5rem', width:'4.2rem', backgroundColor: 'white'}}
+           <InputLabel id="demo-simple-select-label" color='secondary'>Estado</InputLabel>
+           <Select
+               labelId="demo-simple-select-label"
+               id="demo-simple-select"
+               label="Estado"
+               {...register('state')}
+               defaultValue="Estado"
+               color="secondary"
+               className={styles.select}
+               style={{ height: '3.5rem', width:'4.2rem', backgroundColor: 'white'}}
             >
-                <MenuItem value="AC">Acre</MenuItem>
-                <MenuItem value="AL">Alagoas</MenuItem>
-                <MenuItem value="AP">Amapá</MenuItem>
-                <MenuItem value="AM">Amazonas</MenuItem>
-                <MenuItem value="BA">Bahia</MenuItem>
-                <MenuItem value="CE">Ceará</MenuItem>
-                <MenuItem value="DF">Distrito Federal</MenuItem>
-                <MenuItem value="ES">Espírito Santo</MenuItem>
-                <MenuItem value="GO">Goiás</MenuItem>
-                <MenuItem value="MA">Maranhão</MenuItem>
-                <MenuItem value="MT">Mato Grosso</MenuItem>
-                <MenuItem value="MS">Mato Grosso do Sul</MenuItem>
-                <MenuItem value="MG">Minas Gerais</MenuItem>
-                <MenuItem value="PA">Pará</MenuItem>
-                <MenuItem value="PB">Paraíba</MenuItem>
-                <MenuItem value="PR">Paraná</MenuItem>
-                <MenuItem value="PE">Pernambuco</MenuItem>
-                <MenuItem value="PI">Piauí</MenuItem>
-                <MenuItem value="RJ">Rio de Janeiro</MenuItem>
-                <MenuItem value="RN">Rio Grande do Norte</MenuItem>
-                <MenuItem value="RS">Rio Grande do Sul</MenuItem>
-                <MenuItem value="RO">Rondônia</MenuItem>
-                <MenuItem value="RR">Roraima</MenuItem>
-                <MenuItem value="SC">Santa Catarina</MenuItem>
-                <MenuItem value="SP">São Paulo</MenuItem>
-                <MenuItem value="SE">Sergipe</MenuItem>
-                <MenuItem value="TO">Tocantins</MenuItem>
-                <MenuItem value="EX">Estrangeiro</MenuItem>
-          </Select>
-          </FormControl>
+               <MenuItem value="AC">Acre</MenuItem>
+               <MenuItem value="AL">Alagoas</MenuItem>
+               <MenuItem value="AP">Amapá</MenuItem>
+               <MenuItem value="AM">Amazonas</MenuItem>
+               <MenuItem value="BA">Bahia</MenuItem>
+               <MenuItem value="CE">Ceará</MenuItem>
+               <MenuItem value="DF">Distrito Federal</MenuItem>
+               <MenuItem value="ES">Espírito Santo</MenuItem>
+               <MenuItem value="GO">Goiás</MenuItem>
+               <MenuItem value="MA">Maranhão</MenuItem>
+               <MenuItem value="MT">Mato Grosso</MenuItem>
+               <MenuItem value="MS">Mato Grosso do Sul</MenuItem>
+               <MenuItem value="MG">Minas Gerais</MenuItem>
+               <MenuItem value="PA">Pará</MenuItem>
+               <MenuItem value="PB">Paraíba</MenuItem>
+               <MenuItem value="PR">Paraná</MenuItem>
+               <MenuItem value="PE">Pernambuco</MenuItem>
+               <MenuItem value="PI">Piauí</MenuItem>
+               <MenuItem value="RJ">Rio de Janeiro</MenuItem>
+               <MenuItem value="RN">Rio Grande do Norte</MenuItem>
+               <MenuItem value="RS">Rio Grande do Sul</MenuItem>
+               <MenuItem value="RO">Rondônia</MenuItem>
+               <MenuItem value="RR">Roraima</MenuItem>
+               <MenuItem value="SC">Santa Catarina</MenuItem>
+               <MenuItem value="SP">São Paulo</MenuItem>
+               <MenuItem value="SE">Sergipe</MenuItem>
+               <MenuItem value="TO">Tocantins</MenuItem>
+               <MenuItem value="EX">Estrangeiro</MenuItem>
+         </Select>
+         </FormControl>
+
         </div>
 
+       
         <div
-          className={styles.labelCharge}
+          className={styles.labelData}
         >
-          Dados de Cobrança
+          Dados do comprador
         </div>
+      
         
         <TextField
-          {...register('cpf')}
-          id="outlined-basic" 
-          label="CPF" 
-          variant="outlined" 
+          {...register('doc')}
+          id="outlined-basic"
+          label="CPF"
+          variant="outlined"
           color="secondary"
-          type="text"
-          data-checkout="docNumber"
-          onInput={(e) =>
-            inputFn('doc', (e.target as HTMLInputElement).value)
-          }
-          style={{ marginBottom: '13px', backgroundColor: 'white'}} 
-          value={doc}
+          style={{ marginBottom: '13px',backgroundColor: 'white' }} 
         />
+        
         <button id='user-data' type="submit" className={styles.toBeContinued}>Continuar</button>
       </form>
     </div>

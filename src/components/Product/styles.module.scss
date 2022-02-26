@@ -9,9 +9,11 @@
 }
 
 .name {
+  display: flex;
+  justify-content: center;
   margin-top: 0.4rem;
   margin-bottom: 0;
-  color: #4f4f4f;
+  color: var(--black);
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
@@ -21,7 +23,8 @@
   display: flex;
   align-items: center;
   background-color: white;
-  height: 350px;
+  height: 230px;
+  width: 230px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -35,9 +38,12 @@
 }
 
 .price {
-  color: #696969;
+  display: flex;
+  justify-content:center;
+  color: var(--black);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
+  margin-top: 4px;
   margin-bottom: 33px;
 }
 
@@ -71,6 +77,10 @@
     height: 100%;
     display: block;
     object-fit: cover;
+  }
+
+  .price {
+    margin-bottom: 0px;
   }
 
 }

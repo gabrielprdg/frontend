@@ -40,6 +40,7 @@ export interface SectionProps {
 export interface InstallmentsItemProps {
   installments: number
   recommended_message: string
+
 }
 
 type WithChildren = { children?: React.ReactNode }
@@ -52,6 +53,7 @@ export interface CheckoutProps {
   useProfileShipping: ProfileShipping
   setProfileShipping:Dispatch<SetStateAction<ProfileShipping>>
   formRef: MutableRefObject<HTMLFormElement>
+  cardNumberRef: any
 }
 
 const ElementContext = createContext<CheckoutProps>(null!)
@@ -65,6 +67,7 @@ export default function ElementProvider({
   formRef,
   useProfileShipping,
   setProfileShipping,
+  cardNumberRef
 }: ProviderProps) {
   return (
     <ElementContext.Provider
@@ -76,6 +79,7 @@ export default function ElementProvider({
         formRef,
         useProfileShipping,
         setProfileShipping,
+        cardNumberRef
       }}
     >
       {children}
@@ -105,4 +109,10 @@ export function SnapshotProfileShipping() {
   const context = useContext(ElementContext)
   const { useProfileShipping, setProfileShipping } = context
   return { useProfileShipping, setProfileShipping }
+}
+
+export function SnapshotCardNumberRef() {
+  const context = useContext(ElementContext)
+  const { cardNumberRef } = context
+  return { cardNumberRef }
 }

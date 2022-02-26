@@ -1,11 +1,17 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { api } from '../../../services/api'
-import { SnapshotInstallments, SnapshotProfile, SnapshotRef } from '../../contexts/PaymentContext'
+import { SnapshotInstallments, SnapshotProfile, SnapshotProfileShipping, SnapshotRef } from '../../contexts/PaymentContext'
 import { useCart } from '../../contexts/ShoppingCartContext'
 import MercadopagoErrorStatus from '../../utils/modules/MercadopagoErrorStatus'
 import styles from './styles.module.scss'
-
+import Image from 'next/image'
+import MasterCard from '../../../public/mastercard.svg'
+import Visa from '../../../public/visa.svg'
+import Amex from '../../../public/amex.svg'
+import HiperCard from '../../../public/hipercard.svg'
+import { TextField } from '@mui/material'
+import { ClipLoader, MoonLoader } from 'react-spinners'
 
 type PaymentData = {
   cardExpirationDate: string
@@ -54,10 +60,13 @@ type FormSubmitProps = (data: {
 export default function FormPayment() {
   const clickRef = useRef(true)
   const { total } = useCart()
-  const { useInstallments } = SnapshotInstallments()
+  const { useInstallments, setInstallments } = SnapshotInstallments()
   const { formRef } = SnapshotRef()
   const { useProfile, setProfile } = SnapshotProfile()
+  const { useProfileShipping } = SnapshotProfileShipping()
 
+  
+  const [loading, setLoading] = useState(false)
 
   const {
     card_number = '',
@@ -71,9 +80,35 @@ export default function FormPayment() {
     slt_installment = 1
   } = useProfile
 
-
   
+  const selectImageCard = (issuer: string| undefined) => {
+    console.log('man',issuer)
+    if(issuer == 'master'){
+      return(
+        <Image src={MasterCard}/>
+      )
+    }
 
+    if(issuer == 'visa'){
+      return(
+        <Image src={Visa}/>
+      )
+    }
+
+    if(issuer == 'amex'){
+      return(
+        <Image src={Amex}/>
+      )
+    }
+
+    if(issuer == 'hipercard'){
+      return(
+        <Image src={HiperCard}/>
+      )
+    }
+
+  }
+  
   const inputFn: InputProps = (data, val) =>
   setProfile((prevState) =>
     Object({
@@ -93,16 +128,18 @@ export default function FormPayment() {
   const formSubmit: FormSubmitProps = async (data) => {
     try {
       console.log(data)
-      const res = await api.post('/process_payment', data)
+      const res = await api.post('process_payment', data)
       console.log('DATA',res.data)
+      console.log(slt_installment)
       return res.data
     }catch(err:any) {
-      console.log(err)
+      console.log('err:', err)
     }
   }
 
   const confirmFn = () => {
-
+    setLoading(!loading)
+    
     if (clickRef.current) {
       clickRef.current = false
       window.Mercadopago.createToken(formRef.current, (status, response) => {
@@ -119,9 +156,10 @@ export default function FormPayment() {
             .then((data:any) => {
               console.log(data)
               const { status, body } = data
-
-              if (status === 200) {
-                toast.success('Compra realizada com sucesso!')
+              console.log('sts',status)
+              console.log('bd', body)
+              if (status === 201 || status === 200) {
+                
               } else {
                 toast.error('Erro interno do servidor!')
               }
@@ -141,7 +179,7 @@ export default function FormPayment() {
         } else if (status === 400) {
           const { cause } = response
           const [error] = cause
-
+          console.log(error)
           clickRef.current = true
           MercadopagoErrorStatus(error.code)
         } else {
@@ -196,9 +234,9 @@ export default function FormPayment() {
               value={card_number}
           
             />
-            <div className={styles.imageCard}>
-              oi {issuer}
-            </div>
+              <div className={styles.imageCard}>
+                {selectImageCard(issuer)}
+              </div>
           </div>
 
           <div className={styles.nameNasCv}>
@@ -219,43 +257,47 @@ export default function FormPayment() {
               />
             </div>
 
-            <div className={styles.fields}>
-              <label htmlFor="">Data de vencimento</label>
-              <div className={styles.exp}>
+            <div className={styles.expAndCvv}>
+              <div className={styles.fieldsForm}>
+                <label htmlFor="">Data de vencimento</label>
+                <div className={styles.exp}>
+                  <input 
+                    className={styles.expM} 
+                    type="text" placeholder="MM" 
+                    data-checkout="cardExpirationMonth"
+                    onInput={(e) =>
+                      inputValidFn('card_month', (e.target as HTMLInputElement).value)
+                    }
+                    value={card_month}
+                  />
+                  <span className="date-separator">/</span>
+                  <input 
+                    className={styles.expY} 
+                    type="text" placeholder="YY" 
+                    data-checkout="cardExpirationYear"
+                    onInput={(e) =>
+                      inputValidFn('card_year', (e.target as HTMLInputElement).value)
+                    }
+                    value={card_year}
+                  />
+                </div>
+              </div>
+              <div className={styles.cvvCard}>
+                <label htmlFor="securityCode">CVV</label>
                 <input 
-                  className={styles.expM} 
-                  type="text" placeholder="MM" 
-                  data-checkout="cardExpirationMonth"
+                  data-checkout="securityCode" 
+                  type="text" 
+                  className={styles.cvv}
                   onInput={(e) =>
-                    inputValidFn('card_month', (e.target as HTMLInputElement).value)
+                    inputValidFn('code', (e.target as HTMLInputElement).value)
                   }
-                  value={card_month}
-                />
-                <span className="date-separator">/</span>
-                <input 
-                  className={styles.expY} 
-                  type="text" placeholder="YY" 
-                  data-checkout="cardExpirationYear"
-                  onInput={(e) =>
-                    inputValidFn('card_year', (e.target as HTMLInputElement).value)
-                  }
-                  value={card_year}
+                  value={code}
                 />
               </div>
+             
             </div>
 
-            <div className={styles.cvvCard}>
-              <label htmlFor="securityCode">CVV</label>
-              <input 
-                data-checkout="securityCode" 
-                type="text" 
-                className={styles.cvv}
-                onInput={(e) =>
-                  inputValidFn('code', (e.target as HTMLInputElement).value)
-                }
-                value={code}
-              />
-            </div>
+       
           </div>
          
 
@@ -270,18 +312,35 @@ export default function FormPayment() {
             </select>
           </div>
 
-      
+          <div className={styles.docNumber}>
+          <select id="docType" data-checkout="docType" className={styles.docType}/>
+          <div className={styles.docGroup}>
+            <label> Numero do documento </label>
+            <input
+              type="text"
+              data-checkout="docNumber"
+              className={styles.docn}
+              onInput={(e) =>
+                inputFn('doc', (e.target as HTMLInputElement).value)
+              }
+              value={doc}
+            />
+          </div>
+        </div>
+ 
 
-          <div className={styles.hidden}>
+        <div className={styles.hidden}>
             <button 
               type="submit" 
               className={styles.buttonPayment} 
-              onClick={() => confirmFn()}
+              onClick={() => 
+                confirmFn()
+              }
             >
                 Pagar
-            </button>
-          </div>
-       </div>
+          </button> 
+        </div>
+      </div>
     </div>
   )
 }
