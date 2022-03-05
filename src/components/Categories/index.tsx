@@ -8,8 +8,8 @@ type CategoryProps = {
 export default function Categories({ct}: CategoryProps){
   return (
     <div className={styles.categoriesContainer}>
-      {ct.map(c => (
-        <div key={c.id} className={styles.category}>{c.name}</div>
+      {ct.map((c,i) => (
+        <div key={i} className={styles.category}>{c.name}</div>
       ))}
     </div>
   )

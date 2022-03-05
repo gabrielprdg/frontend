@@ -1,6 +1,7 @@
 
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import ArrowDownForm from '../../../../public/arrowdown.svg'
 import BankSlip from '../../../../public/codigo-de-barras.svg'
 import CreditCardIcon from '../../../../public/credit-card.png'
 import CreditCardSmall from '../../../../public/credit_card.svg'
@@ -8,19 +9,20 @@ import ArrowD from '../../../../public/diagonal-arrows.svg'
 import MercadoP from '../../../../public/mercadopago.svg'
 import Next from '../../../../public/next.svg'
 import Offline from '../../../../public/offline.svg'
+import ArrowDown from '../../../../public/seta-para-baixo.svg'
+import ArrowUp from '../../../../public/up-arrow.svg'
+import { api } from '../../../../services/api'
 import Cards from '../../../components/Cards'
+import { CheckoutMercadoPago } from '../../../components/CheckoutMercadoPago'
+import FormCheckoutTicket from '../../../components/FormCheckoutTicket'
 import FormPayment from '../../../components/FormPayment'
 import { Header } from '../../../components/Header'
 import PaymentCards from '../../../components/PaymentCards'
 import PurchaseProduct from '../../../components/PurchaseProduct'
-import { SnapshotCardNumberRef, SnapshotInstallments, SnapshotProfile, SnapshotProfileShipping, SnapshotRef } from '../../../contexts/PaymentContext'
+import PurchaseSuccessfuly from '../../../components/PurchaseSuccessfuly'
+import { SnapshotCardNumberRef, SnapshotInstallments, SnapshotProfile, SnapshotProfileShipping, SnapshotRef, SnapshotTicketRef } from '../../../contexts/PaymentContext'
 import { useCart } from '../../../contexts/ShoppingCartContext'
 import styles from './styles.module.scss'
-import ArrowDown from '../../../../public/seta-para-baixo.svg'
-import ArrowUp from '../../../../public/up-arrow.svg'
-import ArrowDownForm from '../../../../public/arrowdown.svg'
-import Lottie from 'react-lottie'
-import animationData from '../../../../public/animationOk.json'
 
 export function checkFn() {
   window.Mercadopago?.setPublishableKey(
@@ -36,11 +38,12 @@ export default function Payment (){
   const [openMercadoPagoOption, setOpenMercadoPagoOption] = useState(false)
 
   
-  const { total, cartBuyNow } = useCart()
+  const { total, cartBuyNow, isAproved } = useCart()
   const { useProfile, setProfile } = SnapshotProfile()
   const { cardNumberRef } = SnapshotCardNumberRef()
  
   const { formRef } = SnapshotRef()
+  const { formTicketRef } = SnapshotTicketRef()
   const { card_number = '', issuer } = useProfile
   const { setInstallments } = SnapshotInstallments()
 
@@ -127,8 +130,17 @@ export default function Payment (){
     }
   }, [card_number])
 
+  const formSubmit: any = async (data:any) => {
+    try {
+      console.log(data)
+      const res = await api.post('process_payment', data)
+      return res.data
+    }catch(err:any) {
+      console.log('err:', err)
+    }
+  }
 
-
+ 
 
   function handleOpenCardOption() {
     setOpenCardOption(!openCardOption)
@@ -145,57 +157,50 @@ export default function Payment (){
   }
 
 
-   
-  const defaultOptions = {
-    loop: true,
-    autoplay: true, 
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
-    }
-  };
-
   return (
     <div className={styles.paymentContainer}>
       <Header isLoginPage/>
     
-      <div className={styles.f}>
+      <div className={!isAproved ? styles.noShowPurchase : ''}>
+        <PurchaseSuccessfuly/>
+      </div>
+      <div className={!isAproved ? styles.f : styles.nof}>
       <div className={styles.checkoutPayment}>
 
-<div className={styles.productToggle} onClick={() => {handleOpenToggle()}}>
-  {!isOpen ?  
-    <div className={styles.arrowDown}>
-      <Image src={ArrowDown}/>
-    </div>  
-  :
-    <div className={styles.arrowDown}>
-      <Image src={ArrowUp}/>
-    </div>
-  }
+      <div className={styles.productToggle} onClick={() => {handleOpenToggle()}}>
+        {!isOpen ?  
+          <div className={styles.arrowDown}>
+            <Image src={ArrowDown}/>
+          </div>  
+          :
+          <div className={styles.arrowDown}>
+            <Image src={ArrowUp}/>
+          </div>
+        }
     
-  <div>
-    Ver detalhes do pedido
-  </div>
+        <div>
+          Ver detalhes do pedido
+        </div>
 
-  {cartBuyNow?.price ? 
-    <div className={styles.totToggle}>
-      R${cartBuyNow?.price}
-    </div>
-  :
-    <div className={styles.totToggle}>
-      R${total}
-    </div>
-  }    
-</div>
+        {cartBuyNow?.price ? 
+          <div className={styles.totToggle}>
+            R${cartBuyNow?.price}
+          </div>
+        :
+          <div className={styles.totToggle}>
+            R${total}
+          </div>
+        }    
+        </div>
 
-<div className={styles.paymentTitle}>Formas de pagamento</div>
+      <div className={styles.paymentTitle}>Formas de pagamento</div>
 
-<div className={styles.paymentMethods}>
+      <div className={styles.paymentMethods}>
 
-  <div className={ !isOpen ? styles.menuPaymentOption: styles.menuPaymentOptionOpacity}>
+      <div className={ !isOpen ? styles.menuPaymentOption: styles.menuPaymentOptionOpacity}>
 
-    <div className={openBankSlipOption || openMercadoPagoOption ? styles.noCreditCard : styles.cc}>
-      <div className={styles.modalCard} onClick={() => handleOpenCardOption()}>
+      <div className={openBankSlipOption || openMercadoPagoOption ? styles.noCreditCard : styles.cc}>
+        <div className={styles.modalCard} onClick={() => handleOpenCardOption()}>
 
         <div className={styles.cardAndText}>
           <div className={styles.imageCard}>
@@ -270,6 +275,18 @@ export default function Payment (){
             {useProfileShipping?.doc}
           </div>
         </div>
+
+        <div className={!openBankSlipOption ? styles.noTicket : styles.ticket}>
+          <form 
+            id="paymentForm" 
+            className={styles.formTicket} ref={formTicketRef}
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <FormCheckoutTicket/>
+          </form>
+        </div>
+        
+
       </div>
     </div>
 
@@ -317,18 +334,27 @@ export default function Payment (){
           <div>
             Boleto Bancário
           </div>
-          
-            </div>
-            </div>
-              </div>     
-            </div>
+        </div>
+
+        <div className={!openMercadoPagoOption ? styles.noTicket : styles.ticket}>
+          <form 
+            id="paymentForm" 
+            className={styles.formTicket} 
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <CheckoutMercadoPago/>
+          </form>
+        </div>
+
+          </div>
+          </div>     
+          </div>
           </div>
         </div>
+      </div>
 
-
-        <div className={isOpen ? styles.purchaseToggle: styles.noPurchaseToggle}>
-          <PurchaseProduct/>
-        </div>
+      <div className={isOpen ? styles.purchaseToggle: styles.noPurchaseToggle}>
+        <PurchaseProduct/>
       </div>
       
     </div>

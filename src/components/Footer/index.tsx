@@ -44,12 +44,16 @@ export function Footer() {
           <div className={styles.medias}>
             <div>
               <Link href='https://www.instagram.com/use_fashionstorelook/'>
-                <Image src={Insta}/>
+                <div>
+                  <Image src={Insta}/>
+                </div>
               </Link>
             </div>
             <div>
               <Link href='api.whatsapp.com/send?phone=553592363011'>
-                <Image src={Whatsapp}/>
+                <div>
+                  <Image src={Whatsapp}/>
+                </div>
               </Link>
             </div>
           </div>

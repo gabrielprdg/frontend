@@ -1,0 +1,203 @@
+.ticketContainer {
+  width: 100vw;
+  height: 600px;
+  font-family: 'Poppins';
+  display: flex;
+  justify-content: center;
+}
+
+.ticketModal {
+  width: 1000px;
+  height: 530px;
+  margin: 3.1rem 6rem;
+  padding-left: 3rem;
+  padding-top: 3rem;
+  background-color: white;
+  border-radius: 14px;
+  box-shadow: inset 0 0 1px var(--black), 0 0 1px var(--black);
+}
+
+.ticketTitle {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.title {
+  margin-left: 15px;
+}
+
+.barcode {
+  display: flex;
+  margin-top: 40px;
+}
+
+.okLogo {
+  width: 50px;
+  height: 50px;
+}
+.codeContent {
+  margin-right: 3rem;
+  
+}
+
+.codPayment {
+  font-weight: 600;
+  color: var(--black);
+}
+
+.cod {
+  margin-top: 15px;
+  margin-bottom: 13px;
+  width: 37rem;
+  word-break: break-all;
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.bar {
+  font-weight: 600;
+  color: var(--black);
+  margin-left: 4px;
+}
+
+.infoTitle {
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 2rem;
+  margin-top: 11px;
+}
+
+.requestNumber {
+  display: flex;
+}
+
+.requestDate {
+  display: flex;
+}
+
+.value {
+  display: flex;
+}
+
+.requestNumber div{
+  margin-right: 20px;
+}
+
+.requestDate div{
+  margin-right: 47px;
+}
+
+.value div{
+  margin-right: 130px;
+}
+
+.requestNumber span{
+  color: var(--black);
+}
+
+.requestDate span{
+  color: var(--black);
+}
+
+.value span{
+  color: var(--black);
+}
+
+.paymentInfo {
+  margin-bottom: 2rem;
+}
+
+.back {
+  color: var(--pink);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.saveDoc {
+  margin-top: 5px;
+  color: var(--pink);
+  font-weight: 600;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 650px) {
+
+  .ticketContainer {
+    width: 100vw;
+    height: 780px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ticketModal {
+    display: flex;
+    flex-direction: column;
+    margin-top: 47rem;
+    height: 780px;
+    margin: 0;
+    border-radius: 0px;
+    box-shadow: none;
+  }
+  
+  .barcode {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .okLogo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .codPayment {
+    font-size: 17px;
+  }
+
+  .cod {
+    width: 17rem;
+  }
+
+  .bar {
+    font-size: 17px;
+    margin-bottom: 5px;
+    margin-top: 30px;
+    margin-left: 0;
+  }
+
+  .barPic {
+    margin-right: 4px;
+  }
+
+  .saveDoc {
+    margin-left: 0;
+  }
+
+  .infoTitle {
+    margin-top: 30px;
+  }
+
+  .requestNumber {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .requestDate {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .value {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .paymentInfo {
+    margin-right: 3rem;
+  }
+}
+

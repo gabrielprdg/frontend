@@ -1,17 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
+import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
+import Amex from '../../../public/amex.svg'
+import HiperCard from '../../../public/hipercard.svg'
+import MasterCard from '../../../public/mastercard.svg'
+import Visa from '../../../public/visa.svg'
 import { api } from '../../../services/api'
 import { SnapshotInstallments, SnapshotProfile, SnapshotProfileShipping, SnapshotRef } from '../../contexts/PaymentContext'
 import { useCart } from '../../contexts/ShoppingCartContext'
 import MercadopagoErrorStatus from '../../utils/modules/MercadopagoErrorStatus'
 import styles from './styles.module.scss'
-import Image from 'next/image'
-import MasterCard from '../../../public/mastercard.svg'
-import Visa from '../../../public/visa.svg'
-import Amex from '../../../public/amex.svg'
-import HiperCard from '../../../public/hipercard.svg'
-import { TextField } from '@mui/material'
-import { ClipLoader, MoonLoader } from 'react-spinners'
 
 type PaymentData = {
   cardExpirationDate: string
@@ -59,7 +57,7 @@ type FormSubmitProps = (data: {
  
 export default function FormPayment() {
   const clickRef = useRef(true)
-  const { total } = useCart()
+  const { total, purchaseAproved, cartBuyNow } = useCart()
   const { useInstallments, setInstallments } = SnapshotInstallments()
   const { formRef } = SnapshotRef()
   const { useProfile, setProfile } = SnapshotProfile()
@@ -67,6 +65,7 @@ export default function FormPayment() {
 
   
   const [loading, setLoading] = useState(false)
+ 
 
   const {
     card_number = '',
@@ -145,10 +144,11 @@ export default function FormPayment() {
       window.Mercadopago.createToken(formRef.current, (status, response) => {
         if (status === 200 || status === 201) {
           console.log(response, issuer)
+          console.log('cartBuyNow',typeof(total))
           formSubmit({
             token: response.id,
             payment_method_id: issuer,
-            transaction_amount: total,
+            transaction_amount: Number(cartBuyNow.price) ,
             description: 'Vestuário Comprado',
             installments: slt_installment,
             email: e_mail
@@ -159,7 +159,7 @@ export default function FormPayment() {
               console.log('sts',status)
               console.log('bd', body)
               if (status === 201 || status === 200) {
-                
+                toast.success('compra efetuada with sucess')
               } else {
                 toast.error('Erro interno do servidor!')
               }
@@ -337,7 +337,7 @@ export default function FormPayment() {
                 confirmFn()
               }
             >
-                Pagar
+                Finalizar pedido
           </button> 
         </div>
       </div>

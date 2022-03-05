@@ -1,5 +1,22 @@
 import { createContext, useContext, Dispatch, SetStateAction, MutableRefObject } from 'react'
 
+export type BarCode = {
+  content: string
+}
+
+export type TransactionDetailsProps = {
+  external_resource_url: string
+  payment_method_reference_id: string
+}
+
+export type TicketProps = {
+  barcode: BarCode
+  date_created: string
+  date_of_expiration: string
+  status: string
+  transaction_details: TransactionDetailsProps
+}
+
 export type Address = {
   streetName: string
   streetNumber: string
@@ -37,6 +54,10 @@ export interface SectionProps {
   id?: number
 }
 
+export type MercadoPagoProps = {
+  init_point: string
+}
+
 export interface InstallmentsItemProps {
   installments: number
   recommended_message: string
@@ -48,11 +69,16 @@ type ProviderProps = WithChildren & CheckoutProps
 export interface CheckoutProps {
   useProfile: ProfileProps
   setProfile: Dispatch<SetStateAction<ProfileProps>>
+  ticketPayment: TicketProps
+  setTicketPayment: Dispatch<SetStateAction<TicketProps>>
+  mercadoPagoPayment: MercadoPagoProps
+  setMercadoPagoPayment: Dispatch<SetStateAction<MercadoPagoProps>>
   useInstallments: InstallmentsItemProps[]
   setInstallments: Dispatch<SetStateAction<InstallmentsItemProps[]>>
   useProfileShipping: ProfileShipping
   setProfileShipping:Dispatch<SetStateAction<ProfileShipping>>
   formRef: MutableRefObject<HTMLFormElement>
+  formTicketRef: MutableRefObject<HTMLFormElement>
   cardNumberRef: any
 }
 
@@ -62,9 +88,14 @@ export default function ElementProvider({
   children,
   useProfile,
   setProfile,
+  ticketPayment,
+  setTicketPayment,
+  mercadoPagoPayment,
+  setMercadoPagoPayment,
   useInstallments,
   setInstallments,
   formRef,
+  formTicketRef,
   useProfileShipping,
   setProfileShipping,
   cardNumberRef
@@ -74,9 +105,14 @@ export default function ElementProvider({
       value={{
         useProfile,
         setProfile,
+        ticketPayment,
+        setTicketPayment,
+        mercadoPagoPayment,
+        setMercadoPagoPayment,
         useInstallments,
         setInstallments,
         formRef,
+        formTicketRef,
         useProfileShipping,
         setProfileShipping,
         cardNumberRef
@@ -103,6 +139,25 @@ export function SnapshotRef() {
   const context = useContext(ElementContext)
   const { formRef } = context
   return { formRef }
+}
+
+
+export function SnapshotTicket() {
+  const context = useContext(ElementContext)
+  const {  ticketPayment, setTicketPayment } = context
+  return { ticketPayment, setTicketPayment,}
+}
+
+export function SnapshotMercadoPago() {
+  const context = useContext(ElementContext)
+  const { mercadoPagoPayment, setMercadoPagoPayment } = context
+  return { mercadoPagoPayment, setMercadoPagoPayment }
+}
+
+export function SnapshotTicketRef() {
+  const context = useContext(ElementContext)
+  const { formTicketRef } = context
+  return { formTicketRef }
 }
 
 export function SnapshotProfileShipping() {

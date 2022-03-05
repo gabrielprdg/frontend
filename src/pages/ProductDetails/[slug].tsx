@@ -34,19 +34,27 @@ export default function ProductDetails({product}: ProductProps) {
             <span>R${product.price}</span>
             <p>{product.description}</p>
 
-            <span className={styles.colorTitle}>Cores disponíveis :</span>
+            {product.colors ? (
+              <span className={styles.colorTitle}>Cores disponíveis :</span>
+            ): ''}
             <div className={styles.colors}>
               {product.colors ? product.colors.map(color => (
                 <ColorOptions color={color}/>
               )): ''}
             </div>
 
-            <span className={styles.sizeTitle}>Tamanho :</span>
-            <div className={styles.psize}>
-              {Array.isArray(product.productSize) ? product.productSize.map(size => (
-                <div className={styles.size}>{size}</div>
-              )): <div className={styles.size}>{product.productSize}</div>}
-            </div>
+            {product.productSize ? (
+              <span className={styles.sizeTitle}>Tamanho :</span>
+            ): ''}
+        
+            {product.productSize ? (
+              <div className={styles.psize}>
+                {Array.isArray(product.productSize) ? product.productSize.map(size => (
+                  <div className={styles.size}>{size}</div>
+                )): <div className={styles.size}>{product.productSize}</div>}
+              </div>
+            ) : ''}
+            
           </div>
           <div className={styles.images} ref={myRef}>
             {

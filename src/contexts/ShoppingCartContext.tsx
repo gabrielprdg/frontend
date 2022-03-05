@@ -19,14 +19,16 @@ type ShoppingCartContextData = {
   cart: Array<ProductData>
   index: number
   cartBuyNow: ProductData 
+  isAproved: boolean
   addOnCart: (id: string) => void
   buyNow: (id: string) => void
-  getTotalBuyNow: () => void
+
   reduction: (id: string) => void
   promotion: (id: string) => void
   getTotal: () => void
   removeProduct: (id: string) => void
   handleSwapImages: (index: number) => void
+  purchaseAproved: () => void
   total: number
   myRef: any
 }
@@ -43,7 +45,12 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   const [cart, setCart] = useState<ProductData[]>([])
   const [total, setTotal] = useState(0)
   const [index, setIndex] = useState(0)
+  const [isAproved, setIsAproved] = useState(false)
   const myRef = useRef<HTMLDivElement>(null)
+
+  function purchaseAproved() {
+    setIsAproved(!isAproved)
+  }
   
   async function productData() {
     const products = await api.get('products')
@@ -63,7 +70,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     }
 
     if(totalData) {
-      setTotal(JSON.parse(totalData))
+      setTotal(Number(totalData))
     }
 
     if(cartBuyNowData) {
@@ -76,7 +83,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   
   useEffect(() => {
     localStorage.setItem('dataCart', JSON.stringify(cart))
-    localStorage.setItem('dataTotal', JSON.stringify(total))
+    localStorage.setItem('dataTotal', total?.toString())
     localStorage.setItem('dataCartBuyNow', JSON.stringify(cartBuyNow))
   },[cart,total,cartBuyNow])
 
@@ -107,7 +114,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     console.log('ddd', productInBuyNow[0])
 
     setCartBuyNow(productInBuyNow[0])
-    getTotalBuyNow()
+    setTotal(Number(productInBuyNow[0].price))
   }
 
   function reduction (id:string) {
@@ -134,17 +141,13 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     getTotal()
   }
 
-  function getTotalBuyNow() {
-    setTotal(cartBuyNow.price)
-  }
-
   function getTotal() {
     const tot = cart.reduce((prev, item) => {
       console.log('prev',prev)
       return prev + (item.price * item.count)
     },0)
     
-    setTotal(parseFloat(tot.toFixed(2)))
+    setTotal(Number(tot.toFixed(2)))
   }
 
   function removeProduct(id: string) {
@@ -175,7 +178,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       index, 
       myRef,
       cartBuyNow,
-      getTotalBuyNow,
+      isAproved,
       handleSwapImages,
       removeProduct, 
       addOnCart, 
@@ -183,6 +186,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       getTotal,
       reduction, 
       promotion, 
+      purchaseAproved,
       cart}}
     >
       {children}

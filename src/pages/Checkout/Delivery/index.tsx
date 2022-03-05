@@ -12,7 +12,7 @@ import { useCart } from '../../../contexts/ShoppingCartContext'
 export default function Delivery () {
   const [isOpen, setIsOpen] = useState(false)
   
-  const { cartBuyNow, total } = useCart()
+  const { cartBuyNow, total, cart } = useCart()
 
   function handleOpenToggle (){
     setIsOpen(!isOpen)
@@ -36,13 +36,12 @@ export default function Delivery () {
           <div>
             Ver detalhes de pedido
           </div>
-          {cartBuyNow?.price  ? 
+          {cartBuyNow?.price && cart.length == 0 ? 
             <div className={styles.totToggle}>
               R${cartBuyNow?.price}
             </div>
           : 
             <div className={styles.totToggle}>
-              
               R${total}
             </div>
           }
