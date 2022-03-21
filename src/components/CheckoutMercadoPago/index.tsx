@@ -1,12 +1,9 @@
-import { useCart } from '../../contexts/ShoppingCartContext';
-import styles from './styles.module.scss'
-import mercadopago from 'mercadopago'
-import { mercadopagoApi } from '../../../services/apiMercadoPago';
-import { api } from '../../../services/api';
+import Router from 'next/router';
 import { toast } from 'react-toastify';
+import { api } from '../../../services/api';
 import { SnapshotMercadoPago } from '../../contexts/PaymentContext';
-import Link from 'next/link';
-import Router  from 'next/router';
+import { useCart } from '../../contexts/ShoppingCartContext';
+import styles from './styles.module.scss';
 
 type ItemsProps = {
   title: string
