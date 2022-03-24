@@ -48,7 +48,7 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
     setIsFetchingData(!isFechtingData)
   }
 
-  console.log('oi',user?.name)
+  console.log()
   return(
     <div>
       <Header isLoginPage={false}/>
@@ -91,6 +91,7 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
   const products = await api.get('products')
   const prod = products.data
+  console.log('prod1')
 
   const latestProducts = prod.slice(0, 9)
 

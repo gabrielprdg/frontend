@@ -16,6 +16,7 @@ export default function ProductDetails({product}: ProductProps) {
   console.log(`s`,product.id)
 
   function setBuyNow (id: string) {
+    console.log('idpr',id)
     buyNow(id)
     Router.push('/Checkout/Delivery')
   }

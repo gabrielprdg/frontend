@@ -56,7 +56,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     try {
       const products = await api.get('products')
       const prod = products.data
-      
+      console.log('prod',prod)
       setProductList(prod)
     }catch(err) {
       console.log(err)
@@ -78,7 +78,12 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     }
 
     if(cartBuyNowData) {
-      setCartBuyNow(JSON.parse(cartBuyNowData))
+      try {
+        setCartBuyNow(JSON.parse(cartBuyNowData))
+      } catch(err) {
+        console.log(err)
+      }
+      
     }
 
     productData()
