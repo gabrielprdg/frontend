@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: process.env.BASE_URL as string
+    baseURL: 'https://api.usefashionstorelook.com.br/'
 })
 
 console.log(process.env.BASE_URL)

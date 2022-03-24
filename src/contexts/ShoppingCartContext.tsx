@@ -63,6 +63,12 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     }
   };
 
+  useEffect(() => {
+    localStorage.setItem('dataCart', JSON.stringify(cart))
+    localStorage.setItem('dataTotal', total?.toString())
+    localStorage.setItem('dataCartBuyNow', JSON.stringify(cartBuyNow))
+  },[cart,total,cartBuyNow])
+
   useEffect (() => {
     
     const cartData = localStorage.getItem('dataCart')
@@ -90,11 +96,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
 
   },[])
   
-  useEffect(() => {
-    localStorage.setItem('dataCart', JSON.stringify(cart))
-    localStorage.setItem('dataTotal', total?.toString())
-    localStorage.setItem('dataCartBuyNow', JSON.stringify(cartBuyNow))
-  },[cart,total,cartBuyNow])
+
 
   function addOnCart (id: string) {
     console.log(productList,process.env.PUBLIC_KEY_MERCADO_PAGO)

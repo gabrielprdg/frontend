@@ -88,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async ({params}: Params) =
 
   const productData = await api.get(`product/${slug}`)
   const product = productData.data
+  console.log('prx', product)
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
