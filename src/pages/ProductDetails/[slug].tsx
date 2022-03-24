@@ -65,7 +65,7 @@ export default function ProductDetails({product}: ProductProps) {
           </div>
           <div className={styles.buttons}>
             
-        
+            
             <div className={styles.isColorfulButton} onClick={() => {setBuyNow(product.id)}}>
               Comprar agora
             </div>

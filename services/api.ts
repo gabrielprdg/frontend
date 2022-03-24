@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.BASE_URL as string
 })
 
+console.log(process.env.BASE_URL)

@@ -53,10 +53,14 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   }
   
   async function productData() {
-    const products = await api.get('products')
-    const prod = products.data
-    
-    setProductList(prod)
+    try {
+      const products = await api.get('products')
+      const prod = products.data
+      
+      setProductList(prod)
+    }catch(err) {
+      console.log(err)
+    }
   };
 
   useEffect (() => {
@@ -114,7 +118,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     console.log('ddd', productInBuyNow[0])
 
     setCartBuyNow(productInBuyNow[0])
-    setTotal(Number(productInBuyNow[0].price))
+    setTotal(Number(productInBuyNow[0]?.price))
   }
 
   function reduction (id:string) {
