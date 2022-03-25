@@ -26,10 +26,10 @@ import styles from './styles.module.scss'
 
 export function checkFn() {
   window.Mercadopago?.setPublishableKey(
-    'TEST-57ab01b0-15a9-42a8-8da8-72194265fd45'
+    process.env.PUBLIC_KEY as string
   )
-  const p = window.Mercadopago?.getIdentificationTypes()
-  console.log('docType', p)
+  window.Mercadopago?.getIdentificationTypes()
+  console.log('docType', process.env.PUBLIC_KEY)
 }
 
 export default function Payment (){
