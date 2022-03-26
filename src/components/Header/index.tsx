@@ -32,7 +32,7 @@ export function Header({isLoginPage, isAdminPage}: HeaderProps){
           <Link href="/">
             <div className={styles.title}>
               <h2 className={styles.use}>
-                Use
+                {process.env.PUBLIC_KEY_MERCADO_PAGO}
               </h2>
               <div className={styles.fsl}>
                 FashionStoreLook
