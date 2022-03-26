@@ -32,7 +32,7 @@ export function Header({isLoginPage, isAdminPage}: HeaderProps){
           <Link href="/">
             <div className={styles.title}>
               <h2 className={styles.use}>
-                {process.env.BASE_URL}
+                Use
               </h2>
               <div className={styles.fsl}>
                 FashionStoreLook
