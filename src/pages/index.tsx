@@ -57,7 +57,7 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
       
       <div className={styles.topic}> 
         <span className={styles.dash}></span>
-          <p className={styles.titleProd}>{process.env.PUBLIC_KEY_MERCADO_PAGO} </p>
+          <p className={styles.titleProd}>f{process.env.PUBLIC_KEY_MERCADO_PAGO} </p>
         <span className={styles.dash}></span>
       </div>
 
