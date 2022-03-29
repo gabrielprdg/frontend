@@ -315,7 +315,7 @@ export default function FormPayment() {
           <div className={styles.docNumber}>
           <select id="docType" data-checkout="docType" className={styles.docType}/>
           <div className={styles.docGroup}>
-            <label> Numero do documento </label>
+            <label> Num. documento </label>
             <input
               type="text"
               data-checkout="docNumber"

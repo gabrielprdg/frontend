@@ -436,6 +436,10 @@
   border-left: 1px solid #808080;
 }
 
+.cardCont {
+  height: 640px;
+}
+
 .formCard label{
   margin-top: 5px;
   margin-bottom: 5px;
@@ -518,7 +522,7 @@
   .purchaseToggle {
     display: block;
     position: relative;
-
+    height: 100vh;
     top: -448px;
     left: -70px;
     background-color: white;

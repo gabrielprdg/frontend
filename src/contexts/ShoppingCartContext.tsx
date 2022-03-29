@@ -53,15 +53,11 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   }
   
   async function productData() {
-    try {
-      const products = await api.get('products')
-      const prod = products.data
-      console.log('prod',prod)
-      setProductList(prod)
-    }catch(err) {
-      console.log(err)
-    }
-  };
+    const products = await api.get('products')
+    const prod = products.data
+    console.log('prod',prod)
+    setProductList(prod)
+  }
 
   useEffect(() => {
     localStorage.setItem('dataCart', JSON.stringify(cart))

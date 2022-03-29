@@ -90,6 +90,7 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const products = await api.get('products')
+
   const prod = products.data
   console.log('prod1')
 
