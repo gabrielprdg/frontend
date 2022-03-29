@@ -521,9 +521,9 @@
 
   .purchaseToggle {
     display: block;
-    position: relative;
+    position: absolute;
     height: 100vh;
-    top: -448px;
+    top: 132px;
     left: -70px;
     background-color: white;
     transition: 0.5s linear;
