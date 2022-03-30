@@ -112,8 +112,13 @@
   .contentForm{
     position: absolute;
 
-    padding-left: 2.5rem;
-    width: 22rem;
+    padding-left: 0;
+
+
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+
   }
 
   .formCheckout {
