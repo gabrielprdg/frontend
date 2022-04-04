@@ -29,4 +29,8 @@
     padding-left: 6rem;
     overflow-x: auto;
   }
+
+  .categoriesContainer::-webkit-scrollbar {
+    width: 0;
+  }
 }
