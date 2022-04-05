@@ -1,16 +1,22 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { A11y, Navigation, Pagination, Scrollbar } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import Image from 'next/image'
-import styles from './styles.module.scss'
-import Ban1 from '../../../public/ban1.jpg'
-import Ban2 from '../../../public/ban2.png'
-import { style } from '@mui/system';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import Ban1 from '../../../public/ban1.jpg';
+import Ban2 from '../../../public/ban2.png';
+import styles from './styles.module.scss';
 
 export default function Slider() {
+  const [ screenSize, setScreenSize] = useState(0)
+
+  useEffect(() => {
+    setScreenSize(window.screen.width)
+  },[])
+
   return (
     <Swiper
       // install Swiper modules
@@ -25,27 +31,32 @@ export default function Slider() {
       onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide>
-        { globalThis.innerWidth < 640 ? 
+        {screenSize < 640 ? 
           <Image 
             src={Ban1}
-            width={1500}
-            height={1300}
+            className={styles.firstBanner}
+            width={600}
+            height={400}
             objectFit='cover'
-          /> 
-          : 
-          <Image 
-            src={Ban1}
+          />
+          :
+          <Image
+            src={Ban2}
           /> 
         }
+       
+        
+        
       </SwiperSlide>
       <SwiperSlide>
-        {console.log(globalThis.innerWidth)}
-        {globalThis.innerWidth < 640 ? 
+        
+        {console.log('fb', screenSize)}
+        {screenSize < 640 ? 
           <Image 
             src={Ban2}
+            width={600}
+            height={400}
             objectFit='cover'
-            width={1500}
-            height={1300}
           /> 
           : 
           <Image
