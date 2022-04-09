@@ -41,7 +41,7 @@ export default function Slider() {
           />
           :
           <Image
-            src={Ban2}
+            src={Ban1}
           /> 
         }
        
@@ -50,7 +50,7 @@ export default function Slider() {
       </SwiperSlide>
       <SwiperSlide>
         
-        {console.log('fb', screenSize)}
+        
         {screenSize < 640 ? 
           <Image 
             src={Ban2}

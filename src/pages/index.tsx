@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext'
 import  Slider  from '../components/Slider'
 import styles from './home.module.scss'
 import Categories from '../components/Categories'
-import { useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 export type Images = {
   name: string
@@ -16,7 +16,7 @@ export type Images = {
   url: string
 }
 
-type Product = {
+export type Product = {
   id: string
   images: Array<Images>
   name: string,
@@ -43,12 +43,35 @@ type HomeProps = {
 export default function Home({ prod, latestProducts, categories }: HomeProps) {
   const { user } = useAuth()
   const [isFechtingData, setIsFetchingData] = useState(false)
-
+  const [ category, setCategory ] = useState('')
+  const [ productsByCat, setProductsByCat] = useState<Product[]>([])
   function loadAllProducts() {
     setIsFetchingData(!isFechtingData)
   }
 
-  console.log()
+  function handleOptions() {
+    setIsFetchingData(!isFechtingData)
+  }
+
+  async function getCategory(category: string) {
+    try {
+     
+      setCategory(category)
+      const productsByCategory:any = await api.get(`products/${category}`)
+      console.log('e', productsByCategory.data)
+      setProductsByCat(productsByCategory.data)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    console.log('pro', productsByCat)
+
+  },[])
+
+ 
+
   return(
     <div>
       <Header isLoginPage={false}/>
@@ -61,19 +84,35 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
         <span className={styles.dash}></span>
       </div>
 
-      <Categories ct={categories}/>
+      <Categories ct={categories} getCategory={getCategory} handleOptions={handleOptions}/>
 
       <div className={styles.contentHome}>
         <div className={styles.products}>
-          {!isFechtingData ? latestProducts.map((value,index) => {
-            return(
-              <Product key={value.id} product={value}/>
-            )
-          }): prod.map((value,index) => {
+        {
+          //Condition 1
+          !isFechtingData ?
+          //Condition 2
+          productsByCat.length ?
+            //Expression 1           
+            productsByCat.map((value,index) => {
             return(
               <Product key={value.id} product={value}/>
             )
           })
+          : 
+          //Expression 2
+          latestProducts.map((value,index) => {
+            return(
+                <Product key={value.id} product={value}/>
+              )
+            })
+          :
+          //Expression 3
+          prod.map((value,index) => {
+            return(
+              <Product key={value.id} product={value}/>
+            )
+           })
         }
         </div>
       </div>
@@ -90,6 +129,7 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const products = await api.get('products')
+  
 
   const prod = products.data
   console.log('prod1')

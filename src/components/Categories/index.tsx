@@ -3,14 +3,23 @@ import styles from './styles.module.scss'
 
 type CategoryProps = {
   ct: Category[]
+  getCategory: (category: string) => void
+  handleOptions: () => void
 }
 
-export default function Categories({ct}: CategoryProps){
+export default function Categories({ct, getCategory, handleOptions}: CategoryProps){
   return (
     <div className={styles.categoriesContainer}>
-      {ct.map((c,i) => (
-        <div key={i} className={styles.category}>{c.name}</div>
-      ))}
+      <select name="" id="" onChange={(e => {
+        getCategory(e.target.value)
+        handleOptions()
+        })}>
+        <option  selected hidden> Categorias</option>
+        {ct.map((c,i) => (
+          <option key={i} value={c.name}>{c.name}</option>
+        ))}
+        <option value="todosprod">Todos os produtos</option>
+      </select>
     </div>
   )
 }

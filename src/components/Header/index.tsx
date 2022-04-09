@@ -17,7 +17,7 @@ export function Header({isLoginPage, isAdminPage}: HeaderProps){
   const {cart} = useCart()
   const [openMenu,setOpenMenu] = useState(false)
 
-  console.log(cart)
+  
   function menuToggle() {
     setOpenMenu(!openMenu)
   }
