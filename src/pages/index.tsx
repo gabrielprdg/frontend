@@ -43,14 +43,16 @@ type HomeProps = {
 export default function Home({ prod, latestProducts, categories }: HomeProps) {
   const { user } = useAuth()
   const [isFechtingData, setIsFetchingData] = useState(false)
+  const [isItemSelected, setIsItemSelected] = useState(true)
   const [ category, setCategory ] = useState('')
   const [ productsByCat, setProductsByCat] = useState<Product[]>([])
   function loadAllProducts() {
     setIsFetchingData(!isFechtingData)
+ 
   }
 
   function handleOptions() {
-    setIsFetchingData(!isFechtingData)
+    setIsFetchingData(false)
   }
 
   async function getCategory(category: string) {
@@ -90,7 +92,7 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
         <div className={styles.products}>
         {
           //Condition 1
-          !isFechtingData ?
+          !isFechtingData  ?
           //Condition 2
           productsByCat.length ?
             //Expression 1           
@@ -118,7 +120,7 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
       </div>
 
       <div className={styles.showTheRest}> 
-        <button className={ isFechtingData ? styles.removeButton: styles.createB} onClick={() => {loadAllProducts()}}>Exibir todos os produtos ...</button>
+        <button className={ isFechtingData || productsByCat.length ? styles.removeButton: styles.createB} onClick={() => {loadAllProducts()}}>Exibir todos os produtos ...</button>
       </div>
 
       <Footer/>
