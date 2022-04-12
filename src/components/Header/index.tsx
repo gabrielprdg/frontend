@@ -43,11 +43,6 @@ export function Header({isLoginPage, isAdminPage}: HeaderProps){
 
         <nav className={styles.menu}>
             <ul className={openMenu ? styles.toggle :""}>
-              <li><Link href="/Login">Adicionar Produto</Link></li>
-              <li><Link href="/contact"> Excluir algum produto</Link></li>
-              <li><Link href="/about"> Adicionar Categoria </Link></li>
-              <li><Link href="/requests"> Excluir Categoria </Link></li>
-              <li><Link href="/requests"> Orders </Link></li>
               <li><Link href="/requests"> Logout </Link></li>
               <li className={styles.close} onClick={menuToggle} >
                 <Image src={Close} alt="" width={25} height={35}/>

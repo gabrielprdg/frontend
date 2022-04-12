@@ -48,7 +48,6 @@ export default function Home({ prod, latestProducts, categories }: HomeProps) {
   const [ productsByCat, setProductsByCat] = useState<Product[]>([])
   function loadAllProducts() {
     setIsFetchingData(!isFechtingData)
- 
   }
 
   function handleOptions() {
