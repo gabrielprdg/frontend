@@ -20,6 +20,7 @@ type AuthContextTypes = {
   isAuthenticated: boolean
   signIn: (data: SignInData) => void
   user: User | null
+  accessToken: string
 }
 
 type AuthContextProviderProps = {
@@ -30,13 +31,16 @@ const AuthContext = createContext({} as AuthContextTypes)
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User | null>(null)
+  const [accessToken, setAccessToken] = useState('')
   const isAuthenticated = !!user
 
   useEffect(() => {
     const { 'usestore-token' : token } = parseCookies()
     const { 'usestore-userdata' : user } = parseCookies()
     if(token) {
+      console.log('user',user)
       setUser(JSON.parse(user))
+      setAccessToken(token)
     }
   },[])
 
@@ -46,24 +50,27 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       password
     })
 
-    console.log(res.data)
-    const { accessToken :token, user } = res.data
+    console.log('resdata',res.data)
+    const { accessToken :token, user} = res.data
+    const { role } = user 
+
+    setAccessToken(token)
 
     setCookie(undefined, 'usestore-token', token, {
-      maxAge: 60 * 60 * 1 // 1 hour 
+      maxAge: 60 * 60 * 3 // 1 hour 
     })
 
-    setCookie(undefined, 'usestore-userdata', user, {
-      maxAge: 60 * 60 * 1 // 1 hour 
+    setCookie(undefined, 'usestore-userdata', JSON.stringify(user), {
+      maxAge: 60 * 60 * 3 // 1 hour 
     })
 
     setUser(user)
-
-    Router.push('/')
+    console.log(role)
+    role === 'admin' ? Router.push('/Admin') : Router.push('/')
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, user, accessToken}}>
       {children}
     </AuthContext.Provider>
   )

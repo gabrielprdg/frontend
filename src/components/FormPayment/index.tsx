@@ -303,7 +303,10 @@ export default function FormPayment() {
 
           <div className={styles.fields}>
             <label htmlFor="installments">Parcelas</label>
-             <select id="installments" className={styles.installments} onChange={(e) => selectFn(e.target)}>
+              <select id="installments" 
+                className={styles.installments} 
+                onChange={(e) => selectFn(e.target)}
+              >
               {useInstallments.map(({ recommended_message, installments }, i) => (
                 <option key={i} value={installments}>
                   {recommended_message}

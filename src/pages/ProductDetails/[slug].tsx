@@ -39,9 +39,9 @@ export default function ProductDetails({product}: ProductProps) {
               <span className={styles.colorTitle}>Cores disponíveis :</span>
             ): ''}
             <div className={styles.colors}>
-              {product.colors ? product.colors.map(color => (
+              {Array.isArray(product.colors) ? product.colors.map(color => (
                 <ColorOptions color={color}/>
-              )): ''}
+              )): <ColorOptions color={product.colors}/> }
             </div>
 
             {product.productSize ? (

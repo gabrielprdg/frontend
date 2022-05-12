@@ -2,13 +2,21 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '../../contexts/AuthContext';
+import { useState } from 'react';
+import { CircularProgress } from '@mui/material';
 
 
 export default function SignIn() {
   const { register, handleSubmit } = useForm()
   const { signIn } = useAuth()
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  function handleProgress() {
+    setIsLoaded(!isLoaded)
+  }
 
   async function handleSignIn(data:any) {
+    setIsLoaded(!isLoaded)
     try {
       await signIn(data)
     }catch(err) {
@@ -40,7 +48,10 @@ export default function SignIn() {
           autoComplete="password"
           required className={styles.inputPass}
         />
-        <button type="submit">Login</button>
+        {
+          !isLoaded ? <button type="submit">Login</button> : <div className={styles.progress}><CircularProgress color='secondary'/></div>
+        }
+        
       </form>
       <div className={styles.signUp}>Nao possui uma conta? <Link href="/SignUp"><span>Cadastre-se</span></Link></div>
     </div>

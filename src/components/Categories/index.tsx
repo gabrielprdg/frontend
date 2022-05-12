@@ -2,20 +2,24 @@ import { Category } from '../../pages'
 import styles from './styles.module.scss'
 
 type CategoryProps = {
-  ct: Category[]
-  getCategory: (category: string) => void
-  handleOptions: () => void
+  ct?: Category[]
+  getCategory?: (category: string) => void
+  handleOptions?: () => void
 }
 
 export default function Categories({ct, getCategory, handleOptions}: CategoryProps){
   return (
     <div className={styles.categoriesContainer}>
       <select name="" id="" onChange={(e => {
-        getCategory(e.target.value)
-        handleOptions()
+        if(getCategory){
+          getCategory(e.target.value)
+        }
+        if (handleOptions) {
+          handleOptions()
+        }
         })}>
         <option  selected hidden> Categorias</option>
-        {ct.map((c,i) => (
+        {ct?.map((c,i) => (
           <option key={i} value={c.name}>{c.name}</option>
         ))}
         <option value="todosprod">Todos os produtos</option>
@@ -23,4 +27,6 @@ export default function Categories({ct, getCategory, handleOptions}: CategoryPro
     </div>
   )
 }
+
+
 
