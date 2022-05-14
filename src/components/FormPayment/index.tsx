@@ -155,18 +155,21 @@ export default function FormPayment() {
             email: e_mail
           })
             .then((data:any) => {
-              setIsLoaded(!isLoaded)
+              
               console.log(data)
               const { status, body } = data
               console.log('sts',status)
               console.log('bd', body)
               if (status === 201 || status === 200) {
+                setIsLoaded(!isLoaded)
                 toast.success('compra efetuada with sucess')
               } else {
+                setIsLoaded(!isLoaded)
                 toast.error('Erro interno do servidor!')
               }
             })
             .catch(() => {
+              setIsLoaded(!isLoaded)
               toast.error('Erro ao iniciar a compra!')
             })
             .finally(function () {
