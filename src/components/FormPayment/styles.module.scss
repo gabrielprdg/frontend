@@ -222,6 +222,13 @@
   flex-direction: column;
 }
 
+.progress {
+  position: relative;
+  top: 205px;
+  margin: 0rem -2rem;
+  left: 290px;
+}
+
 
 @media (max-width:650px) {
   .formCard{

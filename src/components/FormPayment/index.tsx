@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -64,7 +65,7 @@ export default function FormPayment() {
   const { useProfileShipping } = SnapshotProfileShipping()
 
   
-  const [loading, setLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
  
 
   const {
@@ -137,7 +138,7 @@ export default function FormPayment() {
   }
 
   const confirmFn = () => {
-    setLoading(!loading)
+    setIsLoaded(!isLoaded)
     
     if (clickRef.current) {
       clickRef.current = false
@@ -154,6 +155,7 @@ export default function FormPayment() {
             email: e_mail
           })
             .then((data:any) => {
+              setIsLoaded(!isLoaded)
               console.log(data)
               const { status, body } = data
               console.log('sts',status)
@@ -333,15 +335,18 @@ export default function FormPayment() {
  
 
         <div className={styles.hidden}>
-            <button 
+            {!isLoaded ? <button 
               type="submit" 
               className={styles.buttonPayment} 
               onClick={() => 
                 confirmFn()
               }
-            >
-                Finalizar pedido
-          </button> 
+            > Finalizar pedido </button> :
+            <div className={styles.progress} >
+              <CircularProgress color='secondary'/>
+            </div>
+            }
+          
         </div>
       </div>
     </div>
