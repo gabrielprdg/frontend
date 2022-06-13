@@ -1,31 +1,23 @@
-.pink {
-  width: 30px;
-  height: 30px;
-
-  margin-right: 10px;
-  background-color: #ff5cfa;
+.colorBorder {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
 }
 
-.red {
-  width: 30px;
-  height: 30px;
 
-  margin-right: 10px;
-  background-color: #ff4040;
-}
 
-.orange {
-  width: 30px;
-  height: 30px;
-
-  margin-right: 10px;
-  background-color: #faaf52;
-}
-
-.greenLemon {
-  width: 30px;
-  height: 30px;
-
-  margin-right: 10px;
-  background-color: #6bff6b;
+.active {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #a323de;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
 }

@@ -1,28 +1,132 @@
-import { 
-  TextField, 
-  FormControl, 
-  InputLabel, 
-  Select, 
-  MenuItem
+import {
+  CircularProgress, TextField
 } from '@mui/material'
-
 import Router from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import { api } from '../../../services/api'
 import { SnapshotProfile, SnapshotProfileShipping } from '../../contexts/PaymentContext'
+import { useCart } from '../../contexts/ShoppingCartContext'
 import styles from './styles.module.scss'
 
-type InputProps = (data: string, val: string) => void
+
+
+
+
+type InputProps = (val: string) => void
 
 export default function FormPersonal() {
   const {register, handleSubmit} = useForm()
 
+  const {addToTotal} = useCart()
+
+  const [ isLoading, setIsLoading] = useState(false)
+  const [isCheckedPac, setIsCheckedPac ] = useState(false)
+  const [ isCheckedNoShipping, setIsCheckedNoShipping ] = useState(false)
+  const [ pacPrice, setPacPrice ] = useState(null)
+  const [ cep, setCep ] = useState('')
+  const [ calcLoading, setCalcLoading ] = useState(false)
+  const [ sedexPrice, setSedexPrice ] = useState()
+  const [ isCepSeleted, setIsCepSelected ] = useState(false)
   const { useProfile, setProfile } = SnapshotProfile()
-  const { useProfileShipping, setProfileShipping } = SnapshotProfileShipping() 
-  const {  e_mail = ''} = useProfile
+  const { useProfileShipping, setProfileShipping } = SnapshotProfileShipping()
+
+  const orderData = {...useProfileShipping, shippingType: isCheckedPac ? 'sedex' : 'retirar da loja'} 
+
 
   useEffect(() => {
-   
+    console.log(pacPrice)
+    console.log(orderData)
+  },[])
+
+  function handleLoadingComponent () {
+    
+  }
+
+
+  function handleRadioPac() {
+    if(isCheckedNoShipping){
+      setIsCheckedNoShipping(!isCheckedNoShipping)
+    }
+    setIsCheckedPac(!isCheckedPac)
+  }
+
+  function handleRadioNoShipping() {
+    if(isCheckedPac){
+      setIsCheckedPac(!isCheckedPac)
+    }
+    setIsCheckedNoShipping(!isCheckedNoShipping)
+  }
+
+  function handleSelectRadio(e: any) {
+    console.log(e.target.value)
+    addToTotal(Number(e.target.value))
+  }
+
+  const inputFn: InputProps = (val) => setCep(val)
+
+  const isValidInput = (id: string, val: string, size: number) =>
+  !isNaN(Number(val)) && val.replace(/\D/g, '') !== id && val.length <= size
+
+  const inputValidFn = (id: string, val: string) => {
+    switch (id) {
+      case 'cep':
+        if (isValidInput(id, val, 8)) {
+          inputFn(val)
+        }
+        break
+      default:
+          inputFn(val)
+    }
+  } 
+  async function handleGetPriceShipping (args: any) {
+    try {
+      console.log(args.sCepDestino.length)
+      if(args.sCepDestino.length === 8) {
+        const res = await api.post('shipping',args)
+        setPacPrice(res.data[0].Valor)
+
+      }else {
+        toast.error("Cep nao encontrado ou nao digitado!", {
+          position: 'top-center'
+        })
+        setTimeout(function(){
+          setCalcLoading(!!calcLoading)
+          setIsCepSelected(!!isCepSeleted)
+        },1000);
+      }
+    
+    }catch (err) {
+      console.log(err)
+    }
+  }
+
+  function handleCepValues() {
+    setIsCepSelected(!isCepSeleted)
+    setCalcLoading(!calcLoading)
+ 
+
+    let args = {
+      // Não se preocupe com a formatação dos valores de entrada do cep, qualquer uma será válida (ex: 21770-200, 21770 200, 21asa!770@###200 e etc),
+      sCepOrigem: '37970000',
+      sCepDestino: cep,
+      nVlPeso: '1',
+      nCdFormato: '1',
+      nVlComprimento: '20',
+      nVlAltura: '20',
+      nVlLargura: '20',
+      nCdServico: ['04014', '04510'], //Array com os códigos de serviço
+      nVlDiametro: '0',
+    };
+  
+    handleGetPriceShipping(args)
+
+ 
+  }
+
+  useEffect(() => {
+    console.log(cep)
     const useProfileShippingData = localStorage.getItem('dataProfileShipping')
     console.log(useProfileShippingData)
     if(useProfileShippingData){
@@ -30,24 +134,24 @@ export default function FormPersonal() {
     }
   },[])
 
-
-
   useEffect(() => {
     localStorage.setItem('dataProfileShipping', JSON.stringify(useProfileShipping))
   },[useProfileShipping])
 
   function handleShippingData(data:any) {
-    setProfileShipping(data)
-    Router.push('/Checkout/Payment')
+    setIsLoading(!isLoading)
+    const orderData = {...data, shippingType: isCheckedPac ? 'sedex' : 'retirar da loja'}
+    setProfileShipping(orderData)
+    if(isCheckedPac || isCheckedNoShipping){
+      Router.push('/Checkout/Payment')
+    }else {
+      setIsLoading(!!isLoading)
+      toast.error("Escolha a forma de frete", {
+        position: 'top-center'
+      })
+      
+    }
   }
-
-  const inputFn: InputProps = (data, val) =>
-  setProfile((prevState) =>
-    Object({
-      ...prevState,
-      [data]: val
-    })
-  )
 
   return (
     <div className={styles.contentForm}>
@@ -64,10 +168,6 @@ export default function FormPersonal() {
           id="outlined-basic"
           label="Email"
           variant="outlined"
-          onInput={(e) =>
-            inputFn('e_mail', (e.target as HTMLInputElement).value)
-          }
-          value={e_mail}
           color="secondary"
           className={styles.emailField}
           style={{ marginBottom: '13px', backgroundColor: 'white'}} 
@@ -136,7 +236,7 @@ export default function FormPersonal() {
             label="Complemento"
             variant="outlined"
             color="secondary"
-            style={{ marginBottom: '13px' , marginLeft:'0.8rem' ,backgroundColor: 'white', width: '22rem'}} 
+            style={{ marginBottom: '13px' , marginLeft:'0.8rem' ,backgroundColor: 'white', width: '25.9rem'}} 
           />
         </div>
 
@@ -148,64 +248,8 @@ export default function FormPersonal() {
           color="secondary"
           style={{ marginBottom: '13px',backgroundColor: 'white' }} 
         />
-
-        <div className={styles.location}>
-          <TextField
-            {...register('cep')}
-            id="outlined-basic" 
-            label="CEP" 
-            variant="outlined"
-            className={styles.cep}
-            color="secondary"
-            style={{ marginBottom: '13px' ,backgroundColor: 'white', width: '22rem', marginRight:'1rem'}} 
-          />
-
-          <FormControl>
-           <InputLabel id="demo-simple-select-label" color='secondary'>Estado</InputLabel>
-           <Select
-               labelId="demo-simple-select-label"
-               id="demo-simple-select"
-               label="Estado"
-               {...register('state')}
-               defaultValue="Estado"
-               color="secondary"
-               className={styles.select}
-               style={{ height: '3.5rem', width:'4.2rem', backgroundColor: 'white'}}
-            >
-               <MenuItem value="AC">Acre</MenuItem>
-               <MenuItem value="AL">Alagoas</MenuItem>
-               <MenuItem value="AP">Amapá</MenuItem>
-               <MenuItem value="AM">Amazonas</MenuItem>
-               <MenuItem value="BA">Bahia</MenuItem>
-               <MenuItem value="CE">Ceará</MenuItem>
-               <MenuItem value="DF">Distrito Federal</MenuItem>
-               <MenuItem value="ES">Espírito Santo</MenuItem>
-               <MenuItem value="GO">Goiás</MenuItem>
-               <MenuItem value="MA">Maranhão</MenuItem>
-               <MenuItem value="MT">Mato Grosso</MenuItem>
-               <MenuItem value="MS">Mato Grosso do Sul</MenuItem>
-               <MenuItem value="MG">Minas Gerais</MenuItem>
-               <MenuItem value="PA">Pará</MenuItem>
-               <MenuItem value="PB">Paraíba</MenuItem>
-               <MenuItem value="PR">Paraná</MenuItem>
-               <MenuItem value="PE">Pernambuco</MenuItem>
-               <MenuItem value="PI">Piauí</MenuItem>
-               <MenuItem value="RJ">Rio de Janeiro</MenuItem>
-               <MenuItem value="RN">Rio Grande do Norte</MenuItem>
-               <MenuItem value="RS">Rio Grande do Sul</MenuItem>
-               <MenuItem value="RO">Rondônia</MenuItem>
-               <MenuItem value="RR">Roraima</MenuItem>
-               <MenuItem value="SC">Santa Catarina</MenuItem>
-               <MenuItem value="SP">São Paulo</MenuItem>
-               <MenuItem value="SE">Sergipe</MenuItem>
-               <MenuItem value="TO">Tocantins</MenuItem>
-               <MenuItem value="EX">Estrangeiro</MenuItem>
-         </Select>
-         </FormControl>
-
-        </div>
-
-       
+ 
+      
         <div
           className={styles.labelData}
         >
@@ -221,9 +265,118 @@ export default function FormPersonal() {
           color="secondary"
           style={{ marginBottom: '13px',backgroundColor: 'white' }} 
         />
+
+       
+        { !isLoading ?
+            <div className={styles.buttonContinue}>
+              <button 
+                id='user-data' 
+                type="submit" 
+                className={!isCepSeleted || pacPrice === 0 ? styles.toBeContinued: styles.noToBeContinued}
+               
+              >
+                Continuar
+              </button>
+            </div>
+            
+          :
+          <div className={styles.circular}>
+            <CircularProgress color='secondary'/>
+          </div>
+          
+        }
+
         
-        <button id='user-data' type="submit" className={styles.toBeContinued}>Continuar</button>
       </form>
+
+        <div className={styles.shipping}>
+  
+         
+          
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div className={styles.searchCep}>
+              <div className={styles.shippingTitle}>
+                Frete
+              </div>
+
+              <div className={styles.shippingInput}>
+                <div>
+                  <TextField
+                  
+                  id="outlined-basic" 
+                  label="CEP" 
+                  variant="outlined"
+                  className={styles.cep}
+                  onInput={(e) => {inputValidFn('cep', (e.target as HTMLInputElement).value)}}
+                  color="secondary"
+                  value={cep}
+                  style={{ marginBottom: '13px', backgroundColor: 'white'}} 
+                />
+
+                </div>
+              
+                { !calcLoading || pacPrice ?
+                  <button
+                    onClick={() => handleCepValues()}
+                  > 
+                    Calcular 
+                  </button>
+                :
+                  <div className={styles.circularCalc}>
+                    <CircularProgress color='secondary'/>
+                  </div>
+                
+                }
+                </div>             
+            </div>
+          </form>
+
+          
+
+          {pacPrice ?
+            <div className={styles.shippingOptions}>
+              <div  className={isCheckedPac ? styles.pacSelected : styles.pac} onClick={() => handleRadioPac()}>
+                <input 
+                  type="radio" 
+                  name="pac" 
+                  id="pac"
+                  color="secondary"
+                  value={pacPrice}
+                  checked={isCheckedPac}
+                  onChange={(e) => handleSelectRadio(e as any)}
+                />
+                <div className={styles.priceAndText} id="pac">
+                  <div className={styles.price}>Frete R${pacPrice}</div>
+                  <div className={styles.text}> Frete utilizando o serviço PAC dos correios. </div>
+                </div>
+
+              </div>
+
+              <div className={isCheckedNoShipping ? styles.sedexSelected : styles.sedex} onClick={(e) => handleRadioNoShipping()}>
+                <input 
+                    type="radio" 
+                    name="sedex" 
+                    id="sedex"
+                    value={0}
+                    checked={isCheckedNoShipping}
+                    onChange={(e) => handleSelectRadio(e as any)}
+                  />
+
+                  <div className={styles.priceAndText}>
+                    <div className={styles.price}>Grátis</div>
+                    <div className={styles.text}> Grátis ao retirar diretamente da loja.</div>
+                  </div>
+              </div>
+            </div>
+            :
+            <>
+            </>
+          }
+        
+
+        </div>
+        
+      
     </div>
   )  
 }

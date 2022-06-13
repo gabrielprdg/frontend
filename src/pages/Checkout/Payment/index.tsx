@@ -25,7 +25,7 @@ import styles from './styles.module.scss'
 
 export function checkFn() {
   window.Mercadopago?.setPublishableKey(
-    'APP_USR-4fe9c322-94d8-4e3d-84ef-e3430b90f517'
+    'TEST-18691270-a48e-45c8-94a4-80263f46cf65'
   )
   window.Mercadopago?.getIdentificationTypes()
   console.log('docType', process.env.PUBLIC_KEY)

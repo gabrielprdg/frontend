@@ -83,9 +83,12 @@ export default function ProductRegistrationForm() {
     data.append('price', String(price))
     data.append('category', category)
 
+  
     colors.forEach(color => {
       data.append('colors', color)
     })
+    
+   
 
     productSize.forEach(size => {
       data.append('productSize',size)
@@ -95,6 +98,7 @@ export default function ProductRegistrationForm() {
       data.append('files',image)
     })
 
+
     try { 
       console.log('col',accessToken)
       const res = await api.post('products',data, {
@@ -102,6 +106,12 @@ export default function ProductRegistrationForm() {
           'x-access-token': `${accessToken}`
         }
       })
+
+      setIsLoaded(!!isLoaded)
+      console.log(res)
+      if(res.status === 204) {
+        toast.success('Produto registrado com sucesso!')
+      }
    
     } catch(err:any) {
       setIsLoaded(!!isLoaded)
@@ -118,8 +128,9 @@ export default function ProductRegistrationForm() {
   }
 
   useEffect(() => {
+    console.log(colors)
     getCategories()
-  },[])
+  },[colors])
 
  
   function handleSelectImages(event:ChangeEvent<HTMLInputElement>){

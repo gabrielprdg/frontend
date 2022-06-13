@@ -4,6 +4,7 @@
   display: flex;
   flex-direction:row;
   font-family: 'Poppins';
+
 }
 
 .checkoutPersonal {
@@ -13,6 +14,16 @@
 .productToggle {
   display: none;
 }
+
+
+
+.shippingTitle{
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+
 
 @media (max-width: 650px) {
   .checkoutPersonal {
@@ -27,6 +38,8 @@
 
   .productToggle {
     width: 100vw;
+    position: fixed;
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,7 +56,7 @@
   .purchaseToggle {
     display: block;
     position: relative;
-    
+    margin-top: 4rem;
     top: 0px;
     left: -69px;
     background-color: white;

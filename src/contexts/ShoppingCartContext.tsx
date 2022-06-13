@@ -3,7 +3,7 @@ import { api } from "../../services/api"
 import { Images } from "../pages"
 import styles from '../pages/ProductDetails/styles.module.scss'
 
-type ProductData = {
+export type ProductData = {
   id: string
   images: Array<Images>,
   name: string,
@@ -22,7 +22,7 @@ type ShoppingCartContextData = {
   isAproved: boolean
   addOnCart: (id: string) => void
   buyNow: (id: string) => void
-
+  addToTotal: (value: number) => void
   reduction: (id: string) => void
   promotion: (id: string) => void
   getTotal: () => void
@@ -59,12 +59,6 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     setProductList(prod)
   }
 
-  useEffect(() => {
-    localStorage.setItem('dataCart', JSON.stringify(cart))
-    localStorage.setItem('dataTotal', total?.toString())
-    localStorage.setItem('dataCartBuyNow', JSON.stringify(cartBuyNow))
-  },[cart,total,cartBuyNow])
-
   useEffect (() => {
     
     const cartData = localStorage.getItem('dataCart')
@@ -91,6 +85,14 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     productData()
 
   },[])
+
+  useEffect(() => {
+    localStorage.setItem('dataCart', JSON.stringify(cart))
+    localStorage.setItem('dataTotal', total?.toString())
+    localStorage.setItem('dataCartBuyNow', JSON.stringify(cartBuyNow))
+  },[cart,total,cartBuyNow])
+
+  
   
 
 
@@ -134,6 +136,10 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
 
     setCart([...cart])
     getTotal()
+  }
+
+  function addToTotal(value:number) {
+    setTotal(total+value)
   }
 
   function promotion (id:string) {
@@ -190,6 +196,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
       removeProduct, 
       addOnCart, 
       buyNow,
+      addToTotal,
       getTotal,
       reduction, 
       promotion, 

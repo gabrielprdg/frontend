@@ -161,10 +161,11 @@ export default function FormPayment() {
               console.log('sts',status)
               console.log('bd', body)
               if (status === 201 || status === 200) {
-                setIsLoaded(!isLoaded)
+                setIsLoaded(!!isLoaded)
+                console.log(data)
                 toast.success('compra efetuada with sucess')
               } else {
-                setIsLoaded(!isLoaded)
+                setIsLoaded(!!isLoaded)
                 toast.error('Erro interno do servidor!')
               }
             })
@@ -338,13 +339,16 @@ export default function FormPayment() {
  
 
         <div className={styles.hidden}>
-            {!isLoaded ? <button 
+            {!isLoaded ? 
+            <button 
               type="submit" 
               className={styles.buttonPayment} 
               onClick={() => 
                 confirmFn()
               }
-            > Finalizar pedido </button> :
+            >
+              Finalizar pedido 
+            </button> :
             <div className={styles.progress} >
               <CircularProgress color='secondary'/>
             </div>

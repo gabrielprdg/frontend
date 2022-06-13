@@ -135,12 +135,45 @@
 }
 
 .size {
+  background-color: white;
+  margin-right: 10px;
   display: flex;
   justify-content: center;
   padding: 2px 22px;
-  border: 1px solid var(--black);
+  border: 2px solid var(--black);
   color: var(--black);
   margin-bottom: 30px;
+}
+
+.sizeSelected {
+  background-color: white;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 2px 22px;
+  border: 1px solid var(--pink);
+  color: var(--black);
+  margin-bottom: 30px;
+}
+
+.active {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #a1a1a1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.size:hover {
+  cursor: pointer;
+}
+
+.progressCircle {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 500px) {

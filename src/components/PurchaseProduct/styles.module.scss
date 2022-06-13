@@ -1,9 +1,13 @@
 .cartContent {
-  
-  margin: 6.2rem 2rem 6rem 8rem;
-  width: 17rem;
+  height: 100vh;
+  margin-left: 8rem;
+  width: 23rem;
  
   font-size: 0.8rem;
+  background-color: white;
+  box-shadow: 0px 0px 2px rgba(194, 136, 207, 0.7);
+  padding: 80px 50px;
+  position: fixed;
 }
 
 .cartDetails {
@@ -75,9 +79,9 @@
   .cartContent {  
     display: block;
     height: 1000px;
-    position: absolute;
-    z-index: 1;
-    margin-top: 0rem;
+    position: fixed;
+    z-index: 100;
+ 
     margin-left: 5rem;
     background-color: white;
     width: 100vw;

@@ -6,17 +6,38 @@ import styles from './styles.module.scss'
 import ArrowDown from '../../../../public/seta-para-baixo.svg'
 import ArrowUp from '../../../../public/up-arrow.svg'
 import Image  from 'next/image'
-import { useCart } from '../../../contexts/ShoppingCartContext'
+import { ProductData, useCart } from '../../../contexts/ShoppingCartContext'
+import {calcularPrecoPrazo, consultarCep, rastrearEncomendas} from 'correios-brasil';
+
+
+export type ShippingTypes = {
+  sCepOrigem: string
+  sCepDestino: string
+  nVlPeso: string
+  nCdFormato: string
+  nVlComprimento: string
+  nVlAltura: string
+  nVlLargura: string
+  nCdServico: Array<string>, //Array com os códigos de serviço
+  nVlDiametro: string
+}
 
 
 export default function Delivery () {
   const [isOpen, setIsOpen] = useState(false)
   
   const { cartBuyNow, total, cart } = useCart()
+  const [ shippingValue, setShippingValue] = useState(0)
+  const [ buyNow, setBuyNow] = useState({} as ProductData)
+  const [ tot, setTot ] = useState(0)
+   
+
 
   function handleOpenToggle (){
     setIsOpen(!isOpen)
   }
+
+ 
 
   return (
     <div className={styles.checkoutContainer}>
@@ -48,8 +69,11 @@ export default function Delivery () {
           
         </div>
         <div className={isOpen ? styles.formPersonal: ''}>
-          <FormPersonal/>
+          <FormPersonal />
         </div>
+
+        
+
         <div className={isOpen ? styles.purchaseToggle: styles.noPurchaseToggle}>
           <PurchaseProduct/>
         </div>
