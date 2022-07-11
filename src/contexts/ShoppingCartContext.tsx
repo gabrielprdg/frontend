@@ -80,8 +80,11 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
     }
 
     if(shippingPriceData) {
-      setShippingPrice(shippingPriceData)
-      addToTotalOnEffect(parseFloat(shippingPrice))
+      if(shippingPriceData == '0') {
+        setShippingPrice('0')
+      }else {
+        setShippingPrice(shippingPriceData)
+      }
     }
 
     if(cartBuyNowData) {
@@ -173,6 +176,7 @@ export function ShoppingCartContextProvider({children}: ShoppingCartContextProvi
   }
 
   function addToTotalOnEffect(value: number) {
+    console.log('value', value)
     const totalWithShipping = total + value
     console.log('d4e',totalWithShipping)
     if (totalWithShipping) {
