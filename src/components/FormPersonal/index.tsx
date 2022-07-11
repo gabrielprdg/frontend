@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { api } from '../../../services/api'
 import { SnapshotProfile, SnapshotProfileShipping } from '../../contexts/PaymentContext'
 import { useCart } from '../../contexts/ShoppingCartContext'
+
 import styles from './styles.module.scss'
 
 
@@ -19,7 +20,7 @@ type InputProps = (val: string) => void
 export default function FormPersonal() {
   const {register, handleSubmit} = useForm()
 
-  const {addToTotal} = useCart()
+  const {addToTotal,total, shippingValueSetter, shippingPrice} = useCart()
 
   const [ isLoading, setIsLoading] = useState(false)
   const [isCheckedPac, setIsCheckedPac ] = useState(false)
@@ -38,11 +39,12 @@ export default function FormPersonal() {
   useEffect(() => {
     console.log(pacPrice)
     console.log(orderData)
+    console.log(typeof(pacPrice))
+    console.log('ww', shippingPrice)
+  
   },[])
 
-  function handleLoadingComponent () {
-    
-  }
+ 
 
 
   function handleRadioPac() {
@@ -50,6 +52,7 @@ export default function FormPersonal() {
       setIsCheckedNoShipping(!isCheckedNoShipping)
     }
     setIsCheckedPac(!isCheckedPac)
+    shippingValueSetter(pacPrice as any)
   }
 
   function handleRadioNoShipping() {
@@ -57,11 +60,13 @@ export default function FormPersonal() {
       setIsCheckedPac(!isCheckedPac)
     }
     setIsCheckedNoShipping(!isCheckedNoShipping)
+    shippingValueSetter('0')
   }
 
   function handleSelectRadio(e: any) {
-    console.log(e.target.value)
+    console.log('33',e.target.value)
     addToTotal(Number(e.target.value))
+    console.log('44',total)
   }
 
   const inputFn: InputProps = (val) => setCep(val)

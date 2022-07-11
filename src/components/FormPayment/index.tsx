@@ -1,6 +1,8 @@
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
+import Router from 'next/router'
 import { useRef, useState } from 'react'
+
 import { toast } from 'react-toastify'
 import Amex from '../../../public/amex.svg'
 import HiperCard from '../../../public/hipercard.svg'
@@ -58,6 +60,7 @@ type FormSubmitProps = (data: {
  
 export default function FormPayment() {
   const clickRef = useRef(true)
+  const [ purchaseStatus, setPurchaseStatus] = useState('')
   const { total, purchaseAproved, cartBuyNow } = useCart()
   const { useInstallments, setInstallments } = SnapshotInstallments()
   const { formRef } = SnapshotRef()
@@ -75,11 +78,12 @@ export default function FormPayment() {
     code = '',
     doc = '',
     display_name = '',
-    e_mail,
+    e_mail = useProfileShipping.email,
     issuer,
     slt_installment = 1
   } = useProfile
 
+  const orders = {user:{...useProfileShipping},product:{...cartBuyNow}}
   
   const selectImageCard = (issuer: string| undefined) => {
     console.log('man',issuer)
@@ -108,6 +112,12 @@ export default function FormPayment() {
     }
 
   }
+
+  const postOrders = async (data:any) => {
+    const res = await api.post("order", data)
+    return res.data
+  }
+  
   
   const inputFn: InputProps = (data, val) =>
   setProfile((prevState) =>
@@ -127,7 +137,7 @@ export default function FormPayment() {
 
   const formSubmit: FormSubmitProps = async (data) => {
     try {
-      console.log(data)
+      console.log("mostrardata",data)
       const res = await api.post('process_payment', data)
       console.log('DATA',res.data)
       console.log(slt_installment)
@@ -161,17 +171,17 @@ export default function FormPayment() {
               console.log('sts',status)
               console.log('bd', body)
               if (status === 201 || status === 200) {
-                setIsLoaded(!!isLoaded)
-                console.log(data)
-                toast.success('compra efetuada with sucess')
+                console.log(orders)
+                postOrders(orders)
+                Router.push("/PurchaseSuccessfuly")
               } else {
                 setIsLoaded(!!isLoaded)
                 toast.error('Erro interno do servidor!')
               }
             })
             .catch(() => {
-              setIsLoaded(!isLoaded)
               toast.error('Erro ao iniciar a compra!')
+             
             })
             .finally(function () {
               window.Mercadopago.clearSession()
@@ -182,15 +192,18 @@ export default function FormPayment() {
         } else if (status === 423) {
           toast.error('Espere um momento e tente novamente.')
           clickRef.current = true
+          setIsLoaded(!!isLoaded)
         } else if (status === 400) {
           const { cause } = response
           const [error] = cause
           console.log(error)
           clickRef.current = true
           MercadopagoErrorStatus(error.code)
+          setIsLoaded(!!isLoaded)
         } else {
           toast.error('Certifique-se que todos os dados estão corretos!')
           clickRef.current = true
+          setIsLoaded(!!isLoaded)
         }
       })
     }

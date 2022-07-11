@@ -5,12 +5,9 @@ import { useEffect, useState } from "react"
 
 export default function PurchaseProduct() {
   const {cart, total, cartBuyNow} = useCart()
-  const [ shippingPrice, setShippingPrice] = useState(0)
+  const {shippingPrice} = useCart()
 
-  useEffect(() => {
-    console.log('carty', cart.length)
-    console.log("cbn",cartBuyNow)
-  },[])
+
 
   return (
       <div className={styles.cartContent}>
@@ -31,7 +28,7 @@ export default function PurchaseProduct() {
                 {cartBuyNow.count}
               </span>
               <span>
-                R${(cartBuyNow.price * 1)}
+                R${cartBuyNow.price}
               </span>
             </div>
             
@@ -53,7 +50,7 @@ export default function PurchaseProduct() {
           <div className={styles.cartTotal}>
             <span>Total</span>
             <div className={styles.tot}>
-              R$ {cartBuyNow.price}
+              R$ {total.toFixed(2)}
             </div>
           </div>
         </div>

@@ -18,7 +18,6 @@ import FormPayment from '../../../components/FormPayment'
 import { Header } from '../../../components/Header'
 import PaymentCards from '../../../components/PaymentCards'
 import PurchaseProduct from '../../../components/PurchaseProduct'
-import PurchaseSuccessfuly from '../../../components/PurchaseSuccessfuly'
 import { SnapshotCardNumberRef, SnapshotInstallments, SnapshotProfile, SnapshotProfileShipping, SnapshotRef, SnapshotTicketRef } from '../../../contexts/PaymentContext'
 import { useCart } from '../../../contexts/ShoppingCartContext'
 import styles from './styles.module.scss'
@@ -88,10 +87,11 @@ export default function Payment (){
             function (status, response) {
               console.log('statu', status)
               console.log('respons', response)
-              const inst = response[0].payer_costs.slice(0, 3)
+              const inst = response[0]?.payer_costs.slice(0, 3)
+              console.log('inst', inst)
               if (status === 200) {
                 setInstallments(
-                  inst.map(
+                  inst?.map(
                     ({ recommended_message, installments}, i ) => {
                       console.log(i)
                       return {
@@ -160,9 +160,7 @@ export default function Payment (){
     <div className={styles.paymentContainer}>
       <Header isLoginPage/>
 
-      <div className={!isAproved ? styles.noShowPurchase : ''}>
-        <PurchaseSuccessfuly/>
-      </div>
+      
       <div className={!isAproved ? styles.f : styles.nof}>
       <div className={styles.checkoutPayment}>
 

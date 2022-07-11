@@ -3,7 +3,8 @@ import { style } from "@mui/system";
 import { GetServerSideProps } from "next";
 import { Params } from "next/dist/server/router";
 import Router from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "../../../services/api";
 import { ColorOptions } from "../../components/ColorOptions";
 import { Header } from "../../components/Header";
@@ -19,6 +20,7 @@ export default function ProductDetails({product}: ProductProps) {
   const [ color, setColor ] = useState<string>("")
   const [ isLoading, setIsLoading ] = useState(false)
   const [ colorSelected, setColorSelected ] = useState(false)
+  const [  ] = useState<any>()
  
   const colorRef = useRef<HTMLDivElement>(null)
 
@@ -43,8 +45,17 @@ export default function ProductDetails({product}: ProductProps) {
   function setBuyNow (id: string) {
     setIsLoading(!isLoading)
     console.log('idpr',id)
-    buyNow(id)
-    Router.push('/Checkout/Delivery')
+  
+    if(size){
+      buyNow(id, size, color)
+      Router.push('/Checkout/Delivery')
+    }else {
+      toast.error("Selecione um tamanho", {
+        position: 'top-center'
+      })
+      setIsLoading(!!isLoading)
+    }
+   
   }
 
   function handleSelectSize(event: EventTarget & HTMLSelectElement){
@@ -63,7 +74,7 @@ export default function ProductDetails({product}: ProductProps) {
     <div className={styles.containerDetails}>
       <div className={styles.details}>
         <div className={styles.mainImg}>
-          <img src={product.images[index].url} alt="imagemain" />
+          <img src={product.images[index]?.url} alt="imagemain" />
         </div>
         <div className={styles.content}>
           <div className={styles.row}>
