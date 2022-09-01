@@ -59,7 +59,7 @@ export default function Delivery () {
           </div>
           {cartBuyNow?.price && cart.length == 0 ? 
             <div className={styles.totToggle}>
-              R${cartBuyNow?.price}
+              R${total}
             </div>
           : 
             <div className={styles.totToggle}>

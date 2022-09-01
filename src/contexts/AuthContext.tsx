@@ -3,6 +3,7 @@ import { api } from '../../services/api'
 import { setCookie, parseCookies } from 'nookies'
 import Router from 'next/router'
 import jwt from 'jsonwebtoken'
+import { toast } from "react-toastify"
 
 type SignInData = {
   email: string
@@ -50,11 +51,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       password
     })
 
-    console.log('resdata',res.data)
+    console.log('resdata',res)
     const { accessToken :token, user} = res.data
     const { role } = user 
 
     setAccessToken(token)
+
 
     setCookie(undefined, 'usestore-token', token, {
       maxAge: 60 * 60 * 3 // 1 hour 
@@ -67,6 +69,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     setUser(user)
     console.log(role)
     role === 'admin' ? Router.push('/Admin') : Router.push('/')
+    
   }
 
   return (

@@ -4,6 +4,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '../../contexts/AuthContext';
 import { useState } from 'react';
 import { CircularProgress } from '@mui/material';
+import { Header } from '../../components/Header';
+import { toast } from 'react-toastify';
 
 
 export default function SignIn() {
@@ -20,12 +22,15 @@ export default function SignIn() {
     try {
       await signIn(data)
     }catch(err) {
-      console.log(err)
+      toast.error("Email ou senha incorrestos !");
+      
+      setIsLoaded(!!isLoaded)
     }
   }
 
   return (
     <div className={styles.loginContainer}>
+   
       <div className={styles.useTitle}>
         <span>Use</span>
         <span>FashionStore</span>

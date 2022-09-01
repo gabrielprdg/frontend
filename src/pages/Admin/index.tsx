@@ -1,10 +1,50 @@
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Images } from '..'
+import { api } from '../../../services/api'
 import { Header } from '../../components/Header'
+import { ListOrders } from '../../components/ListOrders'
 import ProductRegistrationForm from '../../components/ProductRegistrationForm'
 import styles from './styles.module.scss'
 
-export default function AdmPanel(){
+export type UserProfile = {
+  email: string
+	firstName: string
+	surname: string
+	telephone: string
+	address: string
+	number: string
+	complement: string
+	district: string
+	doc: string
+	shippingType: string
+}
+
+type productShoppingCart = {
+  name: string
+  description: string
+  category: string
+  price: string
+  colors: string
+  productSize: string
+  images: Array<Images>
+  createdAt: string
+  count: number
+  id: string
+}
+
+export type Order = {
+  id :string
+  user: UserProfile
+  product: productShoppingCart
+}
+
+type AdminProps = {
+  orders: Order[]
+}
+
+export default function AdmPanel({orders}: AdminProps){
 
   const [optionView, setOptionView] = useState(1)
 
@@ -22,7 +62,7 @@ export default function AdmPanel(){
     } else if(optionView === 4) {
 
     } else if(optionView === 5) {
-
+      return <ListOrders od={orders}/>
     } else {
       return 'Opção nao encontrada'
     }
@@ -47,4 +87,17 @@ export default function AdmPanel(){
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const ordersData = await api.get('order')
+  
+
+  const orders = ordersData.data
+
+  return {
+    props: {
+      orders
+    }
+  }
 }
